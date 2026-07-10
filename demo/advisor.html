@@ -215,30 +215,12 @@
       <!-- ---- TAB: Reconciliation ---- -->
       <div class="tab-panel" id="tab-recon">
 
-        <div class="recon-steps">
-          <div class="rstep">
-            <span class="rno">STEP 1</span>
-            <div class="rname">Extract</div>
-            <div class="rmeta">34 rows from 4 statements, each with page &amp; line reference to the archived original.</div>
-          </div>
-          <div class="rstep">
-            <span class="rno">STEP 2</span>
-            <div class="rname">Match</div>
-            <div class="rmeta">8 instruments: 6 matched on ISIN, 2 name-matches confirmed. 0 unmatched.</div>
-          </div>
-          <div class="rstep">
-            <span class="rno">STEP 3</span>
-            <div class="rname">Normalise</div>
-            <div class="rmeta">4 currencies → CHF at SNB rates on each source's valuation date. 1 date exception.</div>
-          </div>
-          <div class="rstep">
-            <span class="rno">STEP 4</span>
-            <div class="rname">Consolidate</div>
-            <div class="rmeta">8 positions · CHF 12,401,268. Approved by O. Marchand, 2 Jul 10:30.</div>
-          </div>
+        <div class="funnel-wrap">
+          <div class="funnel" id="recon-funnel"></div>
+          <div id="funnel-note"></div>
         </div>
 
-        <details class="xpanel">
+        <details class="xpanel" id="match-panel">
           <summary>Matching decisions — 6 ISIN-exact · 2 confirmed · 1 rule</summary>
           <div class="xbody" style="overflow-x:auto;">
             <table class="trace-table">
@@ -260,7 +242,7 @@
           </div>
         </details>
 
-        <details class="xpanel">
+        <details class="xpanel" id="exceptions-panel">
           <summary>Exceptions — 1 open · 0 unmatched rows</summary>
           <div class="xbody">
             <div class="callout flag" style="margin-top:0;">
@@ -540,6 +522,57 @@ function generateReport() {
   appendAudit('o.marchand', 'REPORT_GENERATED', 'RPT-2026-Q3-KEL-005');
 }
 
+/* ---------- Reconciliation funnel (rendered from state, updates live) ---------- */
+const RECON = {
+  extract: { rows: 34, statements: 4 },
+  match: { instruments: 8, isin: 6, confirmed: 2, unmatched: 0 },
+  normalise: { currencies: 4, base: 'CHF', exceptions: 1 },
+  consolidate: { total: '12,401,268', positions: 8, approvedBy: 'O. Marchand', approvedAt: '2 Jul 10:30' },
+  pending: []
+};
+function renderFunnel() {
+  const r = RECON;
+  document.getElementById('recon-funnel').innerHTML =
+    '<div class="fstage clickable" role="button" tabindex="0" ' +
+      'onclick="showTab(\'statements\')" onkeydown="if(event.key===\'Enter\')this.click()">' +
+      '<span class="fno">1 · Extract</span>' +
+      '<div class="fval">' + r.extract.rows + ' <span class="funit">rows</span></div>' +
+      '<div class="fmeta">from ' + r.extract.statements + ' statements · page &amp; line referenced</div>' +
+      '<span class="fopen">view statements</span></div>' +
+    '<div class="fstage clickable" role="button" tabindex="0" ' +
+      'onclick="openXpanel(\'match-panel\')" onkeydown="if(event.key===\'Enter\')this.click()">' +
+      '<span class="fno">2 · Match</span>' +
+      '<div class="fval">' + r.match.instruments + ' <span class="funit">instruments</span></div>' +
+      '<div class="fmeta">' + r.match.isin + ' ISIN-exact · ' + r.match.confirmed + ' confirmed · ' +
+        r.match.unmatched + ' unmatched</div>' +
+      '<span class="fopen">open decisions</span></div>' +
+    '<div class="fstage clickable" role="button" tabindex="0" ' +
+      'onclick="openXpanel(\'exceptions-panel\')" onkeydown="if(event.key===\'Enter\')this.click()">' +
+      '<span class="fno">3 · Normalise</span>' +
+      '<div class="fval">' + r.normalise.currencies + ' <span class="funit">currencies → ' + r.normalise.base + '</span></div>' +
+      '<div class="fmeta">SNB rates per valuation date · ' + r.normalise.exceptions +
+        ' exception' + (r.normalise.exceptions === 1 ? '' : 's') + '</div>' +
+      '<span class="fopen">open exceptions</span></div>' +
+    '<div class="fstage">' +
+      '<span class="fno">4 · Consolidate</span>' +
+      '<div class="fval">' + r.consolidate.total + ' <span class="funit">CHF</span></div>' +
+      '<div class="fmeta">' + r.consolidate.positions + ' positions · approved ' +
+        r.consolidate.approvedBy + ' · ' + r.consolidate.approvedAt + '</div></div>';
+  document.getElementById('funnel-note').innerHTML = r.pending.length === 0 ? '' :
+    '<div class="funnel-note"><span class="num">⏳</span><span><strong>' + r.pending.length +
+    ' staged statement' + (r.pending.length === 1 ? '' : 's') + '</strong> awaiting the next run (' +
+    r.pending.join(' · ') + '). This snapshot stays frozen until you approve a re-consolidation.</span></div>';
+}
+function stagePending(name) {
+  if (!RECON.pending.includes(name)) RECON.pending.push(name);
+  renderFunnel();
+}
+function openXpanel(id) {
+  const el = document.getElementById(id);
+  el.open = true;
+  el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+}
+
 /* ---------- Audit chain ---------- */
 let chainN = 48;
 function appendAudit(actor, event, object) {
@@ -610,6 +643,7 @@ function approveNordkap(btn) {
     'Approved · queued for the next reconciliation run. The consolidated view stays on the approved 2 Jul snapshot until you approve the new run.',
     '<span class="stagechip staged">Staged · approved</span>');
   appendAudit('o.marchand', 'STAGING_APPROVED', 'Nordkap_Portfolio_2026-06-30.pdf → next recon run');
+  stagePending('Nordkap 30 Jun');
 }
 
 /* Guardrail (holder mismatch) */
@@ -636,6 +670,7 @@ function resolveConflict(decision) {
       'Staged as correction · supersedes the 1 Jul ingest (which stays in the archive, marked <span class="stagechip superseded">Superseded</span>). Takes effect at the next approved reconciliation run.',
       '<span class="stagechip staged">Staged</span>');
     appendAudit('o.marchand', 'STATEMENT_SUPERSEDED', 'BCP 9f3a…c21e superseded by v2 · reason: bank correction');
+    stagePending('BCP v2 correction');
   } else {
     setQueue('qf-bcp', '',
       'Quarantined — the existing statement remains authoritative. v2 stays in the archive for reference.',
@@ -744,9 +779,9 @@ const TOUR = [
   },
   {
     nav: () => openClient('keller', 'recon'),
-    target: '#tab-recon .recon-steps',
+    target: '#recon-funnel',
     title: 'Reconciliation, shown working',
-    body: 'Extract, match, normalise, consolidate — with the counts open for inspection. Name matches below full confidence wait in Exceptions for your confirmation; Alpinae never merges on a guess, and confirmed aliases are remembered with their provenance. Click ⌕ trace on any figure for the statement, page, line, and FX rate behind it.'
+    body: 'A live funnel: 34 extracted rows become 8 matched instruments, normalised to CHF, consolidated into one approved total. Click a stage to open what sits behind it. Name matches below full confidence wait in Exceptions — Alpinae never merges on a guess. And ⌕ trace on any figure shows the statement, page, line, and FX rate behind it.'
   },
   {
     nav: () => openClient('keller', 'report'),
@@ -793,7 +828,7 @@ function tourEnd() {
   document.querySelectorAll('.tour-target').forEach(el => el.classList.remove('tour-target'));
 }
 function tourStart() { tourGo(0); }
-document.addEventListener('DOMContentLoaded', () => tourGo(0));
+document.addEventListener('DOMContentLoaded', () => { renderFunnel(); tourGo(0); });
 </script>
 
 </body>

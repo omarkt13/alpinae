@@ -115,6 +115,8 @@ a:hover { color: var(--pine-deep); }
 .mk-nav .links { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 26px; font-size: 14.5px; }
 .mk-nav .links a { color: var(--ink); }
 .mk-nav .links a:hover { color: var(--pine); }
+.mk-nav .links a.btn-primary { color: #fff; }
+.mk-nav .links a.btn-primary:hover { color: #fff; background: var(--pine-deep); }
 
 .mk-section { max-width: 1120px; margin: 0 auto; padding: 72px 24px; }
 .mk-section.tight { padding-top: 48px; padding-bottom: 48px; }
@@ -542,17 +544,51 @@ tr.client-row:hover td { background: rgb(30 64 51 / 0.035); }
 .compare-table td.num { font-family: var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
 .compare-table td.delta { color: var(--flag); font-weight: 600; }
 
-/* ---------- Reconciliation stepper ---------- */
+/* ---------- Reconciliation funnel (JS-rendered, live) ---------- */
 
-.recon-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
-@media (max-width: 900px) { .recon-steps { grid-template-columns: repeat(2, 1fr); } }
-.rstep {
-  background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 10px;
-  padding: 16px 18px; box-shadow: var(--shadow);
+.funnel {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: var(--paper-raised); border: 1px solid var(--hairline);
+  border-radius: 10px; box-shadow: var(--shadow); overflow: hidden;
 }
-.rstep .rno { font-family: var(--mono); font-size: 11px; color: var(--pine); }
-.rstep .rname { font-size: 14px; font-weight: 600; margin-top: 4px; }
-.rstep .rmeta { font-size: 12.5px; color: var(--ink-soft); margin-top: 6px; line-height: 1.55; }
+.fstage { position: relative; padding: 18px 20px 16px 26px; border-left: 1px solid var(--hairline); }
+.fstage:first-child { border-left: none; padding-left: 20px; }
+.fstage:not(:first-child)::before {
+  content: "→"; position: absolute; left: -7px; top: 22px;
+  font-family: var(--mono); font-size: 12px; color: var(--ink-soft);
+  background: var(--paper-raised); line-height: 1;
+}
+.fstage .fno {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.07em;
+  color: var(--pine); text-transform: uppercase;
+}
+.fstage .fval {
+  font-family: var(--mono); font-variant-numeric: tabular-nums;
+  font-size: 22px; font-weight: 500; margin-top: 8px; line-height: 1.2;
+}
+.fstage .fval .funit { font-family: var(--sans); font-size: 13px; font-weight: 600; }
+.fstage .fmeta { font-size: 12px; color: var(--ink-soft); margin-top: 6px; line-height: 1.5; }
+.fstage.clickable { cursor: pointer; }
+.fstage.clickable:hover { background: rgb(30 64 51 / 0.03); }
+.fstage .fopen {
+  font-family: var(--mono); font-size: 10.5px; color: var(--pine);
+  border-bottom: 1px dotted var(--pine); display: inline-block; margin-top: 8px;
+}
+.fstage.clickable:hover .fopen { border-bottom-style: solid; }
+.funnel-note {
+  display: flex; gap: 10px; align-items: baseline;
+  margin-top: 12px; padding: 12px 16px; border-radius: 8px;
+  background: var(--pending-bg); color: var(--pending);
+  font-size: 13px; border: 1px solid rgb(122 92 30 / 0.25);
+}
+.funnel-note .num { font-size: 12px; }
+.funnel-wrap { margin-bottom: 20px; }
+@media (max-width: 900px) {
+  .funnel { grid-template-columns: repeat(2, 1fr); }
+  .fstage:nth-child(3) { border-top: 1px solid var(--hairline); }
+  .fstage:nth-child(4) { border-top: 1px solid var(--hairline); }
+  .fstage:nth-child(3)::before { content: ""; }
+}
 
 /* ---------- Expandable details panels ---------- */
 
