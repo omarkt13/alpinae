@@ -39,8 +39,8 @@
     <a class="btn btn-ghost" href="demo/client.html">See the client view</a>
   </div>
   <p class="provenance">
-    Swiss-hosted, end to end. Read-only by construction. Every figure traceable
-    to the source statement it came from.
+    Swiss-hosted from end to end. Read-only, always. Every figure traceable
+    to its source statement.
   </p>
 </header>
 
@@ -81,7 +81,7 @@
 
   <!-- Flow diagram: many statements -> one view -->
   <div style="margin-top:56px;overflow-x:auto;">
-    <svg viewBox="0 0 760 300" style="width:100%;min-width:560px;display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three differently-formatted statements consolidated by Alpinae into one view">
+    <svg viewBox="0 0 760 300" style="width:100%;max-width:720px;min-width:560px;display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three differently-formatted statements consolidated by Alpinae into one view">
       <defs>
         <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
           <path d="M1,1 L7,4 L1,7" fill="none" stroke="var(--ink-soft)" stroke-width="1.2"/>
@@ -224,15 +224,15 @@
     </div>
     <div class="mk-card">
       <h3>What can it break?</h3>
-      <p>Nothing. Alpinae is read-only by construction: there are no write-backs to any
-      bank, custodian, or system of record anywhere in the codebase. Stop using it
+      <p>Nothing. Alpinae cannot place orders, move money, or write to any bank,
+      custodian, or system of record — the capability does not exist. Stop using it
       tomorrow and nothing in your firm changes.</p>
     </div>
   </div>
 
   <!-- Swiss data-perimeter diagram -->
   <div style="margin-top:48px;overflow-x:auto;">
-    <svg viewBox="0 0 760 260" style="width:100%;min-width:560px;display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="All infrastructure inside one Swiss region; advisors connect over TLS; nothing leaves toward foreign clouds or external AI APIs">
+    <svg viewBox="0 0 760 260" style="width:100%;max-width:720px;min-width:560px;display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="All infrastructure inside one Swiss region; advisors connect over TLS; nothing leaves toward foreign clouds or external AI APIs">
       <defs>
         <marker id="arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
           <path d="M1,1 L7,4 L1,7" fill="none" stroke="var(--ink-soft)" stroke-width="1.2"/>
@@ -289,10 +289,9 @@
 
   <div class="callout flag" style="max-width:760px;margin-top:36px;">
     <span class="glyph">⚑</span>
-    <span><strong>The guardrail:</strong> if a statement's account holder doesn't match
-    the client space it was dropped into, Alpinae blocks reconciliation and asks a
-    human — before one client's positions can ever appear in another client's
-    report.</span>
+    <span>If a statement doesn't match the client space it was dropped into,
+    Alpinae stops and asks you first. One client's positions never appear in
+    another client's report.</span>
   </div>
 </section>
 
@@ -316,9 +315,9 @@
       Alpinae removes the reconciliation labour between the two.</span>
     </div>
     <div class="row">
-      <strong>Not autonomous</strong>
-      <span>Alpinae computes; a human approves. Nothing reaches a client or a regulator
-      without your sign-off, and every warning requires an explicit decision.</span>
+      <strong>Not a decision-maker</strong>
+      <span>Alpinae computes; you approve. Nothing reaches a client or a regulator
+      without your sign-off, and every warning waits for your decision.</span>
     </div>
     <div class="row">
       <strong>Not a client portal — until you say so</strong>
