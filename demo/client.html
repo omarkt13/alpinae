@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valmont &amp; Cie — Consolidated position (demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<div class="demo-banner">
+  Demo — the read-only client view, switched on per client only when the firm decides.
+  <a href="../index.html">About Alpinae</a> · <a href="advisor.html">Advisor portal</a>
+</div>
+
+<div class="cp-wrap">
+  <div class="cp-head">
+    <div>
+      <p class="eyebrow">Prepared by</p>
+      <div class="wordmark" style="font-size:26px;">Valmont &amp; Cie</div>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-top:4px;">
+        Consolidated position · A. Keller
+      </p>
+    </div>
+    <div style="text-align:right;">
+      <span class="badge">Read-only</span><br>
+      <span class="num" style="font-size:12.5px;color:var(--ink-soft);display:inline-block;margin-top:8px;">
+        as of 30 Jun 2026 · base CHF
+      </span>
+    </div>
+  </div>
+
+  <p class="eyebrow">Total consolidated assets</p>
+  <div class="cp-total">CHF 12,401,268</div>
+  <p style="font-size:13.5px;color:var(--ink-soft);margin-top:6px;">
+    Across 4 sources · reconciled and approved by your manager on 2 Jul 2026
+  </p>
+
+  <div class="panel" style="margin-top:32px;">
+    <h3>Allocation</h3>
+    <div class="alloc">
+      <div class="arow"><span class="alabel">Multi-asset funds</span><span class="bar"><i style="width:47.8%"></i></span><span class="aval">47.8%</span></div>
+      <div class="arow"><span class="alabel">Equities</span><span class="bar"><i style="width:25.8%"></i></span><span class="aval">25.8%</span></div>
+      <div class="arow"><span class="alabel">Fixed income</span><span class="bar"><i style="width:11.9%"></i></span><span class="aval">11.9%</span></div>
+      <div class="arow"><span class="alabel">Cash &amp; equivalents</span><span class="bar"><i style="width:14.5%"></i></span><span class="aval">14.5%</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>By source</h3>
+    <div style="overflow-x:auto;">
+      <table class="holdings">
+        <thead>
+          <tr><th>Source</th><th>Valuation date</th><th class="num">Value (CHF)</th><th class="num">Share</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Valmont Global Allocation Fund</td><td class="num">30 Jun 2026</td><td class="num">4,819,815</td><td class="num">38.9%</td></tr>
+          <tr><td>Banque Cantonale Privée, Geneva</td><td class="num">30 Jun 2026</td><td class="num">3,940,120</td><td class="num">31.8%</td></tr>
+          <tr><td>Edmond Frères &amp; Cie, Luxembourg</td><td class="num">30 Jun 2026</td><td class="num">2,150,445</td><td class="num">17.3%</td></tr>
+          <tr><td>Nordkap Asset Management, Stockholm *</td><td class="num">27 Jun 2026</td><td class="num">1,490,888</td><td class="num">12.0%</td></tr>
+          <tr class="total-row"><td>Total</td><td></td><td class="num">12,401,268</td><td class="num">100.0%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>Principal holdings</h3>
+    <div style="overflow-x:auto;">
+      <table class="holdings">
+        <thead>
+          <tr><th>Instrument</th><th>Held at</th><th class="num">Value (CHF)</th><th class="num">Weight</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Valmont Global Allocation Fund</td><td>Proprietary</td><td class="num">4,819,815</td><td class="num">38.9%</td></tr>
+          <tr><td>Cash &amp; equivalents</td><td>3 custodians</td><td class="num">1,808,617</td><td class="num">14.5%</td></tr>
+          <tr><td>US Treasury 4.25% 2031</td><td>2 custodians</td><td class="num">1,470,480</td><td class="num">11.9%</td></tr>
+          <tr><td>Nestlé SA</td><td>2 custodians</td><td class="num">1,301,742</td><td class="num">10.5%</td></tr>
+          <tr><td>European IG Bond Fund (EF)</td><td>Edmond Frères &amp; Cie</td><td class="num">1,102,530</td><td class="num">8.9%</td></tr>
+          <tr><td>Roche Holding AG GS</td><td>Banque Cantonale Privée</td><td class="num">839,260</td><td class="num">6.8%</td></tr>
+          <tr><td>ASML Holding NV</td><td>Banque Cantonale Privée</td><td class="num">546,588</td><td class="num">4.4%</td></tr>
+          <tr><td>Investor AB ser. B *</td><td>Nordkap AM</td><td class="num">512,236</td><td class="num">4.1%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <p style="margin-top:24px;font-size:12px;color:var(--ink-soft);line-height:1.7;">
+    * Nordkap Asset Management positions valued 27 June 2026; all other sources
+    30 June 2026. This view is read-only and reflects figures reconciled and approved
+    by Valmont &amp; Cie. For questions, contact your manager. All values converted to
+    CHF at SNB reference rates on each source's valuation date.
+    Alpinae ref. RPT-2026-Q2-KEL-004.
+  </p>
+</div>
+
+</body>
+</html>

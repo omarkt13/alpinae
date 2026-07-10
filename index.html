@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpinae — Consolidated reconciliation &amp; reporting for Swiss wealth managers</title>
+<meta name="description" content="Alpinae consolidates your proprietary fund and third-party custodian statements into one accurate, fully traceable exposure view. Swiss-hosted. Read-only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<nav class="mk-nav">
+  <a class="wordmark" href="/">Alpinae<span class="dot">.</span></a>
+  <div class="links">
+    <a href="#product">Product</a>
+    <a href="#compliance">Compliance</a>
+    <a href="#what-it-is-not">What it is not</a>
+    <a href="demo/advisor.html">Demo</a>
+    <a class="btn btn-primary btn-sm" href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20pilot">Request a pilot</a>
+  </div>
+</nav>
+
+<hr class="mk-rule">
+
+<header class="mk-section hero">
+  <p class="eyebrow">For FINMA- and CSSF-regulated wealth managers</p>
+  <h1 style="margin-top:16px;">Every client. Every custodian. One reconciled truth.</h1>
+  <p class="sub">
+    Your proprietary fund arrives as an Excel printout. Each third-party bank sends its own
+    statement in its own format. Someone reconciles them by hand.
+    Alpinae does that consolidation for you — accurately, traceably, and without
+    replacing a single tool you use today.
+  </p>
+  <div class="ctas">
+    <a class="btn btn-primary" href="demo/advisor.html">See the advisor demo</a>
+    <a class="btn btn-ghost" href="demo/client.html">See the client view</a>
+  </div>
+  <p class="provenance">
+    Swiss-hosted, end to end. Read-only by construction. Every figure traceable
+    to the source statement it came from.
+  </p>
+</header>
+
+<hr class="mk-rule">
+
+<section class="mk-section" id="product">
+  <p class="eyebrow">The problem</p>
+  <h2 class="mk-h2" style="margin-top:14px;">"What is this client's total exposure right now?" should not be a project.</h2>
+  <p class="mk-lede">
+    When a client holds your fund plus mandates at three outside banks, answering that
+    question means collecting four differently-formatted statements and rebuilding the
+    picture in a spreadsheet. It is slow, it is error-prone, and in a regulated
+    environment a manual error reaching a client — or a regulator — is a serious problem.
+  </p>
+
+  <div class="mk-grid cols-3">
+    <div class="mk-card">
+      <span class="step-no">01</span>
+      <h3>Drop the statements</h3>
+      <p>Your fund's Excel printout and each custodian's statement, dragged into the
+      client's space. Alpinae reads the account holder on every file and flags any
+      mismatch before it touches a number.</p>
+    </div>
+    <div class="mk-card">
+      <span class="step-no">02</span>
+      <h3>Alpinae reconciles</h3>
+      <p>Instrument names are matched across custodians, currencies normalised,
+      valuation dates checked. The result: one consolidated exposure view, with the
+      arithmetic shown.</p>
+    </div>
+    <div class="mk-card">
+      <span class="step-no">03</span>
+      <h3>Your report, your format</h3>
+      <p>The consolidated view lands in the reporting format you already send —
+      no manual assembly, nothing to re-learn. You review, you approve, you send.</p>
+    </div>
+  </div>
+
+  <!-- Product figure: a real consolidated table -->
+  <div class="consol-figure">
+    <div class="figure-head">
+      <div>
+        <strong style="font-size:14.5px;">Consolidated exposure — A. Keller</strong>
+        <span class="badge" style="margin-left:10px;">4 sources</span>
+      </div>
+      <span class="num" style="font-size:12.5px;color:var(--ink-soft);">as of 30 Jun 2026 · base CHF</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="holdings">
+        <thead>
+          <tr>
+            <th>Instrument</th><th>Held at</th><th class="num">Quantity</th>
+            <th class="num">Value (CHF)</th><th class="num">Weight</th><th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="group-row">
+            <td>Nestlé SA · CH0038863350</td><td>2 custodians</td>
+            <td class="num">11,700</td><td class="num">1,301,742</td><td class="num">10.5%</td>
+            <td><span class="trace-btn">⌕ trace</span></td>
+          </tr>
+          <tr class="src-row">
+            <td>"NESTLE SA REG SHS"</td><td>Banque Cantonale Privée</td>
+            <td class="num">8,200</td><td class="num">912,314</td><td class="num"></td>
+            <td class="num" style="font-size:12px;">stmt p.2 · l.14</td>
+          </tr>
+          <tr class="src-row">
+            <td>"Nestle N"</td><td>Edmond Frères &amp; Cie</td>
+            <td class="num">3,500</td><td class="num">389,428</td><td class="num"></td>
+            <td class="num" style="font-size:12px;">stmt p.1 · l.6</td>
+          </tr>
+          <tr class="group-row">
+            <td>US Treasury 4.25% 2031 · US91282CJK15</td><td>2 custodians</td>
+            <td class="num">1,650,000</td><td class="num">1,470,480</td><td class="num">11.9%</td>
+            <td><span class="trace-btn">⌕ trace</span></td>
+          </tr>
+          <tr class="group-row">
+            <td>Valmont Global Allocation Fund</td><td>Proprietary</td>
+            <td class="num">38,500</td><td class="num">4,819,815</td><td class="num">38.9%</td>
+            <td><span class="trace-btn">⌕ trace</span></td>
+          </tr>
+          <tr class="total-row">
+            <td>Total consolidated</td><td></td><td></td>
+            <td class="num">12,401,268</td><td class="num">100.0%</td><td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p style="margin-top:14px;font-size:13px;color:var(--ink-soft);">
+    Illustrative data. Every consolidated figure carries a trace back to the statement,
+    page, and line it came from — including the FX rate applied.
+  </p>
+</section>
+
+<hr class="mk-rule">
+
+<section class="mk-section" id="compliance">
+  <p class="eyebrow">Compliance is the product</p>
+  <h2 class="mk-h2" style="margin-top:14px;">Built for the questions your compliance officer will actually ask.</h2>
+
+  <div class="mk-grid cols-2">
+    <div class="mk-card">
+      <h3>Where is the data?</h3>
+      <p>Switzerland. Compute, database, statement archive, and backups in one Swiss
+      region with a Swiss-owned provider. No US-controlled processor in the chain,
+      no data leaves the jurisdiction — including for any AI processing.</p>
+    </div>
+    <div class="mk-card">
+      <h3>Who can see it?</h3>
+      <p>Role-based access with mandatory two-factor authentication. Advisors see only
+      their assigned clients; compliance sees everything plus the audit trail. Every
+      read is logged — including administrators'.</p>
+    </div>
+    <div class="mk-card">
+      <h3>Can we audit it?</h3>
+      <p>An append-only, tamper-evident log records every statement ingested, every
+      reconciliation, every report generated, and every access — exportable for your
+      own compliance file at any time.</p>
+    </div>
+    <div class="mk-card">
+      <h3>What can it break?</h3>
+      <p>Nothing. Alpinae is read-only by construction: there are no write-backs to any
+      bank, custodian, or system of record anywhere in the codebase. Stop using it
+      tomorrow and nothing in your firm changes.</p>
+    </div>
+  </div>
+
+  <div class="callout flag" style="max-width:760px;margin-top:36px;">
+    <span class="glyph">⚑</span>
+    <span><strong>The guardrail that matters:</strong> if a statement's account holder
+    doesn't match the client space it was dropped into, Alpinae blocks reconciliation
+    and asks a human — before Client A's positions can ever contaminate Client B's
+    report.</span>
+  </div>
+</section>
+
+<hr class="mk-rule">
+
+<section class="mk-section" id="what-it-is-not">
+  <p class="eyebrow">Deliberately narrow</p>
+  <h2 class="mk-h2" style="margin-top:14px;">What Alpinae is not.</h2>
+  <p class="mk-lede">Most tools fail in this market because they demand too much. Alpinae is additive: it sits on top of what you already run.</p>
+
+  <div class="notlist">
+    <div class="row">
+      <strong>Not a CRM</strong>
+      <span>No system-of-record migration, no data entry, no dependency on Wise,
+      Salesforce, or anything else. A lightweight client directory routes statements —
+      that's all.</span>
+    </div>
+    <div class="row">
+      <strong>Not a replacement for Excel</strong>
+      <span>Your fund printout stays an Excel printout. Your report stays in your format.
+      Alpinae removes the reconciliation labour between the two.</span>
+    </div>
+    <div class="row">
+      <strong>Not autonomous</strong>
+      <span>Alpinae computes; a human approves. Nothing reaches a client or a regulator
+      without your sign-off, and every warning requires an explicit decision.</span>
+    </div>
+    <div class="row">
+      <strong>Not a client portal — until you say so</strong>
+      <span>Internal by default. A read-only client view exists and is switched on per
+      client, only when you decide it should be.</span>
+    </div>
+  </div>
+</section>
+
+<section class="mk-section tight">
+  <div class="mk-cta-band">
+    <div>
+      <h2>See it on one real account.</h2>
+      <p>The pilot is simple: one client, their actual statement set, reconciled and
+      traceable. If the numbers aren't right, you'll know in a week.</p>
+    </div>
+    <a class="btn" href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20pilot">Request a pilot</a>
+  </div>
+</section>
+
+<hr class="mk-rule">
+
+<footer class="mk-footer">
+  <div>
+    <span class="wordmark" style="font-size:17px;">Alpinae<span class="dot">.</span></span><br>
+    Consolidated reconciliation &amp; reporting.<br>Geneva · Luxembourg
+  </div>
+  <div style="text-align:right;">
+    <a href="demo/advisor.html">Advisor demo</a> · <a href="demo/client.html">Client view</a><br>
+    All demo data is fictional.
+  </div>
+</footer>
+
+</body>
+</html>
