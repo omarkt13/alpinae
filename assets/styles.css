@@ -484,3 +484,87 @@ tr.client-row:hover td { background: rgb(30 64 51 / 0.035); }
   .app-main { padding: 24px 16px 64px; }
   .report-sheet { padding: 28px 20px; }
 }
+
+/* ---------- Statement lifecycle strip ---------- */
+
+.lifecycle { display: flex; align-items: stretch; gap: 0; overflow-x: auto; padding: 4px 0; }
+.lifecycle .lstep { flex: 1; min-width: 128px; position: relative; padding: 0 18px 0 0; }
+.lifecycle .lstep + .lstep { padding-left: 18px; border-left: 1px solid var(--hairline); }
+.lifecycle .lstep .lno {
+  font-family: var(--mono); font-size: 11px; color: var(--pine);
+  display: block; margin-bottom: 6px;
+}
+.lifecycle .lstep .lname { font-size: 13.5px; font-weight: 600; display: block; }
+.lifecycle .lstep .ldesc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; display: block; margin-top: 4px; }
+
+/* ---------- Stage chips ---------- */
+
+.stagechip {
+  display: inline-block; font-family: var(--mono); font-size: 10.5px; font-weight: 500;
+  letter-spacing: 0.05em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px;
+  white-space: nowrap;
+}
+.stagechip.consolidated { color: var(--ok); background: var(--ok-bg); }
+.stagechip.staged { color: #7A5C1E; background: #F7F0DF; }
+.stagechip.quarantined { color: var(--flag); background: var(--flag-bg); }
+.stagechip.reassigned { color: var(--ink-soft); background: rgb(92 102 96 / 0.1); }
+.stagechip.superseded { color: var(--ink-soft); background: rgb(92 102 96 / 0.1); text-decoration: line-through; }
+
+/* ---------- Processing queue ---------- */
+
+.queue { display: grid; gap: 10px; margin-top: 18px; }
+.queue-item {
+  display: flex; justify-content: space-between; align-items: center; gap: 14px;
+  border: 1px solid var(--hairline); border-radius: 8px; background: var(--paper);
+  padding: 12px 16px; flex-wrap: wrap;
+}
+.queue-item .qname { font-family: var(--mono); font-size: 13px; font-weight: 500; }
+.queue-item .qstatus { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
+.queue-item .qactions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.queue-item.q-flag { border-color: rgb(166 58 46 / 0.4); }
+.queue-item.q-ok { border-color: rgb(46 107 79 / 0.35); }
+.spin {
+  display: inline-block; width: 12px; height: 12px; border-radius: 50%;
+  border: 2px solid var(--hairline); border-top-color: var(--pine);
+  animation: spin 0.8s linear infinite; vertical-align: -2px; margin-right: 6px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- Conflict comparison ---------- */
+
+.compare-table { width: 100%; border-collapse: collapse; margin: 14px 0; }
+.compare-table th, .compare-table td {
+  font-size: 12.5px; padding: 8px 10px; border-bottom: 1px solid var(--hairline); text-align: left;
+}
+.compare-table th { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-soft); }
+.compare-table td.num { font-family: var(--mono); text-align: right; font-variant-numeric: tabular-nums; }
+.compare-table td.delta { color: var(--flag); font-weight: 600; }
+
+/* ---------- Reconciliation stepper ---------- */
+
+.recon-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+@media (max-width: 900px) { .recon-steps { grid-template-columns: repeat(2, 1fr); } }
+.rstep {
+  background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 10px;
+  padding: 16px 18px; box-shadow: var(--shadow);
+}
+.rstep .rno { font-family: var(--mono); font-size: 11px; color: var(--pine); }
+.rstep .rname { font-size: 14px; font-weight: 600; margin-top: 4px; }
+.rstep .rmeta { font-size: 12.5px; color: var(--ink-soft); margin-top: 6px; line-height: 1.55; }
+
+/* ---------- Expandable details panels ---------- */
+
+details.xpanel {
+  background: var(--paper-raised); border: 1px solid var(--hairline); border-radius: 10px;
+  box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden;
+}
+details.xpanel > summary {
+  cursor: pointer; list-style: none; padding: 16px 20px;
+  font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 10px;
+}
+details.xpanel > summary::-webkit-details-marker { display: none; }
+details.xpanel > summary::before {
+  content: "+"; font-family: var(--mono); color: var(--pine); font-size: 15px;
+}
+details.xpanel[open] > summary::before { content: "−"; }
+details.xpanel .xbody { padding: 0 20px 18px; }

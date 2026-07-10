@@ -76,23 +76,44 @@ One service, one database, one bucket. No queues, no microservices, no
 multi-region until a paying firm forces it. The demo portal and marketing site
 stay static and separate.
 
-## 4. The critical decision: no LLM on raw client data
+## 4. AI on client documents — Swiss-hosted options (evaluated Jul 2026)
 
-Sending client statements to a US-hosted LLM API (Anthropic, OpenAI) breaks
-the entire Swiss story in one API call. The MVP must not do it. The ladder:
+The constraint stands: raw client statements must never reach a US-hosted LLM
+API (Anthropic, OpenAI direct) — one API call breaks the entire Swiss story.
+But statement parsing *does* benefit from a vision-language model (custody PDFs
+are messy, multi-layout, multi-language), and Swiss-hosted inference now exists.
+The options, in the order we should use them:
 
-1. **MVP: deterministic template parsers per custodian.** The spec confirms the
-   custodian list is finite and bounded per firm. Each format gets a parser
-   (openpyxl/pdfplumber + layout rules) with golden-file tests. Instrument
-   aliasing ("NESTLE SA REG" ≡ "Nestle N") is a curated mapping table keyed on
-   ISIN where present, human-confirmed where not. Slow to add custodians,
-   totally explainable to an auditor — which is the product.
-2. **If fuzzy matching earns its keep:** a small open-weights model self-hosted
-   on a GPU instance *inside the same Swiss VPC*, used only for candidate
-   instrument-name matching, never authoritative, always human-confirmed.
-3. **Post-MVP, with legal review:** LLM parsing of *pseudonymised* statement
-   rows (client identifiers stripped before the call). Treat as a feature
-   negotiation with the firm's compliance officer, not a default.
+**Step 0 — now, for the first real statement set (validation):** process it
+locally on our own machine. `pdfplumber`/`openpyxl` for extraction; if a VLM
+helps, run one locally via Ollama (e.g. Qwen3-VL — strong document OCR/parsing,
+32-language support). Client data never leaves the laptop; zero procurement;
+unblocks the hand-reconciliation validation immediately.
+
+**Step 1 — pilot: Swiss-owned inference API** (managed, pay-per-token, no ops):
+
+| Provider | What it is | Notes |
+|---|---|---|
+| **Infomaniak AI Tools** | OpenAI-compatible API, Swiss datacenters, Swiss-owned. Open models incl. Qwen 3, Gemma 3n, Llama, Mistral, Whisper | Prompts not logged or used for training; data never leaves CH. Cheap. **Verify current vision-model lineup + sign DPA before first real document.** |
+| **Safe Swiss Cloud "Private AI" API** | Unified API over curated open models — incl. multimodal Llama 4 Maverick, plus Apertus, DeepSeek, Mistral | All hosted in CH by Swiss-owned entities; positioned exactly at this compliance niche. |
+| **Swisscom Swiss AI Platform** | Sovereign Swiss platform; hosts Apertus (the EPFL/ETHZ open Swiss model) | Strongest enterprise/compliance brand a Geneva buyer can hear. Apertus is text-only → pair with a deterministic OCR layer. |
+
+**Step 2 — production end-state: self-hosted VLM in our own Swiss VPC.**
+Exoscale GPU instance + vLLM serving Qwen3-VL (open weights). The strongest
+possible answer to a compliance officer: *the model runs on our machines, in
+Switzerland; no third party — Swiss or otherwise — ever sees a document.*
+More ops, ~CHF 1–2k/mo GPU; adopt once a paying firm justifies it.
+
+**Fallback (capability, weaker story): Azure OpenAI, Switzerland North.**
+GPT-4o deployable with in-region processing; FINMA-aligned contracts; widely
+used by Swiss financial institutions. But a US-parent processor is precisely
+the objection we sell against — keep as a documented fallback, not the default.
+
+**Role of the model at every step: proposal, never authority.** The VLM locates
+tables, extracts candidate rows, and proposes instrument matches. Deterministic
+checks (row totals must cross-foot to statement totals, ISINs must validate)
+and human confirmation remain the gate before anything is staged. Golden-file
+tests per custodian format regardless of which engine extracts.
 
 ## 5. Traceability as a data model (the moat, built first)
 

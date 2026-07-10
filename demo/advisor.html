@@ -179,46 +179,155 @@
 
       <!-- ---- TAB: Statements ---- -->
       <div class="tab-panel" id="tab-statements">
+
         <div class="panel">
-          <h3>Ingested statements — Q2 2026</h3>
-          <div class="src-list">
-            <div class="src-item">
-              <div><div class="name">Valmont_Fund_Printout_2026-06-30.xlsx</div><div class="meta">sha256 4c1e…a9f2 · ingested 1 Jul 09:02 · O. Marchand</div></div>
-              <span class="badge badge-ok">Verified · A. Keller</span>
+          <h3>Where a statement goes</h3>
+          <div class="lifecycle">
+            <div class="lstep">
+              <span class="lno">01 · RECEIVED</span>
+              <span class="lname">Archived</span>
+              <span class="ldesc">Original file checksummed and stored immutably in the Swiss archive. It is never altered or deleted.</span>
             </div>
-            <div class="src-item">
-              <div><div class="name">BCP_Custody_2026-06-30.pdf</div><div class="meta">sha256 9f3a…c21e · ingested 1 Jul 09:04 · O. Marchand</div></div>
-              <span class="badge badge-ok">Verified · A. Keller</span>
+            <div class="lstep">
+              <span class="lno">02 · VERIFIED</span>
+              <span class="lname">Holder checked</span>
+              <span class="ldesc">Account holder on the statement compared to this client space. Mismatch blocks everything downstream.</span>
             </div>
-            <div class="src-item">
-              <div><div class="name">EdmondFreres_Mandate_2026-06-30.pdf</div><div class="meta">sha256 77b0…e4d8 · ingested 1 Jul 09:04 · O. Marchand</div></div>
-              <span class="badge badge-ok">Verified · A. Keller</span>
+            <div class="lstep">
+              <span class="lno">03 · PARSED</span>
+              <span class="lname">Rows extracted</span>
+              <span class="ldesc">Every position line extracted with its page and line reference. The raw file stays untouched.</span>
             </div>
-            <div class="src-item">
-              <div><div class="name">Nordkap_Portfolio_2026-06-27.pdf</div><div class="meta">sha256 b2c9…1f07 · ingested 1 Jul 09:06 · O. Marchand</div></div>
-              <span class="badge badge-flag">Verified · stale date</span>
+            <div class="lstep">
+              <span class="lno">04 · STAGED</span>
+              <span class="lname">Awaiting you</span>
+              <span class="ldesc">Extracted rows wait outside the consolidated view until you approve a reconciliation run.</span>
+            </div>
+            <div class="lstep">
+              <span class="lno">05 · CONSOLIDATED</span>
+              <span class="lname">In the view</span>
+              <span class="ldesc">Rows enter the approved consolidated snapshot, each figure traceable back to step 01.</span>
             </div>
           </div>
+          <p style="font-size:12.5px;color:var(--ink-soft);margin-top:16px;border-top:1px solid var(--hairline);padding-top:12px;">
+            Every file ends in exactly one state —
+            <span class="stagechip consolidated">Consolidated</span>
+            <span class="stagechip staged">Staged</span>
+            <span class="stagechip reassigned">Reassigned</span>
+            <span class="stagechip quarantined">Quarantined</span> —
+            nothing is silently dropped, merged, or overwritten.
+          </p>
+        </div>
 
+        <div class="panel">
+          <h3>Statements in this space — Q2 2026</h3>
+          <div class="src-list">
+            <div class="src-item">
+              <div><div class="name">Valmont_Fund_Printout_2026-06-30.xlsx</div><div class="meta">sha256 4c1e…a9f2 · archive ch-gva-2 · ingested 1 Jul 09:02 · O. Marchand · 9 rows</div></div>
+              <span class="stagechip consolidated">Consolidated</span>
+            </div>
+            <div class="src-item">
+              <div><div class="name">BCP_Custody_2026-06-30.pdf</div><div class="meta">sha256 9f3a…c21e · archive ch-gva-2 · ingested 1 Jul 09:04 · O. Marchand · 13 rows</div></div>
+              <span class="stagechip consolidated">Consolidated</span>
+            </div>
+            <div class="src-item">
+              <div><div class="name">EdmondFreres_Mandate_2026-06-30.pdf</div><div class="meta">sha256 77b0…e4d8 · archive ch-gva-2 · ingested 1 Jul 09:04 · O. Marchand · 5 rows</div></div>
+              <span class="stagechip consolidated">Consolidated</span>
+            </div>
+            <div class="src-item">
+              <div><div class="name">Nordkap_Portfolio_2026-06-27.pdf</div><div class="meta">sha256 b2c9…1f07 · archive ch-gva-2 · ingested 1 Jul 09:06 · O. Marchand · 7 rows · valuation 27 Jun ⚑</div></div>
+              <span class="stagechip consolidated">Consolidated</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Add statements</h3>
           <div class="dropzone" id="dropzone"
                ondragover="event.preventDefault(); this.classList.add('drag');"
                ondragleave="this.classList.remove('drag');"
-               ondrop="event.preventDefault(); this.classList.remove('drag'); simulateUpload();">
-            Drag a statement into A. Keller's space<br>
-            <span style="font-size:12.5px;">Alpinae reads the account holder before anything is reconciled</span><br>
-            <button class="btn btn-ghost btn-sm" onclick="simulateUpload()">Simulate an upload</button>
+               ondrop="event.preventDefault(); this.classList.remove('drag'); simulateDrop();">
+            Drag statements into A. Keller's space — multiple files at once is fine.<br>
+            <span style="font-size:12.5px;">Each file is archived, holder-verified, and parsed independently. Conflicts stop and ask; they are never resolved silently.</span><br>
+            <button class="btn btn-ghost btn-sm" onclick="simulateDrop()">Simulate a drop of 3 files</button>
           </div>
-          <div id="upload-result"></div>
+          <div class="queue" id="queue"></div>
+          <div id="queue-summary"></div>
         </div>
       </div>
 
       <!-- ---- TAB: Reconciliation ---- -->
       <div class="tab-panel" id="tab-recon">
-        <div class="callout flag">
-          <span class="glyph">⚑</span>
-          <span><strong>Valuation dates differ:</strong> Nordkap is valued 27 Jun; all other
-          sources 30 Jun. FX rates applied per source valuation date (SNB reference rates).</span>
+
+        <div class="recon-steps">
+          <div class="rstep">
+            <span class="rno">STEP 1</span>
+            <div class="rname">Extract</div>
+            <div class="rmeta">34 rows extracted from 4 statements, each with page &amp; line reference to the archived original.</div>
+          </div>
+          <div class="rstep">
+            <span class="rno">STEP 2</span>
+            <div class="rname">Match</div>
+            <div class="rmeta">8 consolidated instruments: 6 matched on ISIN, 2 name-matches confirmed by a human. 0 unmatched.</div>
+          </div>
+          <div class="rstep">
+            <span class="rno">STEP 3</span>
+            <div class="rname">Normalise</div>
+            <div class="rmeta">4 currencies → CHF at SNB rates on each source's valuation date. 1 date exception flagged.</div>
+          </div>
+          <div class="rstep">
+            <span class="rno">STEP 4</span>
+            <div class="rname">Consolidate</div>
+            <div class="rmeta">8 positions · CHF 12,401,268. Approved by O. Marchand, 2 Jul 10:30. Snapshot frozen until next approval.</div>
+          </div>
         </div>
+
+        <details class="xpanel">
+          <summary>Matching decisions — how source lines became instruments</summary>
+          <div class="xbody" style="overflow-x:auto;">
+            <table class="trace-table">
+              <thead>
+                <tr><th>Source line</th><th>Statement</th><th>Matched to</th><th>Method</th><th>Confirmed</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>"NESTLE SA REG SHS"</td><td>BCP</td><td>Nestlé SA · CH0038863350</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"Nestle N"</td><td>Edmond Frères</td><td>Nestlé SA · CH0038863350</td><td>name similarity 0.94 — no ISIN on line</td><td><strong>O. Marchand · 1 Jul</strong></td></tr>
+                <tr><td>"US TREASURY N/B 4.25 12/31/31"</td><td>BCP</td><td>UST 4.25% 2031 · US91282CJK15</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"UST 4¼ 2031"</td><td>Nordkap</td><td>UST 4.25% 2031 · US91282CJK15</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"European IG Bond Fund"</td><td>Edmond Frères</td><td>European IG Bond Fund · LU0348612345</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"ROCHE HLDG AG GENUSSSCHEIN"</td><td>BCP</td><td>Roche Holding AG GS · CH0012032048</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"INVESTOR AB SER. B"</td><td>Nordkap</td><td>Investor AB ser. B · SE0015811963</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"Fondsanteile Valmont Global"</td><td>Valmont printout</td><td>Valmont Global Allocation Fund</td><td>proprietary register</td><td>automatic</td></tr>
+                <tr><td>"Current account CHF/USD", "Liquidités EUR", "Likvida medel SEK"</td><td>BCP · Edmond · Nordkap</td><td>Cash &amp; equivalents</td><td>cash-account rule</td><td>automatic</td></tr>
+              </tbody>
+            </table>
+            <p style="font-size:12.5px;color:var(--ink-soft);margin-top:12px;">
+              A name-similarity match is a <em>proposal</em>, never a merge. It sits in the
+              exceptions queue and blocks approval until a human confirms it. Confirmed
+              aliases are remembered — "Nestle N" will match automatically next quarter,
+              with this confirmation as its provenance.
+            </p>
+          </div>
+        </details>
+
+        <details class="xpanel">
+          <summary>Exceptions — 1 open, 0 unmatched rows</summary>
+          <div class="xbody">
+            <div class="callout flag" style="margin-top:0;">
+              <span class="glyph">⚑</span>
+              <span><strong>Valuation-date mismatch (open):</strong> Nordkap valued 27 Jun; all
+              other sources 30 Jun. Consolidation proceeded with your approval and the
+              exception is stamped on every report generated from this snapshot. It clears
+              when a 30 Jun Nordkap statement is ingested.</span>
+            </div>
+            <p style="font-size:13px;color:var(--ink-soft);">
+              <strong>Unmatched rows: none.</strong> Any extracted row that cannot be matched
+              with high confidence lands here and blocks the reconciliation run — Alpinae
+              never guesses a merge. You resolve it once; the decision is remembered and audited.
+            </p>
+          </div>
+        </details>
+
         <div class="dir-table-wrap" style="overflow-x:auto;">
           <table class="holdings">
             <thead>
@@ -269,7 +378,7 @@
                 <td class="num" style="font-size:12px;">p.1 · l.06</td>
               </tr>
               <tr class="group-row">
-                <td>European IG Bond Fund (EF)</td><td>Edmond Frères &amp; Cie</td>
+                <td>European IG Bond Fund · LU0348612345</td><td>Edmond Frères &amp; Cie</td>
                 <td class="num">9,840</td><td class="num">1,102,530</td><td class="num">8.9%</td>
                 <td><button class="trace-btn" onclick="openTrace('efbond')">⌕ trace</button></td>
               </tr>
@@ -295,10 +404,6 @@
             </tbody>
           </table>
         </div>
-        <p style="margin-top:14px;font-size:13px;color:var(--ink-soft);">
-          Instrument aliases ("NESTLE SA REG SHS" ≡ "Nestle N") are matched on ISIN where
-          present and confirmed by a human where not. Nothing is merged silently.
-        </p>
       </div>
 
       <!-- ---- TAB: Report ---- -->
@@ -351,7 +456,7 @@
               <tr class="audit-row"><td>2026-07-02 10:31:44</td><td>o.marchand</td><td>REPORT_GENERATED</td><td>RPT-2026-Q2-KEL-004</td><td class="num">h#0047 ← h#0046</td></tr>
               <tr class="audit-row"><td>2026-07-02 10:30:12</td><td>o.marchand</td><td>RECON_APPROVED</td><td>keller · 4 sources · CHF 12,401,268</td><td class="num">h#0046 ← h#0045</td></tr>
               <tr class="audit-row"><td>2026-07-02 10:29:58</td><td>system</td><td>DATE_MISMATCH_FLAGGED</td><td>Nordkap_Portfolio_2026-06-27.pdf (27 Jun vs 30 Jun)</td><td class="num">h#0045 ← h#0044</td></tr>
-              <tr class="audit-row"><td>2026-07-02 10:29:57</td><td>system</td><td>RECON_COMPUTED</td><td>keller · 31 extracted rows → 8 positions</td><td class="num">h#0044 ← h#0043</td></tr>
+              <tr class="audit-row"><td>2026-07-02 10:29:57</td><td>system</td><td>RECON_COMPUTED</td><td>keller · 34 extracted rows → 8 positions</td><td class="num">h#0044 ← h#0043</td></tr>
               <tr class="audit-row"><td>2026-07-01 09:06:40</td><td>o.marchand</td><td>ALIAS_CONFIRMED</td><td>"Nestle N" ≡ CH0038863350</td><td class="num">h#0043 ← h#0042</td></tr>
               <tr class="audit-row"><td>2026-07-01 09:06:21</td><td>system</td><td>STATEMENT_PARSED</td><td>Nordkap_Portfolio_2026-06-27.pdf · 7 rows</td><td class="num">h#0042 ← h#0041</td></tr>
               <tr class="audit-row"><td>2026-07-01 09:06:02</td><td>o.marchand</td><td>STATEMENT_INGESTED</td><td>Nordkap_Portfolio_2026-06-27.pdf · sha256 b2c9…1f07</td><td class="num">h#0041 ← h#0040</td></tr>
@@ -374,19 +479,55 @@
 <!-- ============ MODAL: file-to-client guardrail ============ -->
 <div class="modal-scrim" id="guardrail-modal">
   <div class="modal">
-    <span class="badge badge-flag">Verification failed</span>
+    <span class="badge badge-flag">Holder mismatch</span>
     <h3 style="margin-top:12px;">This statement doesn't appear to belong to A. Keller.</h3>
-    <p>Alpinae read the account holder on the uploaded statement before reconciling:</p>
+    <p>Alpinae read the account holder before anything else happened:</p>
     <div class="stmt-quote">
       EdmondFreres_Mandate_2026-06-30_b.pdf<br>
       Account holder: <strong>H. &amp; M. FONTAINE</strong> · acct ••4471<br>
       Dropped into client space: <strong>A. KELLER</strong>
     </div>
-    <p>Reconciliation is blocked until you decide. Both this flag and your decision are
-    recorded in the audit log.</p>
+    <p>The file is archived but blocked from parsing and reconciliation until you decide.
+    Both this flag and your decision are recorded in the audit log.</p>
     <div class="modal-actions">
-      <button class="btn btn-ghost btn-sm" onclick="resolveGuardrail('cancel')">Cancel upload</button>
+      <button class="btn btn-ghost btn-sm" onclick="resolveGuardrail('cancel')">Quarantine file</button>
       <button class="btn btn-primary btn-sm" onclick="resolveGuardrail('reassign')">Reassign to H. &amp; M. Fontaine</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: duplicate/conflict ============ -->
+<div class="modal-scrim" id="conflict-modal">
+  <div class="modal" style="max-width:600px;">
+    <span class="badge badge-flag">Conflicting duplicate</span>
+    <h3 style="margin-top:12px;">A statement for this custodian and period already exists — and the figures differ.</h3>
+    <p>BCP_Custody_2026-06-30_v2.pdf covers the same account and valuation date as the
+    statement already consolidated. 12 of 13 rows are identical; 1 differs:</p>
+    <div style="overflow-x:auto;">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Row</th><th>Existing (ingested 1 Jul)</th><th>New — v2</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nestlé SA · quantity</td>
+            <td class="num">8,200</td>
+            <td class="num delta">8,450</td>
+          </tr>
+          <tr>
+            <td>Nestlé SA · value</td>
+            <td class="num">CHF 912,314</td>
+            <td class="num delta">CHF 940,128</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Banks occasionally reissue corrected statements. If you supersede, the original
+    stays in the archive with full history — it is never deleted. Either way, nothing
+    changes in the consolidated view until you approve a new reconciliation run.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="resolveConflict('quarantine')">Quarantine v2 — keep existing</button>
+      <button class="btn btn-primary btn-sm" onclick="resolveConflict('supersede')">Supersede — v2 is the correction</button>
     </div>
   </div>
 </div>
@@ -437,36 +578,119 @@ function reportNote() {
   document.getElementById('report-note').style.display = 'block';
 }
 
-/* ---------- Guardrail demo ---------- */
-function simulateUpload() {
-  document.getElementById('guardrail-modal').classList.add('open');
-}
-function resolveGuardrail(decision) {
-  document.getElementById('guardrail-modal').classList.remove('open');
-  const box = document.getElementById('upload-result');
-  const ts = '2026-07-10 ' + new Date().toTimeString().slice(0, 8);
-  if (decision === 'reassign') {
-    box.innerHTML = '<div class="callout ok"><span class="glyph">✓</span><span>' +
-      'Statement reassigned to <strong>H. &amp; M. Fontaine</strong>. Nothing was ' +
-      'reconciled into A. Keller’s space. Decision recorded in the audit log.</span></div>';
-    appendAudit(ts, 'o.marchand', 'MISMATCH_RESOLVED', 'reassigned EdmondFreres_Mandate_2026-06-30_b.pdf → fontaine');
-  } else {
-    box.innerHTML = '<div class="callout ok"><span class="glyph">✓</span><span>' +
-      'Upload cancelled. The file was quarantined and never reconciled. ' +
-      'Flag and decision recorded in the audit log.</span></div>';
-    appendAudit(ts, 'o.marchand', 'MISMATCH_CANCELLED', 'quarantined EdmondFreres_Mandate_2026-06-30_b.pdf');
-  }
-  appendAudit(ts, 'system', 'MISMATCH_FLAGGED', 'holder "H. & M. FONTAINE" ≠ space "A. KELLER"');
-}
+/* ---------- Audit chain ---------- */
 let chainN = 48;
-function appendAudit(ts, actor, event, object) {
+function appendAudit(actor, event, object) {
+  const ts = '2026-07-10 ' + new Date().toTimeString().slice(0, 8);
   const tbody = document.querySelector('#audit-table tbody');
   const tr = document.createElement('tr');
   tr.className = 'audit-row';
   tr.innerHTML = '<td>' + ts + '</td><td>' + actor + '</td><td>' + event +
-    '</td><td>' + object + '</td><td class="num">h#00' + (chainN) + ' ← h#00' + (chainN - 1) + '</td>';
+    '</td><td>' + object + '</td><td class="num">h#00' + chainN + ' ← h#00' + (chainN - 1) + '</td>';
   chainN++;
   tbody.prepend(tr);
+}
+
+/* ---------- Multi-file drop simulation ---------- */
+let dropRan = false;
+const QFILES = [
+  { id: 'qf-bcp', name: 'BCP_Custody_2026-06-30_v2.pdf' },
+  { id: 'qf-edm', name: 'EdmondFreres_Mandate_2026-06-30_b.pdf' },
+  { id: 'qf-nor', name: 'Nordkap_Portfolio_2026-06-30.pdf' }
+];
+
+function simulateDrop() {
+  if (dropRan) return;
+  dropRan = true;
+  const q = document.getElementById('queue');
+  q.innerHTML = QFILES.map(f =>
+    '<div class="queue-item" id="' + f.id + '">' +
+      '<div><div class="qname">' + f.name + '</div>' +
+      '<div class="qstatus"><span class="spin"></span>Archiving · checksumming · reading account holder…</div></div>' +
+      '<div class="qactions"></div>' +
+    '</div>'
+  ).join('');
+
+  setTimeout(() => {
+    setQueue('qf-bcp', 'q-flag',
+      'Holder verified ✓ · parsed 13 rows · <strong style="color:var(--flag);">conflicts with an existing statement for the same period</strong>',
+      '<button class="btn btn-primary btn-sm" onclick="openConflict()">Review conflict</button>');
+    appendAudit('system', 'DUPLICATE_CONFLICT_FLAGGED', 'BCP_Custody_2026-06-30_v2.pdf vs 9f3a…c21e · 1 row differs');
+  }, 900);
+
+  setTimeout(() => {
+    setQueue('qf-edm', 'q-flag',
+      '<strong style="color:var(--flag);">Holder mismatch</strong> — statement reads "H. &amp; M. FONTAINE", this space is A. Keller. Parsing blocked.',
+      '<button class="btn btn-primary btn-sm" onclick="openGuardrail()">Review mismatch</button>');
+    appendAudit('system', 'MISMATCH_FLAGGED', 'holder "H. & M. FONTAINE" ≠ space "A. KELLER"');
+  }, 1500);
+
+  setTimeout(() => {
+    setQueue('qf-nor', 'q-ok',
+      'Holder verified ✓ · parsed 7 rows · valuation 30 Jun — fresher than the current 27 Jun statement, clears the stale-date flag',
+      '<span class="stagechip staged">Staged</span> <button class="btn btn-ghost btn-sm" onclick="approveNordkap(this)">Approve for next run</button>');
+    appendAudit('system', 'STATEMENT_PARSED', 'Nordkap_Portfolio_2026-06-30.pdf · 7 rows · staged');
+  }, 2100);
+}
+
+function setQueue(id, cls, statusHtml, actionsHtml) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove('q-flag', 'q-ok');
+  if (cls) el.classList.add(cls);
+  el.querySelector('.qstatus').innerHTML = statusHtml;
+  el.querySelector('.qactions').innerHTML = actionsHtml || '';
+  maybeSummarise();
+}
+
+function approveNordkap(btn) {
+  setQueue('qf-nor', 'q-ok',
+    'Approved · queued for the next reconciliation run. The consolidated view stays on the approved 2 Jul snapshot until you approve the new run.',
+    '<span class="stagechip staged">Staged · approved</span>');
+  appendAudit('o.marchand', 'STAGING_APPROVED', 'Nordkap_Portfolio_2026-06-30.pdf → next recon run');
+}
+
+/* Guardrail (holder mismatch) */
+function openGuardrail() { document.getElementById('guardrail-modal').classList.add('open'); }
+function resolveGuardrail(decision) {
+  document.getElementById('guardrail-modal').classList.remove('open');
+  if (decision === 'reassign') {
+    setQueue('qf-edm', '', 'Reassigned to <strong>H. &amp; M. Fontaine</strong> — will be parsed in that client space. Nothing entered A. Keller’s data.',
+      '<span class="stagechip reassigned">Reassigned</span>');
+    appendAudit('o.marchand', 'MISMATCH_RESOLVED', 'EdmondFreres_Mandate_2026-06-30_b.pdf → fontaine');
+  } else {
+    setQueue('qf-edm', '', 'Quarantined — archived but excluded from all parsing and reconciliation.',
+      '<span class="stagechip quarantined">Quarantined</span>');
+    appendAudit('o.marchand', 'MISMATCH_QUARANTINED', 'EdmondFreres_Mandate_2026-06-30_b.pdf');
+  }
+}
+
+/* Duplicate conflict */
+function openConflict() { document.getElementById('conflict-modal').classList.add('open'); }
+function resolveConflict(decision) {
+  document.getElementById('conflict-modal').classList.remove('open');
+  if (decision === 'supersede') {
+    setQueue('qf-bcp', 'q-ok',
+      'Staged as correction · supersedes the 1 Jul ingest (which stays in the archive, marked <span class="stagechip superseded">Superseded</span>). Takes effect at the next approved reconciliation run.',
+      '<span class="stagechip staged">Staged</span>');
+    appendAudit('o.marchand', 'STATEMENT_SUPERSEDED', 'BCP 9f3a…c21e superseded by v2 · reason: bank correction');
+  } else {
+    setQueue('qf-bcp', '',
+      'Quarantined — the existing statement remains authoritative. v2 stays in the archive for reference.',
+      '<span class="stagechip quarantined">Quarantined</span>');
+    appendAudit('o.marchand', 'DUPLICATE_QUARANTINED', 'BCP_Custody_2026-06-30_v2.pdf');
+  }
+}
+
+function maybeSummarise() {
+  const pending = document.querySelectorAll('#queue .spin, #queue .btn').length;
+  const done = document.querySelectorAll('#queue .stagechip').length;
+  if (pending === 0 && done >= 3) {
+    document.getElementById('queue-summary').innerHTML =
+      '<div class="callout ok"><span class="glyph">✓</span><span><strong>All 3 files resolved.</strong> ' +
+      'Each decision is in the audit log. The consolidated view never moved during any of this — ' +
+      'it only changes when you approve a reconciliation run.</span></div>';
+  }
 }
 
 /* ---------- Trace demo ---------- */
@@ -490,7 +714,7 @@ const TRACES = {
     ]
   },
   efbond: {
-    title: 'European IG Bond Fund (EF) — CHF 1,102,530',
+    title: 'European IG Bond Fund (LU0348612345) — CHF 1,102,530',
     rows: [['EdmondFreres_Mandate_2026-06-30.pdf', 'p.1 l.09', '"European IG Bond Fund 9,840 units"', 'EUR 1,147,036', '0.9612 (30 Jun)', '1,102,530']]
   },
   roche: {
@@ -532,8 +756,7 @@ function closeTrace() {
 }
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    closeTrace();
-    document.getElementById('guardrail-modal').classList.remove('open');
+    document.querySelectorAll('.modal-scrim').forEach(m => m.classList.remove('open'));
   }
 });
 </script>
