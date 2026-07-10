@@ -13,6 +13,7 @@
 
 <div class="demo-banner">
   Demo environment — all firms, clients, and figures are fictional.
+  <a href="#" onclick="tourStart(); return false;">Restart tour</a> ·
   <a href="../index.html">About Alpinae</a> · <a href="client.html">Client view</a>
 </div>
 
@@ -35,7 +36,7 @@
     <!-- ============ VIEW: CLIENT DIRECTORY ============ -->
     <section id="view-directory">
       <div class="app-header"><h1>Clients</h1></div>
-      <p class="app-sub">Valmont &amp; Cie · 6 client spaces · statements route by drag &amp; drop</p>
+      <p class="app-sub">Valmont &amp; Cie · 6 client spaces</p>
 
       <div class="dir-table-wrap" style="overflow-x:auto;">
         <table class="holdings">
@@ -46,32 +47,32 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="client-row" onclick="openClient('keller','overview')">
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="openClient('keller','overview')">
               <td><strong>A. Keller</strong></td><td class="num">4</td>
               <td class="num">12,401,268</td><td class="num">2 Jul 2026</td>
               <td><span class="badge badge-ok">Reconciled</span></td>
             </tr>
-            <tr class="client-row" onclick="demoNote()">
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="demoNote()">
               <td><strong>Familie Brandt-Meyer</strong></td><td class="num">5</td>
               <td class="num">28,114,502</td><td class="num">30 Jun 2026</td>
               <td><span class="badge badge-flag">Date mismatch</span></td>
             </tr>
-            <tr class="client-row" onclick="demoNote()">
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="demoNote()">
               <td><strong>H. &amp; M. Fontaine</strong></td><td class="num">3</td>
               <td class="num">8,733,910</td><td class="num">27 Jun 2026</td>
               <td><span class="badge">1 statement pending</span></td>
             </tr>
-            <tr class="client-row" onclick="demoNote()">
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="demoNote()">
               <td><strong>Ekström Family Trust</strong></td><td class="num">4</td>
               <td class="num">19,306,447</td><td class="num">1 Jul 2026</td>
               <td><span class="badge badge-ok">Reconciled</span></td>
             </tr>
-            <tr class="client-row" onclick="demoNote()">
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="demoNote()">
               <td><strong>C. von Arx</strong></td><td class="num">2</td>
               <td class="num">5,240,081</td><td class="num">2 Jul 2026</td>
               <td><span class="badge badge-ok">Reconciled</span></td>
             </tr>
-            <tr class="client-row" onclick="demoNote()">
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="demoNote()">
               <td><strong>Osei Family Holdings</strong></td><td class="num">4</td>
               <td class="num">15,872,336</td><td class="num">25 Jun 2026</td>
               <td><span class="badge">2 statements pending</span></td>
@@ -79,8 +80,8 @@
           </tbody>
         </table>
       </div>
-      <p id="demo-note" style="display:none;margin-top:14px;font-size:13.5px;color:var(--ink-soft);">
-        This demo is built out for <strong>A. Keller</strong> — open that client space to explore.
+      <p id="demo-note" style="display:none;margin-top:14px;">
+        <span class="demo-chip">This demo is built out for <strong>&nbsp;A. Keller&nbsp;</strong> — open that client space to explore.</span>
       </p>
     </section>
 
@@ -170,55 +171,14 @@
           </div>
           <div class="callout flag" style="margin-bottom:0;">
             <span class="glyph">⚑</span>
-            <span>Nordkap's statement is valued 3 days earlier than the other sources.
-            The consolidated view mixes valuation dates — this is flagged here and stamped
-            on any generated report.</span>
+            <span>Nordkap is valued 3 days earlier than the other sources. This is flagged
+            here and stamped on any report generated from this snapshot.</span>
           </div>
         </div>
       </div>
 
       <!-- ---- TAB: Statements ---- -->
       <div class="tab-panel" id="tab-statements">
-
-        <div class="panel">
-          <h3>Where a statement goes</h3>
-          <div class="lifecycle">
-            <div class="lstep">
-              <span class="lno">01 · RECEIVED</span>
-              <span class="lname">Archived</span>
-              <span class="ldesc">Original file checksummed and stored immutably in the Swiss archive. It is never altered or deleted.</span>
-            </div>
-            <div class="lstep">
-              <span class="lno">02 · VERIFIED</span>
-              <span class="lname">Holder checked</span>
-              <span class="ldesc">Account holder on the statement compared to this client space. Mismatch blocks everything downstream.</span>
-            </div>
-            <div class="lstep">
-              <span class="lno">03 · PARSED</span>
-              <span class="lname">Rows extracted</span>
-              <span class="ldesc">Every position line extracted with its page and line reference. The raw file stays untouched.</span>
-            </div>
-            <div class="lstep">
-              <span class="lno">04 · STAGED</span>
-              <span class="lname">Awaiting you</span>
-              <span class="ldesc">Extracted rows wait outside the consolidated view until you approve a reconciliation run.</span>
-            </div>
-            <div class="lstep">
-              <span class="lno">05 · CONSOLIDATED</span>
-              <span class="lname">In the view</span>
-              <span class="ldesc">Rows enter the approved consolidated snapshot, each figure traceable back to step 01.</span>
-            </div>
-          </div>
-          <p style="font-size:12.5px;color:var(--ink-soft);margin-top:16px;border-top:1px solid var(--hairline);padding-top:12px;">
-            Every file ends in exactly one state —
-            <span class="stagechip consolidated">Consolidated</span>
-            <span class="stagechip staged">Staged</span>
-            <span class="stagechip reassigned">Reassigned</span>
-            <span class="stagechip quarantined">Quarantined</span> —
-            nothing is silently dropped, merged, or overwritten.
-          </p>
-        </div>
-
         <div class="panel">
           <h3>Statements in this space — Q2 2026</h3>
           <div class="src-list">
@@ -239,16 +199,12 @@
               <span class="stagechip consolidated">Consolidated</span>
             </div>
           </div>
-        </div>
 
-        <div class="panel">
-          <h3>Add statements</h3>
           <div class="dropzone" id="dropzone"
                ondragover="event.preventDefault(); this.classList.add('drag');"
                ondragleave="this.classList.remove('drag');"
                ondrop="event.preventDefault(); this.classList.remove('drag'); simulateDrop();">
             Drag statements into A. Keller's space — multiple files at once is fine.<br>
-            <span style="font-size:12.5px;">Each file is archived, holder-verified, and parsed independently. Conflicts stop and ask; they are never resolved silently.</span><br>
             <button class="btn btn-ghost btn-sm" onclick="simulateDrop()">Simulate a drop of 3 files</button>
           </div>
           <div class="queue" id="queue"></div>
@@ -263,27 +219,27 @@
           <div class="rstep">
             <span class="rno">STEP 1</span>
             <div class="rname">Extract</div>
-            <div class="rmeta">34 rows extracted from 4 statements, each with page &amp; line reference to the archived original.</div>
+            <div class="rmeta">34 rows from 4 statements, each with page &amp; line reference to the archived original.</div>
           </div>
           <div class="rstep">
             <span class="rno">STEP 2</span>
             <div class="rname">Match</div>
-            <div class="rmeta">8 consolidated instruments: 6 matched on ISIN, 2 name-matches confirmed by a human. 0 unmatched.</div>
+            <div class="rmeta">8 instruments: 6 matched on ISIN, 2 name-matches confirmed. 0 unmatched.</div>
           </div>
           <div class="rstep">
             <span class="rno">STEP 3</span>
             <div class="rname">Normalise</div>
-            <div class="rmeta">4 currencies → CHF at SNB rates on each source's valuation date. 1 date exception flagged.</div>
+            <div class="rmeta">4 currencies → CHF at SNB rates on each source's valuation date. 1 date exception.</div>
           </div>
           <div class="rstep">
             <span class="rno">STEP 4</span>
             <div class="rname">Consolidate</div>
-            <div class="rmeta">8 positions · CHF 12,401,268. Approved by O. Marchand, 2 Jul 10:30. Snapshot frozen until next approval.</div>
+            <div class="rmeta">8 positions · CHF 12,401,268. Approved by O. Marchand, 2 Jul 10:30.</div>
           </div>
         </div>
 
         <details class="xpanel">
-          <summary>Matching decisions — how source lines became instruments</summary>
+          <summary>Matching decisions — 6 ISIN-exact · 2 confirmed · 1 rule</summary>
           <div class="xbody" style="overflow-x:auto;">
             <table class="trace-table">
               <thead>
@@ -301,29 +257,21 @@
                 <tr><td>"Current account CHF/USD", "Liquidités EUR", "Likvida medel SEK"</td><td>BCP · Edmond · Nordkap</td><td>Cash &amp; equivalents</td><td>cash-account rule</td><td>automatic</td></tr>
               </tbody>
             </table>
-            <p style="font-size:12.5px;color:var(--ink-soft);margin-top:12px;">
-              A name-similarity match is a <em>proposal</em>, never a merge. It sits in the
-              exceptions queue and blocks approval until a human confirms it. Confirmed
-              aliases are remembered — "Nestle N" will match automatically next quarter,
-              with this confirmation as its provenance.
-            </p>
           </div>
         </details>
 
         <details class="xpanel">
-          <summary>Exceptions — 1 open, 0 unmatched rows</summary>
+          <summary>Exceptions — 1 open · 0 unmatched rows</summary>
           <div class="xbody">
             <div class="callout flag" style="margin-top:0;">
               <span class="glyph">⚑</span>
-              <span><strong>Valuation-date mismatch (open):</strong> Nordkap valued 27 Jun; all
-              other sources 30 Jun. Consolidation proceeded with your approval and the
-              exception is stamped on every report generated from this snapshot. It clears
-              when a 30 Jun Nordkap statement is ingested.</span>
+              <span><strong>Valuation-date mismatch (open):</strong> Nordkap valued 27 Jun;
+              all other sources 30 Jun. Stamped on every report from this snapshot.
+              Clears when a 30 Jun Nordkap statement is ingested.</span>
             </div>
             <p style="font-size:13px;color:var(--ink-soft);">
-              <strong>Unmatched rows: none.</strong> Any extracted row that cannot be matched
-              with high confidence lands here and blocks the reconciliation run — Alpinae
-              never guesses a merge. You resolve it once; the decision is remembered and audited.
+              No unmatched rows. Rows that cannot be matched with confidence land here
+              and block approval until resolved.
             </p>
           </div>
         </details>
@@ -409,14 +357,11 @@
       <!-- ---- TAB: Report ---- -->
       <div class="tab-panel" id="tab-report">
         <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
-          <button class="btn btn-primary btn-sm" onclick="reportNote()">Generate Q2 report</button>
+          <button class="btn btn-primary btn-sm" onclick="generateReport()">Generate Q3 report</button>
           <button class="btn btn-ghost btn-sm" disabled title="Demo — export disabled">Export · firm template (.xlsx)</button>
           <button class="btn btn-ghost btn-sm" disabled title="Demo — export disabled">Export · PDF</button>
         </div>
-        <p id="report-note" style="display:none;font-size:13.5px;color:var(--ink-soft);margin-bottom:16px;">
-          In the product, this renders directly into your firm's existing report template.
-          The preview below shows the generated content.
-        </p>
+        <div id="report-result"></div>
         <div class="report-sheet">
           <div class="rpt-head">
             <div class="firm">Valmont &amp; Cie</div>
@@ -467,10 +412,10 @@
             </tbody>
           </table>
         </div>
-        <p style="margin-top:14px;font-size:13px;color:var(--ink-soft);">
-          Append-only and hash-chained: each entry embeds the hash of the previous one, so
-          any tampering is evident. Exportable to CSV for the firm's compliance file.
-        </p>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap;">
+          <span class="num" style="font-size:12px;color:var(--ink-soft);">append-only · hash-chained · complete since account opening</span>
+          <button class="btn btn-ghost btn-sm" disabled title="Demo — export disabled">Export CSV</button>
+        </div>
       </div>
     </section>
   </main>
@@ -545,10 +490,23 @@
         <tbody></tbody>
       </table>
     </div>
-    <p style="font-size:12.5px;margin-top:14px;">FX: SNB reference rate at the source's valuation date. In the product, "Loc." links to the highlighted region of the original file.</p>
+    <p style="font-size:12.5px;margin-top:14px;">FX: SNB reference rate at the source's valuation date.</p>
     <div class="modal-actions">
       <button class="btn btn-ghost btn-sm" onclick="closeTrace()">Close</button>
     </div>
+  </div>
+</div>
+
+<!-- ============ DEMO TOUR (demo chrome) ============ -->
+<div class="tour" id="tour" style="display:none;">
+  <div class="tour-step" id="tour-step-label"></div>
+  <h4 id="tour-title"></h4>
+  <p id="tour-body"></p>
+  <div class="tour-dots" id="tour-dots"></div>
+  <div class="tour-actions">
+    <button class="tour-btn ghost" id="tour-back" onclick="tourGo(tourI - 1)">Back</button>
+    <button class="tour-btn" id="tour-next" onclick="tourNext()">Next</button>
+    <button class="tour-skip" onclick="tourEnd()">Skip tour ✕</button>
   </div>
 </div>
 
@@ -574,8 +532,12 @@ function showTab(name) {
 function demoNote() {
   document.getElementById('demo-note').style.display = 'block';
 }
-function reportNote() {
-  document.getElementById('report-note').style.display = 'block';
+function generateReport() {
+  document.getElementById('report-result').innerHTML =
+    '<div class="callout ok"><span class="glyph">✓</span><span>' +
+    'Report <span class="num">RPT-2026-Q3-KEL-005</span> generated from the approved ' +
+    '2 Jul snapshot and recorded in the audit log.</span></div>';
+  appendAudit('o.marchand', 'REPORT_GENERATED', 'RPT-2026-Q3-KEL-005');
 }
 
 /* ---------- Audit chain ---------- */
@@ -759,6 +721,79 @@ document.addEventListener('keydown', e => {
     document.querySelectorAll('.modal-scrim').forEach(m => m.classList.remove('open'));
   }
 });
+
+/* ---------- Demo tour (all demo explanation lives HERE, not on product surfaces) ---------- */
+const TOUR = [
+  {
+    nav: () => showDirectory(),
+    target: '#view-directory .dir-table-wrap',
+    title: 'The client directory',
+    body: 'Each client is a space that receives their statements and shows their consolidated total, sources, and last reconciliation. It routes files to the right client — it is not a CRM and holds nothing more than it needs. Open A. Keller, or press Next.'
+  },
+  {
+    nav: () => openClient('keller', 'overview'),
+    target: '#tab-overview .stats',
+    title: 'One screen: where does this client stand?',
+    body: 'Total consolidated value, allocation, and every source with its valuation date. Anything stale or inconsistent is flagged in red — never hidden, never auto-corrected.'
+  },
+  {
+    nav: () => openClient('keller', 'statements'),
+    target: '#dropzone',
+    title: 'Where statements go',
+    body: 'Every file you drop is archived unchanged and checksummed, checked against the client’s name, parsed row by row, then staged. Nothing touches the consolidated view until you approve a run. Try the simulated drop: three files arrive — one belongs to another client, one conflicts with an existing statement. Alpinae stops and asks; it never resolves a conflict silently.'
+  },
+  {
+    nav: () => openClient('keller', 'recon'),
+    target: '#tab-recon .recon-steps',
+    title: 'Reconciliation, shown working',
+    body: 'Extract, match, normalise, consolidate — with the counts open for inspection. Name matches below full confidence wait in Exceptions for your confirmation; Alpinae never merges on a guess, and confirmed aliases are remembered with their provenance. Click ⌕ trace on any figure for the statement, page, line, and FX rate behind it.'
+  },
+  {
+    nav: () => openClient('keller', 'report'),
+    target: '#tab-report .report-sheet',
+    title: 'Your report, assembled for you',
+    body: 'The consolidated view renders into your firm’s existing template — nothing retyped. Every figure resolves back to its source statement, and generating a report is itself a logged event. Try the Generate button.'
+  },
+  {
+    nav: () => openClient('keller', 'audit'),
+    target: '#tab-audit .panel',
+    title: 'The audit log',
+    body: 'Append-only and hash-chained: each entry embeds the hash of the one before, so tampering is evident. Ingestions, flags, your decisions, approvals, report generations — and every read, including administrators’. Exportable for your compliance file.'
+  }
+];
+let tourI = 0;
+function tourGo(i) {
+  if (i < 0 || i >= TOUR.length) return;
+  tourI = i;
+  const s = TOUR[i];
+  s.nav();
+  document.querySelectorAll('.tour-target').forEach(el => el.classList.remove('tour-target'));
+  document.getElementById('tour').style.display = '';
+  document.getElementById('tour-step-label').textContent = 'Demo tour · step ' + (i + 1) + ' of ' + TOUR.length;
+  document.getElementById('tour-title').textContent = s.title;
+  document.getElementById('tour-body').textContent = s.body;
+  document.getElementById('tour-dots').innerHTML =
+    TOUR.map((_, d) => '<i class="' + (d === i ? 'on' : '') + '"></i>').join('');
+  document.getElementById('tour-back').disabled = (i === 0);
+  document.getElementById('tour-next').textContent = (i === TOUR.length - 1) ? 'Finish' : 'Next';
+  setTimeout(() => {
+    const t = document.querySelector(s.target);
+    if (t) {
+      t.classList.add('tour-target');
+      t.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  }, 60);
+}
+function tourNext() {
+  if (tourI === TOUR.length - 1) { tourEnd(); return; }
+  tourGo(tourI + 1);
+}
+function tourEnd() {
+  document.getElementById('tour').style.display = 'none';
+  document.querySelectorAll('.tour-target').forEach(el => el.classList.remove('tour-target'));
+}
+function tourStart() { tourGo(0); }
+document.addEventListener('DOMContentLoaded', () => tourGo(0));
 </script>
 
 </body>

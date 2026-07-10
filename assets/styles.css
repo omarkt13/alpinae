@@ -12,6 +12,8 @@
   --flag-bg: #F9EEEC;
   --ok: #2E6B4F;
   --ok-bg: #EDF3EF;
+  --pending: #7A5C1E;
+  --pending-bg: #F7F0DF;
   --serif: "EB Garamond", Georgia, serif;
   --sans: "Inter", -apple-system, "Helvetica Neue", sans-serif;
   --mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
@@ -505,7 +507,7 @@ tr.client-row:hover td { background: rgb(30 64 51 / 0.035); }
   white-space: nowrap;
 }
 .stagechip.consolidated { color: var(--ok); background: var(--ok-bg); }
-.stagechip.staged { color: #7A5C1E; background: #F7F0DF; }
+.stagechip.staged { color: var(--pending); background: var(--pending-bg); }
 .stagechip.quarantined { color: var(--flag); background: var(--flag-bg); }
 .stagechip.reassigned { color: var(--ink-soft); background: rgb(92 102 96 / 0.1); }
 .stagechip.superseded { color: var(--ink-soft); background: rgb(92 102 96 / 0.1); text-decoration: line-through; }
@@ -568,3 +570,78 @@ details.xpanel > summary::before {
 }
 details.xpanel[open] > summary::before { content: "−"; }
 details.xpanel .xbody { padding: 0 20px 18px; }
+
+/* ---------- Guidelines v1.1: focus, motion, pending ---------- */
+
+:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; border-radius: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
+details.xpanel > summary:hover { background: rgb(30 64 51 / 0.04); }
+
+.trace-btn { padding: 3px 2px; margin: -3px -2px; }
+
+.demo-chip {
+  display: inline-block;
+  background: var(--ink);
+  color: rgb(255 255 255 / 0.88);
+  font-size: 12.5px;
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+
+/* ---------- Demo tour (demo chrome — never product surface) ---------- */
+
+.tour {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 60;
+  width: 350px;
+  max-width: calc(100vw - 32px);
+  background: var(--ink);
+  color: rgb(255 255 255 / 0.92);
+  border-radius: 12px;
+  padding: 20px 22px;
+  box-shadow: 0 12px 40px rgb(26 36 32 / 0.35);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.tour .tour-step {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.55);
+}
+.tour h4 { font-family: var(--sans); font-size: 15px; font-weight: 600; color: #fff; margin: 8px 0 6px; }
+.tour p { color: rgb(255 255 255 / 0.8); }
+.tour .tour-dots { display: flex; gap: 5px; margin-top: 14px; }
+.tour .tour-dots i { width: 6px; height: 6px; border-radius: 50%; background: rgb(255 255 255 / 0.25); }
+.tour .tour-dots i.on { background: #fff; }
+.tour .tour-actions { display: flex; gap: 8px; margin-top: 14px; align-items: center; }
+.tour-btn {
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  padding: 7px 14px; border-radius: 6px; cursor: pointer;
+  background: #fff; color: var(--ink); border: 1px solid #fff;
+  white-space: nowrap;
+}
+.tour-btn:hover { background: var(--paper); }
+.tour-btn.ghost { background: transparent; color: rgb(255 255 255 / 0.85); border-color: rgb(255 255 255 / 0.35); }
+.tour-btn.ghost:hover { background: rgb(255 255 255 / 0.08); }
+.tour-btn[disabled] { opacity: 0.4; cursor: not-allowed; }
+.tour-skip {
+  margin-left: auto; background: none; border: none; cursor: pointer;
+  color: rgb(255 255 255 / 0.55); font-size: 12px; font-family: var(--sans);
+}
+.tour-skip:hover { color: rgb(255 255 255 / 0.85); }
+.tour-target { outline: 2px solid var(--pine); outline-offset: 4px; border-radius: 4px; }
+@media (max-width: 640px) {
+  .tour { left: 16px; right: 16px; bottom: 16px; width: auto; }
+}
