@@ -564,7 +564,7 @@ function renderFunnel() {
       '<div class="fmeta">' + r.consolidate.positions + ' positions · approved ' +
         r.consolidate.approvedBy + ' · ' + r.consolidate.approvedAt + '</div></div>';
   document.getElementById('funnel-note').innerHTML = r.pending.length === 0 ? '' :
-    '<div class="funnel-note"><span class="num">⏳</span><span><strong>' + r.pending.length +
+    '<div class="funnel-note"><span><strong>' + r.pending.length +
     ' staged statement' + (r.pending.length === 1 ? '' : 's') + '</strong> awaiting the next run (' +
     r.pending.join(' · ') + '). This snapshot stays frozen until you approve a re-consolidation.</span></div>';
 }
