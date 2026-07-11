@@ -215,7 +215,7 @@
     <div class="screen comp-screen" id="comp-screen" data-cstep="0">
       <div class="screen-bar">
         <span class="dots"><i></i><i></i><i></i></span>
-        <span class="url">compliance review · controls AL-01 – AL-05</span>
+        <span class="url">compliance review · 5 controls</span>
       </div>
       <div class="screen-body">
 
@@ -227,7 +227,7 @@
             </marker>
           </defs>
 
-          <!-- Advisors (AL-02) -->
+          <!-- Advisors (access) -->
           <g id="vg-adv" class="vg">
             <circle cx="100" cy="54" r="7" fill="none" stroke="#5C6660" stroke-width="1.3"/>
             <path d="M86,76 C86,65 114,65 114,76" fill="none" stroke="#5C6660" stroke-width="1.3"/>
@@ -237,7 +237,7 @@
           </g>
           <circle id="d-adv" cx="164" cy="80" r="2.6" fill="#1E4033"/>
 
-          <!-- Statements through holder check (AL-05) -->
+          <!-- Statements through holder check (segregation) -->
           <g id="vg-gate" class="vg">
             <path d="M88,140 h16 l8,8 v20 h-24 z" fill="none" stroke="#5C6660" stroke-width="1.3"/>
             <path d="M104,140 v8 h8" fill="none" stroke="#5C6660" stroke-width="1.3"/>
@@ -248,7 +248,7 @@
           </g>
           <circle id="d-gate" cx="164" cy="166" r="2.6" fill="#1E4033"/>
 
-          <!-- Swiss region (AL-01) -->
+          <!-- Swiss region (residency) -->
           <g id="vg-region" class="vg">
             <rect x="220" y="24" width="352" height="204" rx="12" fill="#FFFFFF" stroke="#1A2420" stroke-width="1.2"/>
             <text x="396" y="46" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="1.4" fill="#1A2420">SWITZERLAND · ONE REGION · SWISS-OWNED</text>
@@ -284,7 +284,7 @@
             <text x="482" y="190" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">append-only · hash-chained</text>
           </g>
 
-          <!-- Blocked egress (AL-04) -->
+          <!-- Blocked egress (write path) -->
           <g id="vg-egress" class="vg">
             <line x1="572" y1="120" x2="594" y2="120" stroke="#5C6660" stroke-width="1"/>
             <path class="keep-flag" d="M598,115 L608,125 M608,115 L598,125" stroke="#A63A2E" stroke-width="1.6" fill="none"/>
@@ -299,11 +299,11 @@
 
         <div class="comp-caption">
           <div class="cchips" role="tablist">
-            <button class="cchip on" type="button">AL-01</button>
-            <button class="cchip" type="button">AL-02</button>
-            <button class="cchip" type="button">AL-03</button>
-            <button class="cchip" type="button">AL-04</button>
-            <button class="cchip" type="button">AL-05</button>
+            <button class="cchip on" type="button">01 · Residency</button>
+            <button class="cchip" type="button">02 · Access</button>
+            <button class="cchip" type="button">03 · Auditability</button>
+            <button class="cchip" type="button">04 · Write path</button>
+            <button class="cchip" type="button">05 · Segregation</button>
           </div>
           <h4 id="cq">Where is the data?</h4>
           <p id="ct">All compute, the database, the statement archive, and backups run in a
@@ -387,6 +387,57 @@
 /* The reconciliation screen: statements arrive -> processing -> the table builds in place.
    Static end-state (stage 3) without JS or with reduced motion. */
 (function () {
+  var screen = document.getElementById('screen');
+  var procTxt = document.getElementById('proc-txt');
+  var replay = document.getElementById('replay');
+  if (!screen) return;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DONE = 'reconciled \u2713 \u00b7 34 rows \u2192 8 positions \u00b7 1 flag';
+  var STEPS = [
+    'reading account holders \u2014 4 of 4 verified',
+    'parsing 34 rows across 4 formats',
+    'matching instruments \u2014 6 ISIN-exact \u00b7 2 confirmed',
+    'normalising 4 currencies \u2192 CHF \u00b7 SNB rates'
+  ];
+  var timers = [];
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function play() {
+    timers.forEach(clearTimeout);
+    timers = [];
+    screen.dataset.stage = '0';
+    procTxt.classList.remove('done');
+    procTxt.textContent = '';
+    void screen.offsetHeight;
+    at(60, function () { screen.dataset.stage = '1'; });
+    at(1500, function () { screen.dataset.stage = '2'; procTxt.textContent = STEPS[0]; });
+    at(2150, function () { procTxt.textContent = STEPS[1]; });
+    at(2800, function () { procTxt.textContent = STEPS[2]; });
+    at(3450, function () { procTxt.textContent = STEPS[3]; });
+    at(4050, function () {
+      screen.dataset.stage = '3';
+      procTxt.classList.add('done');
+      procTxt.textContent = DONE;
+    });
+  }
+  replay.addEventListener('click', play);
+  if (reduced) return;
+  function inView() {
+    var r = screen.getBoundingClientRect();
+    var visible = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
+    return visible > Math.min(r.height, window.innerHeight) * 0.45;
+  }
+  function check() {
+    if (!inView()) return;
+    window.removeEventListener('scroll', check);
+    play();
+  }
+  window.addEventListener('scroll', check, { passive: true });
+  check();
+})();
+
+/* The reconciliation screen: statements arrive -> processing -> the table builds in place.
+   Static end-state (stage 3) without JS or with reduced motion. */
+(function () {
   var card = document.getElementById('comp-screen');
   if (!card) return;
   var CS = [
@@ -439,39 +490,6 @@
   start();
 })();
 
-/* Compliance: hovering a control row lights where it lives in the schematic */
-(function () {
-  var MAP = {
-    'AL-01': ['vg-region', 'vg-app', 'vg-db', 'vg-arch', 'vg-log'],
-    'AL-02': ['vg-adv'],
-    'AL-03': ['vg-log', 'vg-arch'],
-    'AL-04': ['vg-egress'],
-    'AL-05': ['vg-gate']
-  };
-  var ALL = ['vg-adv', 'vg-gate', 'vg-region', 'vg-app', 'vg-db', 'vg-arch', 'vg-log', 'vg-egress'];
-  var rows = document.querySelectorAll('.controls tbody tr[data-al]');
-  if (!rows.length || !document.getElementById('vg-region')) return;
-  function clear() {
-    ALL.forEach(function (id) {
-      var el = document.getElementById(id);
-      el.classList.remove('lit'); el.classList.remove('dim');
-    });
-  }
-  function focusRow(key) {
-    clear();
-    var targets = MAP[key] || [];
-    ALL.forEach(function (id) {
-      document.getElementById(id).classList.add(targets.indexOf(id) >= 0 ? 'lit' : 'dim');
-    });
-  }
-  rows.forEach(function (tr) {
-    var key = tr.getAttribute('data-al');
-    tr.addEventListener('mouseenter', function () { focusRow(key); });
-    tr.addEventListener('mouseleave', clear);
-    tr.addEventListener('focusin', function () { focusRow(key); });
-    tr.addEventListener('focusout', clear);
-  });
-})();
 </script>
 
 </body>
