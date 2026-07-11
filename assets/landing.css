@@ -393,7 +393,7 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
 
 /* Residency fact sheet */
 .residency {
-  margin-top: 20px;
+  margin-top: 24px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1px;
@@ -416,21 +416,13 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
 @media (max-width: 860px) { .residency { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .residency { grid-template-columns: 1fr; } }
 
-.comp-cta { margin-top: 28px; font-size: 14.5px; color: var(--ink-soft); }
-
-.guardrail {
-  display: flex;
-  gap: 12px;
-  margin-top: 20px;
-  padding: 16px 20px;
-  border-radius: 8px;
-  background: var(--flag-bg);
-  border: 1px solid rgb(166 58 46 / 0.25);
-  color: #6E251C;
-  font-size: 14.5px;
-  max-width: 760px;
+.controls-foot {
+  padding: 15px 24px;
+  border-top: 1px solid var(--hairline);
+  background: var(--paper);
+  font-size: 13.5px;
+  color: var(--ink-soft);
 }
-.guardrail .glyph { font-weight: 700; flex-shrink: 0; }
 
 /* ---------- Not-list ---------- */
 
@@ -465,7 +457,7 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
 .cta-band .btn:hover { background: var(--paper); }
 @media (max-width: 640px) { .cta-band { padding: 36px 28px; } }
 
-.footer { border-top: 1px solid var(--hairline); margin-top: 96px; }
+.footer { border-top: 1px solid var(--hairline); }
 .footer-inner {
   display: flex;
   justify-content: space-between;
