@@ -342,57 +342,6 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
 
 /* ---------- Compliance: control register ---------- */
 
-.controls-wrap {
-  margin-top: 56px;
-  background: var(--paper-raised);
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
-  box-shadow: 0 1px 2px rgb(26 36 32 / 0.05), 0 20px 48px -20px rgb(26 36 32 / 0.14);
-  overflow-x: auto;
-}
-.controls { width: 100%; border-collapse: collapse; min-width: 840px; }
-.controls th {
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-  text-align: left;
-  padding: 15px 24px;
-  background: var(--paper);
-  border-bottom: 1px solid var(--hairline);
-  white-space: nowrap;
-}
-.controls td {
-  padding: 22px 24px;
-  border-bottom: 1px solid var(--hairline);
-  vertical-align: top;
-  font-size: 14px;
-  line-height: 1.62;
-}
-.controls tr:last-child td { border-bottom: none; }
-.controls tbody tr { transition: background 0.2s ease; }
-.controls tbody tr:hover, .controls tbody tr:focus-visible { background: rgb(30 64 51 / 0.025); outline: none; }
-.controls td.cid {
-  font-family: var(--mono);
-  font-size: 11.5px;
-  color: var(--pine);
-  white-space: nowrap;
-  padding-top: 25px;
-  width: 68px;
-}
-.controls td.cq { font-weight: 600; font-size: 14.5px; width: 168px; }
-.controls td.cctl { color: var(--ink); }
-.controls td.cev {
-  font-family: var(--mono);
-  font-size: 11px;
-  line-height: 1.8;
-  color: var(--ink-soft);
-  width: 224px;
-  padding-top: 25px;
-}
-
 .controls-foot {
   padding: 15px 24px;
   border-top: 1px solid var(--hairline);
@@ -451,32 +400,58 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
   html { scroll-behavior: auto; }
 }
 
-/* Compliance schematic — lit by hovering the register above */
-.comp-visual {
-  margin-top: 24px;
-  background: var(--paper-raised);
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
-  box-shadow: 0 1px 2px rgb(26 36 32 / 0.05), 0 20px 48px -20px rgb(26 36 32 / 0.14);
-  padding: 26px 30px 18px;
-  overflow-x: auto;
+/* ---------- Compliance screen: schematic + stepped overlay ---------- */
+
+.comp-screen { margin-top: 56px; }
+.comp-screen svg { width: 100%; min-width: 620px; display: block; }
+.comp-screen .vg { transition: opacity 0.3s ease; }
+.comp-screen .vg rect, .comp-screen .vg path, .comp-screen .vg line,
+.comp-screen .vg circle, .comp-screen .vg ellipse, .comp-screen .vg text {
+  transition: stroke 0.3s ease, fill 0.3s ease;
 }
-.comp-visual svg { width: 100%; min-width: 620px; display: block; }
-.comp-visual .cap {
-  margin-top: 12px;
+.comp-screen .vg.dim { opacity: 0.3; }
+.comp-screen .vg.lit rect, .comp-screen .vg.lit path, .comp-screen .vg.lit line,
+.comp-screen .vg.lit circle, .comp-screen .vg.lit ellipse { stroke: var(--pine); }
+.comp-screen .vg.lit text { fill: var(--pine); }
+.comp-screen .vg.lit .keep-flag { stroke: var(--flag); }
+.comp-screen .vg.lit text.keep-flag { fill: var(--flag); stroke: none; }
+
+/* Flow pulses — horizontal only */
+#d-adv, #d-gate, #d-egress { opacity: 0; }
+.comp-screen[data-cstep="1"] #d-adv { opacity: 1; animation: flowIn 1.3s linear infinite; }
+.comp-screen[data-cstep="4"] #d-gate { opacity: 1; animation: flowIn 1.3s linear infinite; }
+.comp-screen[data-cstep="3"] #d-egress { opacity: 1; animation: flowBlocked 1.2s linear infinite; }
+@keyframes flowIn { from { transform: translateX(0); } to { transform: translateX(44px); } }
+@keyframes flowBlocked {
+  0% { transform: translateX(0); opacity: 1; }
+  85% { opacity: 1; }
+  100% { transform: translateX(22px); opacity: 0; }
+}
+.comp-screen[data-cstep="0"] #vg-region > rect { animation: regionPulse 2.4s ease-in-out infinite; }
+@keyframes regionPulse { 50% { stroke-width: 2.2; } }
+
+/* Step overlay */
+.comp-caption {
+  border-top: 1px solid var(--hairline);
+  margin-top: 24px;
+  padding-top: 20px;
+  min-height: 168px;
+}
+.cchips { display: flex; gap: 8px; flex-wrap: wrap; }
+.cchip {
   font-family: var(--mono);
   font-size: 10.5px;
   letter-spacing: 0.06em;
+  padding: 4px 11px;
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  background: none;
   color: var(--ink-soft);
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
-.comp-visual .vg { transition: opacity 0.25s ease; }
-.comp-visual .vg rect, .comp-visual .vg path, .comp-visual .vg line,
-.comp-visual .vg circle, .comp-visual .vg ellipse, .comp-visual .vg text {
-  transition: stroke 0.25s ease, fill 0.25s ease;
-}
-.comp-visual .vg.dim { opacity: 0.28; }
-.comp-visual .vg.lit rect, .comp-visual .vg.lit path, .comp-visual .vg.lit line,
-.comp-visual .vg.lit circle, .comp-visual .vg.lit ellipse { stroke: var(--pine); }
-.comp-visual .vg.lit text { fill: var(--pine); }
-.comp-visual .vg.lit .keep-flag { stroke: var(--flag); }
-.comp-visual .vg.lit text.keep-flag { fill: var(--flag); stroke: none; }
+.cchip:hover { color: var(--pine); border-color: var(--pine); }
+.cchip.on { color: #fff; background: var(--pine); border-color: var(--pine); }
+.comp-caption h4 { font-family: var(--sans); font-size: 15.5px; font-weight: 600; margin-top: 18px; }
+.comp-caption p { font-size: 14px; color: var(--ink-soft); margin-top: 6px; max-width: 760px; }
+.comp-caption .cev-line { font-family: var(--mono); font-size: 11px; margin-top: 12px; }
