@@ -258,8 +258,22 @@
             requires no unwinding — export, delete, done.</td>
             <td class="cev">Architecture note · exit &amp; deletion procedure</td>
           </tr>
+          <tr>
+            <td class="cid">AL-05</td>
+            <td class="cq">Can a statement land in the wrong client?</td>
+            <td class="cctl">Every uploaded file's account holder is read and compared to the
+            client space before anything is parsed. A mismatch blocks reconciliation
+            until a person decides — reassign or quarantine. One client's positions
+            never appear in another client's report.</td>
+            <td class="cev">Mismatch flags &amp; resolutions in the audit log · live in the demo</td>
+          </tr>
         </tbody>
       </table>
+      <div class="controls-foot">
+        The complete compliance pack — architecture note, audit-log sample, exit
+        procedure — is available under NDA.
+        <a href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20compliance%20pack">Request it →</a>
+      </div>
     </div>
 
     <div class="residency">
@@ -271,18 +285,6 @@
       <div class="ritem"><span class="rk">Access</span><span class="rv">MFA · role-based · read-only</span></div>
     </div>
 
-    <div class="guardrail">
-      <span class="glyph">⚑</span>
-      <span>If a statement doesn't match the client space it was dropped into,
-      Alpinae stops and asks you first. One client's positions never appear in
-      another client's report.</span>
-    </div>
-
-    <p class="comp-cta">
-      The complete compliance pack — architecture note, audit-log sample, exit
-      procedure — is available under NDA.
-      <a href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20compliance%20pack">Request it →</a>
-    </p>
   </div>
 </section>
 

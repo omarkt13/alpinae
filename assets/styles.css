@@ -332,7 +332,7 @@ table.holdings tr.total-row td {
   overflow: hidden;
 }
 .panel { padding: 24px; overflow: visible; }
-.panel + .panel, .dir-table-wrap + .panel, .panel + .dir-table-wrap { margin-top: 20px; }
+.panel + .panel, .dir-table-wrap + .panel, .panel + .dir-table-wrap { margin-top: 24px; }
 .panel h3 { font-family: var(--sans); font-size: 15px; font-weight: 600; margin-bottom: 14px; }
 
 tr.client-row { cursor: pointer; }
@@ -470,19 +470,19 @@ tr.client-row:hover td { background: rgb(30 64 51 / 0.035); }
 /* Allocation bars (client portal) */
 .alloc { display: grid; gap: 12px; margin-top: 8px; }
 .alloc .arow {
-  display: grid; grid-template-columns: minmax(96px, 150px) 1fr 64px;
-  gap: 12px; align-items: center;
+  display: grid; grid-template-columns: minmax(110px, 30%) 1fr 52px;
+  gap: 14px; align-items: center;
   padding: 4px 8px; margin: -4px -8px; border-radius: 6px;
 }
 .alloc .arow[title] { cursor: default; }
 .alloc .arow[title]:hover { background: rgb(30 64 51 / 0.045); }
 .alloc .arow .alabel { font-size: 14px; }
 .alloc .arow .aval { font-family: var(--mono); font-size: 13px; text-align: right; font-variant-numeric: tabular-nums; }
-.alloc .bar { height: 8px; border-radius: 4px; background: rgb(30 64 51 / 0.09); overflow: hidden; }
+.alloc .bar { height: 10px; border-radius: 5px; background: rgb(30 64 51 / 0.09); overflow: hidden; }
 .alloc .bar i { display: block; height: 100%; background: var(--pine); border-radius: 4px; }
 
 /* Client portal page */
-.cp-wrap { max-width: 880px; margin: 0 auto; padding: 40px 24px 96px; }
+.cp-wrap { max-width: 960px; margin: 0 auto; padding: 40px 24px 96px; }
 .cp-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; padding-bottom: 24px; border-bottom: 1px solid var(--hairline); margin-bottom: 32px; }
 .cp-total { font-family: var(--mono); font-size: 40px; font-weight: 500; font-variant-numeric: tabular-nums; }
 
@@ -686,3 +686,9 @@ details.xpanel > summary:hover { background: rgb(30 64 51 / 0.04); }
 @media (max-width: 640px) {
   .tour { left: 16px; right: 16px; bottom: 16px; width: auto; }
 }
+
+/* Client portal tables: designed column proportions, not browser auto-layout */
+.cp-wrap table.holdings th:nth-child(1) { width: 44%; }
+.cp-wrap table.holdings th:nth-child(2) { width: 20%; }
+.cp-wrap table.holdings th:nth-child(3) { width: 22%; }
+.cp-wrap table.holdings th:nth-child(4) { width: 14%; }
