@@ -308,7 +308,7 @@ table.holdings tr.total-row td {
   line-height: 1.5;
 }
 
-.app-main { flex: 1; padding: 32px 40px 80px; max-width: 1200px; }
+.app-main { flex: 1; padding: 32px 32px 80px; max-width: 1200px; }
 
 .app-header { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 8px; }
 .app-header h1 { font-size: 30px; }
@@ -339,7 +339,7 @@ tr.client-row { cursor: pointer; }
 tr.client-row:hover td { background: rgb(30 64 51 / 0.035); }
 
 /* Tabs */
-.tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--hairline); margin: 20px 0 24px; }
+.tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--hairline); margin: 20px 0 24px; overflow-x: auto; }
 .tab {
   background: none;
   border: none;
@@ -482,7 +482,8 @@ tr.client-row:hover td { background: rgb(30 64 51 / 0.035); }
 .alloc .bar i { display: block; height: 100%; background: var(--pine); border-radius: 4px; }
 
 /* Client portal page */
-.cp-wrap { max-width: 960px; margin: 0 auto; padding: 40px 24px 96px; }
+.cp-wrap { max-width: 960px; margin: 0 auto; padding: 40px 32px 96px; }
+@media (max-width: 640px) { .cp-wrap { padding: 28px 20px 64px; } }
 .cp-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; padding-bottom: 24px; border-bottom: 1px solid var(--hairline); margin-bottom: 32px; }
 .cp-total { font-family: var(--mono); font-size: 40px; font-weight: 500; font-variant-numeric: tabular-nums; }
 

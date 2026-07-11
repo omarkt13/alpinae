@@ -102,7 +102,7 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
   gap: 72px;
   align-items: center;
 }
-.hero h1 { font-size: clamp(36px, 4.6vw, 52px); margin-top: 20px; }
+.hero h1 { font-size: clamp(33px, 3.8vw, 44px); margin-top: 20px; }
 .hero .sub { margin-top: 22px; color: var(--ink-soft); font-size: 17.5px; max-width: 520px; }
 .hero .ctas { margin-top: 34px; display: flex; gap: 14px; flex-wrap: wrap; }
 @media (max-width: 920px) {
@@ -167,7 +167,7 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
   text-transform: uppercase;
   color: var(--ink-soft);
   text-align: center;
-  padding: 17px 12px;
+  padding: 16px 12px;
   border-left: 1px solid var(--hairline);
 }
 .fact:first-child { border-left: none; }
@@ -372,6 +372,8 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
   line-height: 1.62;
 }
 .controls tr:last-child td { border-bottom: none; }
+.controls tbody tr { transition: background 0.2s ease; }
+.controls tbody tr:hover, .controls tbody tr:focus-visible { background: rgb(30 64 51 / 0.025); outline: none; }
 .controls td.cid {
   font-family: var(--mono);
   font-size: 11.5px;
@@ -390,31 +392,6 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
   width: 224px;
   padding-top: 25px;
 }
-
-/* Residency fact sheet */
-.residency {
-  margin-top: 24px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--hairline);
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.ritem { background: var(--paper-raised); padding: 16px 22px 15px; }
-.ritem .rk {
-  display: block;
-  font-family: var(--mono);
-  font-size: 9.5px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
-}
-.ritem .rv { display: block; font-size: 14px; font-weight: 500; margin-top: 5px; }
-@media (max-width: 860px) { .residency { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 560px) { .residency { grid-template-columns: 1fr; } }
 
 .controls-foot {
   padding: 15px 24px;
@@ -473,3 +450,33 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
   *, *::before, *::after { animation: none !important; transition: none !important; }
   html { scroll-behavior: auto; }
 }
+
+/* Compliance schematic — lit by hovering the register above */
+.comp-visual {
+  margin-top: 24px;
+  background: var(--paper-raised);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgb(26 36 32 / 0.05), 0 20px 48px -20px rgb(26 36 32 / 0.14);
+  padding: 26px 30px 18px;
+  overflow-x: auto;
+}
+.comp-visual svg { width: 100%; min-width: 620px; display: block; }
+.comp-visual .cap {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+.comp-visual .vg { transition: opacity 0.25s ease; }
+.comp-visual .vg rect, .comp-visual .vg path, .comp-visual .vg line,
+.comp-visual .vg circle, .comp-visual .vg ellipse, .comp-visual .vg text {
+  transition: stroke 0.25s ease, fill 0.25s ease;
+}
+.comp-visual .vg.dim { opacity: 0.28; }
+.comp-visual .vg.lit rect, .comp-visual .vg.lit path, .comp-visual .vg.lit line,
+.comp-visual .vg.lit circle, .comp-visual .vg.lit ellipse { stroke: var(--pine); }
+.comp-visual .vg.lit text { fill: var(--pine); }
+.comp-visual .vg.lit .keep-flag { stroke: var(--flag); }
+.comp-visual .vg.lit text.keep-flag { fill: var(--flag); stroke: none; }

@@ -48,7 +48,10 @@ decoratively, so that when it appears it means something.
 
 ## Layout & texture
 
-- Max content width 1120px marketing, full-bleed app shell for the portal.
+- Content widths, one per surface: **1080px** marketing (`landing.css`
+  container), **1200px** advisor app main column, **960px** client portal
+  (statement-like, centered). Side gutter **32px** everywhere (20px under
+  640px). These are decisions — do not drift them per page.
 - Hairline rules (`1px solid var(--hairline)`) instead of shadows wherever
   possible. Shadows, when used, are barely-there (`0 1px 2px rgb(26 36 32 / .06)`).
 - Corners: 6px on controls, 10px on cards. Never pill-shaped except badges.
