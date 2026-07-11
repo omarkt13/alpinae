@@ -79,9 +79,10 @@
     </div>
   </div>
 
-  <!-- Flow diagram: many statements -> one view -->
+  <!-- Flow diagram: many statements -> one view (animated) -->
   <div style="margin-top:56px;overflow-x:auto;">
-    <svg viewBox="0 0 760 300" style="width:100%;max-width:720px;min-width:560px;display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three differently-formatted statements consolidated by Alpinae into one view">
+    <div id="flow-figure" style="max-width:720px;">
+    <svg viewBox="0 0 760 300" style="width:100%;min-width:560px;display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four differently-formatted statements flow into Alpinae and out as one consolidated view">
       <defs>
         <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
           <path d="M1,1 L7,4 L1,7" fill="none" stroke="var(--ink-soft)" stroke-width="1.2"/>
@@ -92,44 +93,58 @@
       </defs>
 
       <!-- Source documents -->
-      <g>
+      <g class="anim-src" id="as1">
         <rect x="20" y="16" width="190" height="58" rx="6" fill="var(--paper-raised)" stroke="var(--hairline)"/>
         <text x="36" y="40" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Fund printout · proprietary</text>
         <text x="36" y="57" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">XLSX · CHF · 9 rows</text>
       </g>
-      <g>
+      <g class="anim-src" id="as2">
         <rect x="20" y="86" width="190" height="58" rx="6" fill="var(--paper-raised)" stroke="var(--hairline)"/>
         <text x="36" y="110" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Custody · Geneva</text>
         <text x="36" y="127" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">PDF · CHF/USD · 13 rows</text>
       </g>
-      <g>
+      <g class="anim-src" id="as3">
         <rect x="20" y="156" width="190" height="58" rx="6" fill="var(--paper-raised)" stroke="var(--hairline)"/>
         <text x="36" y="180" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Mandate · Luxembourg</text>
         <text x="36" y="197" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">PDF · EUR · 5 rows</text>
       </g>
-      <g>
+      <g class="anim-src" id="as4">
         <rect x="20" y="226" width="190" height="58" rx="6" fill="var(--paper-raised)" stroke="var(--hairline)"/>
         <text x="36" y="250" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Portfolio · Stockholm</text>
         <text x="36" y="267" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">PDF · SEK · 7 rows</text>
       </g>
 
       <!-- Connectors into the engine -->
-      <path d="M210,45 C280,45 258,136 320,142" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
-      <path d="M210,115 C262,115 268,144 320,147" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
-      <path d="M210,185 C262,185 268,156 320,153" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
-      <path d="M210,255 C280,255 258,164 320,158" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
+      <path id="p1" class="anim-path" pathLength="1" d="M210,45 C280,45 258,136 320,142" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
+      <path id="p2" class="anim-path" pathLength="1" d="M210,115 C262,115 268,144 320,147" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
+      <path id="p3" class="anim-path" pathLength="1" d="M210,185 C262,185 268,156 320,153" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
+      <path id="p4" class="anim-path" pathLength="1" d="M210,255 C280,255 258,164 320,158" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
+
+      <!-- Data pulses travelling the connectors -->
+      <circle class="flow-dot" r="2.6" fill="var(--pine)">
+        <animateMotion dur="1.6s" begin="1.8s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion>
+      </circle>
+      <circle class="flow-dot" r="2.6" fill="var(--pine)">
+        <animateMotion dur="1.6s" begin="2.1s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion>
+      </circle>
+      <circle class="flow-dot" r="2.6" fill="var(--pine)">
+        <animateMotion dur="1.6s" begin="2.4s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion>
+      </circle>
+      <circle class="flow-dot" r="2.6" fill="var(--pine)">
+        <animateMotion dur="1.6s" begin="2.7s" repeatCount="indefinite"><mpath href="#p4"/></animateMotion>
+      </circle>
 
       <!-- Engine -->
       <g>
-        <rect x="322" y="106" width="166" height="88" rx="8" fill="var(--paper-raised)" stroke="var(--pine)" stroke-width="1.3"/>
+        <rect class="eng-rect" x="322" y="106" width="166" height="88" rx="8" fill="var(--paper-raised)" stroke="var(--pine)" stroke-width="1.3"/>
         <text x="405" y="136" text-anchor="middle" font-family="'EB Garamond', serif" font-size="19" font-weight="600" fill="var(--ink)">Alpinae</text>
         <text x="405" y="156" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">verify · match · normalise</text>
         <text x="405" y="171" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">every figure traced</text>
       </g>
 
       <!-- Output -->
-      <path d="M488,150 C520,150 528,150 556,150" fill="none" stroke="var(--pine)" stroke-width="1.3" marker-end="url(#arr-pine)"/>
-      <g>
+      <path id="pout" class="anim-path" pathLength="1" d="M488,150 C520,150 528,150 556,150" fill="none" stroke="var(--pine)" stroke-width="1.3" marker-end="url(#arr-pine)"/>
+      <g class="anim-out">
         <rect x="558" y="96" width="182" height="108" rx="8" fill="var(--paper-raised)" stroke="var(--hairline)"/>
         <text x="574" y="122" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Consolidated view</text>
         <text x="574" y="146" font-family="'IBM Plex Mono', monospace" font-size="15" font-weight="500" fill="var(--ink)">CHF 12,401,268</text>
@@ -137,7 +152,15 @@
         <text x="574" y="178" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">8 positions · as of 30 Jun</text>
         <text x="574" y="192" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">34 source rows · 1 flag</text>
       </g>
+
+      <!-- Cursor click on the consolidated view -->
+      <circle id="ripple" cx="642" cy="154" r="5" fill="none" stroke="var(--pine)" stroke-width="1.6"/>
+      <g class="anim-cursor" transform="translate(730,290)">
+        <path d="M0,0 L0,16 L4.6,12.6 L8,19.6 L10.4,18.4 L7,11.4 L12.6,11.4 Z"
+              fill="var(--ink)" stroke="#fff" stroke-width="1.2"/>
+      </g>
     </svg>
+    </div>
   </div>
 
   <!-- Product figure: a real consolidated table -->
@@ -209,25 +232,25 @@
   <h2 class="mk-h2" style="margin-top:14px;">Ready for the questions your compliance officer will ask.</h2>
 
   <div class="mk-grid cols-2">
-    <div class="mk-card">
+    <div class="mk-card qcard" id="q-data">
       <h3>Where is the data?</h3>
       <p>Switzerland. Compute, database, statement archive, and backups in one Swiss
       region with a Swiss-owned provider. No US-controlled processor in the chain,
       no data leaves the jurisdiction — including for any AI processing.</p>
     </div>
-    <div class="mk-card">
+    <div class="mk-card qcard" id="q-access">
       <h3>Who can see it?</h3>
       <p>Role-based access with mandatory two-factor authentication. Advisors see only
       their assigned clients; compliance sees everything plus the audit trail. Every
       read is logged — including administrators'.</p>
     </div>
-    <div class="mk-card">
+    <div class="mk-card qcard" id="q-audit">
       <h3>Can we audit it?</h3>
       <p>An append-only, tamper-evident log records every statement ingested, every
       reconciliation, every report generated, and every access — exportable for your
       own compliance file at any time.</p>
     </div>
-    <div class="mk-card">
+    <div class="mk-card qcard" id="q-break">
       <h3>What can it break?</h3>
       <p>Nothing. Alpinae cannot place orders, move money, or write to any bank,
       custodian, or system of record — the capability does not exist. Stop using it
@@ -245,8 +268,10 @@
       </defs>
 
       <!-- Perimeter -->
+      <g id="dg-region">
       <rect x="200" y="24" width="380" height="212" rx="12" fill="var(--paper-raised)" stroke="var(--ink)" stroke-width="1.2"/>
       <text x="390" y="48" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10.5" letter-spacing="1.5" fill="var(--ink)">SWITZERLAND · ONE REGION · SWISS-OWNED PROVIDER</text>
+      </g>
 
       <!-- Inside boxes -->
       <rect x="224" y="66" width="160" height="46" rx="6" fill="var(--paper)" stroke="var(--hairline)"/>
@@ -257,6 +282,7 @@
       <text x="476" y="86" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Database</text>
       <text x="476" y="101" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="var(--ink-soft)">encrypted at rest</text>
 
+      <g id="dg-audit">
       <rect x="224" y="158" width="160" height="46" rx="6" fill="var(--paper)" stroke="var(--hairline)"/>
       <text x="304" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Statement archive</text>
       <text x="304" y="193" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="var(--ink-soft)">immutable · checksummed</text>
@@ -264,26 +290,31 @@
       <rect x="396" y="158" width="160" height="46" rx="6" fill="var(--paper)" stroke="var(--hairline)"/>
       <text x="476" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Backups &amp; audit log</text>
       <text x="476" y="193" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="var(--ink-soft)">append-only · in-country</text>
+      </g>
 
       <line x1="304" y1="112" x2="304" y2="158" stroke="var(--hairline)"/>
       <line x1="476" y1="112" x2="476" y2="158" stroke="var(--hairline)"/>
       <line x1="384" y1="89" x2="396" y2="89" stroke="var(--hairline)"/>
 
       <!-- Advisors entering -->
+      <g id="dg-advisors">
       <rect x="20" y="104" width="130" height="52" rx="6" fill="var(--paper-raised)" stroke="var(--hairline)"/>
       <text x="85" y="126" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Your advisors</text>
       <text x="85" y="142" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="var(--ink-soft)">browser · read-only</text>
       <line x1="150" y1="130" x2="196" y2="130" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr2)"/>
       <text x="174" y="119" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="var(--ink-soft)">TLS·MFA</text>
+      </g>
 
       <!-- Blocked egress -->
+      <g id="dg-egress">
       <rect x="632" y="102" width="108" height="56" rx="6" fill="none" stroke="var(--hairline)" stroke-dasharray="4 4"/>
       <text x="686" y="124" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="var(--ink-soft)">Foreign clouds,</text>
       <text x="686" y="140" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="var(--ink-soft)">external AI APIs</text>
       <line x1="580" y1="130" x2="600" y2="130" stroke="var(--ink-soft)" stroke-width="1"/>
       <line x1="614" y1="130" x2="630" y2="130" stroke="var(--hairline)" stroke-width="1" stroke-dasharray="3 3"/>
-      <path d="M602,125 L612,135 M612,125 L602,135" stroke="var(--flag)" stroke-width="1.6" fill="none"/>
-      <text x="607" y="152" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="var(--flag)">nothing leaves</text>
+      <path class="keep-flag" d="M602,125 L612,135 M612,125 L602,135" stroke="var(--flag)" stroke-width="1.6" fill="none"/>
+      <text class="keep-flag" x="607" y="152" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="var(--flag)">nothing leaves</text>
+      </g>
     </svg>
     <p style="margin-top:12px;font-size:13px;color:var(--ink-soft);max-width:720px;">
       Compute, database, statement archive, audit log, and backups in one Swiss region.
@@ -356,5 +387,69 @@
   </div>
 </footer>
 
+
+<script>
+/* Flow animation: sources -> pulses -> engine -> consolidated -> cursor click -> table reveal */
+(function () {
+  var wrap = document.getElementById('flow-figure');
+  var fig = document.querySelector('.consol-figure');
+  if (!wrap || !fig) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  wrap.classList.add('flow-anim');
+  fig.classList.add('pre');
+  function inView() {
+    var r = wrap.getBoundingClientRect();
+    var visible = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
+    return visible > r.height * 0.4;
+  }
+  function check() {
+    if (!inView()) return;
+    window.removeEventListener('scroll', check);
+    wrap.classList.add('play');
+    setTimeout(function () { fig.classList.add('revealed'); }, 5300);
+  }
+  window.addEventListener('scroll', check, { passive: true });
+  check();
+})();
+
+/* Compliance: cycle the four questions and light the matching part of the diagram */
+(function () {
+  var seq = [['q-data', 'dg-region'], ['q-access', 'dg-advisors'],
+             ['q-audit', 'dg-audit'], ['q-break', 'dg-egress']];
+  if (seq.some(function (p) { return !document.getElementById(p[0]) || !document.getElementById(p[1]); })) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var i = 0, timer = null;
+  function clear() {
+    seq.forEach(function (p) {
+      document.getElementById(p[0]).classList.remove('lit');
+      document.getElementById(p[1]).classList.remove('lit');
+    });
+  }
+  function light(n) {
+    clear();
+    document.getElementById(seq[n][0]).classList.add('lit');
+    document.getElementById(seq[n][1]).classList.add('lit');
+  }
+  function start() {
+    if (timer) return;
+    light(i);
+    timer = setInterval(function () { i = (i + 1) % seq.length; light(i); }, 2400);
+  }
+  function stop() { clearInterval(timer); timer = null; clear(); }
+  var section = document.getElementById('compliance');
+  function sectionVisible() {
+    var r = section.getBoundingClientRect();
+    return r.top < window.innerHeight * 0.8 && r.bottom > window.innerHeight * 0.2;
+  }
+  function watch() { sectionVisible() ? start() : stop(); }
+  window.addEventListener('scroll', watch, { passive: true });
+  watch();
+  seq.forEach(function (p, n) {
+    var card = document.getElementById(p[0]);
+    card.addEventListener('mouseenter', function () { stop(); light(n); });
+    card.addEventListener('mouseleave', function () { i = n; start(); });
+  });
+})();
+</script>
 </body>
 </html>
