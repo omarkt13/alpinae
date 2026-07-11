@@ -41,9 +41,9 @@
   </p>
 
   <div class="panel" style="margin-top:32px;">
-    <h3>Development — 12 months</h3>
+    <h3>Portfolio value — 12 months</h3>
     <div style="overflow-x:auto;">
-      <svg viewBox="0 0 640 200" style="width:100%;min-width:480px;display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Total consolidated value by month, July 2025 to June 2026, rising from 11.62 to 12.40 million francs">
+      <svg viewBox="0 0 640 200" style="width:100%;min-width:480px;display:block;" xmlns="http://www.w3.org/2000/svg" role="img" id="trend-chart" aria-label="Total portfolio value by month, July 2025 to June 2026, rising from 11.62 to 12.40 million francs">
         <!-- grid -->
         <line x1="46" y1="28" x2="620" y2="28" stroke="var(--hairline)"/>
         <line x1="46" y1="90" x2="620" y2="90" stroke="var(--hairline)"/>
@@ -64,25 +64,18 @@
         <text x="307" y="188" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Dec</text>
         <text x="464" y="188" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Mar</text>
         <text x="620" y="188" text-anchor="end" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Jun</text>
-        <!-- hover targets (native tooltips) -->
-        <g fill="transparent">
-          <rect x="20" y="16" width="52" height="154"><title>Jul 2025 · CHF 11.62M</title></rect>
-          <rect x="72" y="16" width="52" height="154"><title>Aug 2025 · CHF 11.71M</title></rect>
-          <rect x="124" y="16" width="52" height="154"><title>Sep 2025 · CHF 11.58M</title></rect>
-          <rect x="176" y="16" width="52" height="154"><title>Oct 2025 · CHF 11.83M</title></rect>
-          <rect x="228" y="16" width="53" height="154"><title>Nov 2025 · CHF 12.02M</title></rect>
-          <rect x="281" y="16" width="52" height="154"><title>Dec 2025 · CHF 11.94M</title></rect>
-          <rect x="333" y="16" width="52" height="154"><title>Jan 2026 · CHF 12.08M</title></rect>
-          <rect x="385" y="16" width="52" height="154"><title>Feb 2026 · CHF 12.19M</title></rect>
-          <rect x="437" y="16" width="53" height="154"><title>Mar 2026 · CHF 12.19M</title></rect>
-          <rect x="490" y="16" width="52" height="154"><title>Apr 2026 · CHF 12.05M</title></rect>
-          <rect x="542" y="16" width="52" height="154"><title>May 2026 · CHF 12.26M</title></rect>
-          <rect x="594" y="16" width="46" height="154"><title>Jun 2026 · CHF 12.40M</title></rect>
+        <!-- interactive crosshair + tooltip -->
+        <line id="ch-line" x1="0" x2="0" y1="16" y2="170" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="3 3" style="opacity:0;pointer-events:none;"/>
+        <circle id="ch-dot" r="4" fill="var(--pine)" stroke="var(--paper-raised)" stroke-width="2" style="opacity:0;pointer-events:none;"/>
+        <g id="ch-tip" style="opacity:0;pointer-events:none;">
+          <rect width="118" height="40" rx="6" fill="var(--ink)" opacity="0.94"/>
+          <text id="ch-tip-month" x="12" y="17" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#ffffffbb"></text>
+          <text id="ch-tip-val" x="12" y="31" font-family="'IBM Plex Mono', monospace" font-size="11.5" font-weight="500" fill="#ffffff"></text>
         </g>
       </svg>
     </div>
     <p style="font-size:12px;color:var(--ink-soft);margin-top:10px;">
-      Total consolidated value at each month end, all sources, in CHF.
+      Total portfolio value at each month end, all sources, in CHF. Hover for monthly values.
     </p>
   </div>
 
@@ -90,19 +83,22 @@
     <div class="panel" style="margin-top:0;">
       <h3>Allocation</h3>
       <div class="alloc">
-        <div class="arow"><span class="alabel">Multi-asset funds</span><span class="bar"><i style="width:47.8%"></i></span><span class="aval">47.8%</span></div>
-        <div class="arow"><span class="alabel">Equities</span><span class="bar"><i style="width:25.8%"></i></span><span class="aval">25.8%</span></div>
-        <div class="arow"><span class="alabel">Fixed income</span><span class="bar"><i style="width:11.9%"></i></span><span class="aval">11.9%</span></div>
-        <div class="arow"><span class="alabel">Cash &amp; equivalents</span><span class="bar"><i style="width:14.5%"></i></span><span class="aval">14.5%</span></div>
+        <div class="arow" title="Multi-asset funds · CHF 5,922,345"><span class="alabel">Multi-asset funds</span><span class="bar"><i style="width:47.8%"></i></span><span class="aval">47.8%</span></div>
+        <div class="arow" title="Equities · CHF 3,199,826"><span class="alabel">Equities</span><span class="bar"><i style="width:25.8%"></i></span><span class="aval">25.8%</span></div>
+        <div class="arow" title="Fixed income · CHF 1,470,480"><span class="alabel">Fixed income</span><span class="bar"><i style="width:11.9%"></i></span><span class="aval">11.9%</span></div>
+        <div class="arow" title="Cash & equivalents · CHF 1,808,617"><span class="alabel">Cash &amp; equivalents</span><span class="bar"><i style="width:14.5%"></i></span><span class="aval">14.5%</span></div>
       </div>
+      <p style="font-size:12px;color:var(--ink-soft);margin-top:14px;">
+        Share of total consolidated assets.
+      </p>
     </div>
     <div class="panel" style="margin-top:0;">
       <h3>Currency exposure</h3>
       <div class="alloc">
-        <div class="arow"><span class="alabel">CHF</span><span class="bar"><i style="width:60.3%"></i></span><span class="aval">60.3%</span></div>
-        <div class="arow"><span class="alabel">EUR</span><span class="bar"><i style="width:18.6%"></i></span><span class="aval">18.6%</span></div>
-        <div class="arow"><span class="alabel">USD</span><span class="bar"><i style="width:13.8%"></i></span><span class="aval">13.8%</span></div>
-        <div class="arow"><span class="alabel">SEK</span><span class="bar"><i style="width:7.3%"></i></span><span class="aval">7.3%</span></div>
+        <div class="arow" title="CHF assets · CHF 7,480,817"><span class="alabel">CHF</span><span class="bar"><i style="width:60.3%"></i></span><span class="aval">60.3%</span></div>
+        <div class="arow" title="EUR exposure · CHF 2,307,605"><span class="alabel">EUR</span><span class="bar"><i style="width:18.6%"></i></span><span class="aval">18.6%</span></div>
+        <div class="arow" title="USD exposure · CHF 1,713,715"><span class="alabel">USD</span><span class="bar"><i style="width:13.8%"></i></span><span class="aval">13.8%</span></div>
+        <div class="arow" title="SEK exposure · CHF 899,131"><span class="alabel">SEK</span><span class="bar"><i style="width:7.3%"></i></span><span class="aval">7.3%</span></div>
       </div>
       <p style="font-size:12px;color:var(--ink-soft);margin-top:14px;">
         After conversion to CHF at each source's valuation date.
@@ -158,5 +154,39 @@
   </p>
 </div>
 
+
+<script>
+(function () {
+  var svg = document.getElementById('trend-chart');
+  if (!svg) return;
+  var pts = [
+    ['Jul 2025', '11.62', 46, 137], ['Aug 2025', '11.71', 98, 126], ['Sep 2025', '11.58', 150, 142],
+    ['Oct 2025', '11.83', 202, 111], ['Nov 2025', '12.02', 255, 88], ['Dec 2025', '11.94', 307, 97],
+    ['Jan 2026', '12.08', 359, 80], ['Feb 2026', '12.19', 411, 67], ['Mar 2026', '12.19', 464, 67],
+    ['Apr 2026', '12.05', 516, 84], ['May 2026', '12.26', 568, 58], ['Jun 2026', '12.40', 620, 40]];
+  var cross = document.getElementById('ch-line'), dot = document.getElementById('ch-dot'),
+      tip = document.getElementById('ch-tip'),
+      tMonth = document.getElementById('ch-tip-month'), tVal = document.getElementById('ch-tip-val');
+  function show(e) {
+    var r = svg.getBoundingClientRect();
+    var x = (e.clientX - r.left) / r.width * 640;
+    if (x < 30 || x > 636) { hide(); return; }
+    var best = pts[0];
+    pts.forEach(function (p) { if (Math.abs(p[2] - x) < Math.abs(best[2] - x)) best = p; });
+    cross.setAttribute('x1', best[2]); cross.setAttribute('x2', best[2]);
+    dot.setAttribute('cx', best[2]); dot.setAttribute('cy', best[3]);
+    var tx = best[2] + 12; if (tx + 118 > 632) tx = best[2] - 130;
+    var ty = Math.max(18, best[3] - 48);
+    tip.setAttribute('transform', 'translate(' + tx + ',' + ty + ')');
+    tMonth.textContent = best[0];
+    tVal.textContent = 'CHF ' + best[1] + 'M';
+    cross.style.opacity = dot.style.opacity = tip.style.opacity = 1;
+  }
+  function hide() { cross.style.opacity = dot.style.opacity = tip.style.opacity = 0; }
+  svg.addEventListener('pointermove', show);
+  svg.addEventListener('pointerdown', show);
+  svg.addEventListener('pointerleave', hide);
+})();
+</script>
 </body>
 </html>
