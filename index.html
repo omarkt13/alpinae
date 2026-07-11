@@ -207,95 +207,68 @@
   <div class="container">
     <p class="eyebrow">Data protection &amp; audit</p>
     <h2 class="section-title">Ready for the questions your compliance officer will ask.</h2>
+    <p class="section-lede">
+      Alpinae is built to be examined. Each claim below maps to a control you can
+      inspect and an artifact you can request.
+    </p>
 
-    <div class="comp-grid">
-      <div class="qa-list">
-        <div class="qa" id="q-data">
-          <h3>Where is the data?</h3>
-          <p>Switzerland. Compute, database, statement archive, and backups in one
-          Swiss region with a Swiss-owned provider. No US-controlled processor in
-          the chain, no data leaves the jurisdiction — including for any AI
-          processing.</p>
-        </div>
-        <div class="qa" id="q-access">
-          <h3>Who can see it?</h3>
-          <p>Role-based access with mandatory two-factor authentication. Advisors
-          see only their assigned clients; compliance sees everything plus the
-          audit trail. Every read is logged — including administrators'.</p>
-        </div>
-        <div class="qa" id="q-audit">
-          <h3>Can we audit it?</h3>
-          <p>An append-only, tamper-evident log records every statement ingested,
-          every reconciliation, every report generated, and every access —
-          exportable for your own compliance file at any time.</p>
-        </div>
-        <div class="qa" id="q-break">
-          <h3>What can it break?</h3>
-          <p>Nothing. Alpinae cannot place orders, move money, or write to any
-          bank, custodian, or system of record — the capability does not exist.
-          Stop using it tomorrow and nothing in your firm changes.</p>
-        </div>
-      </div>
+    <div class="controls-wrap">
+      <table class="controls">
+        <thead>
+          <tr>
+            <th>Ref</th>
+            <th>Your question</th>
+            <th>The control</th>
+            <th>Evidence on request</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="cid">AL-01</td>
+            <td class="cq">Where is the data?</td>
+            <td class="cctl">All compute, the database, the statement archive, and backups run
+            in a single Swiss region with a Swiss-owned provider. No US-controlled
+            processor anywhere in the chain; nothing leaves the jurisdiction —
+            including AI-assisted document parsing.</td>
+            <td class="cev">Hosting contract &amp; region attestation · sub-processor register</td>
+          </tr>
+          <tr>
+            <td class="cid">AL-02</td>
+            <td class="cq">Who can see it?</td>
+            <td class="cctl">Role-based access with mandatory two-factor authentication.
+            Advisors are scoped to their assigned clients; the compliance role reads
+            everything plus the audit trail. Every read is logged — including
+            administrators'.</td>
+            <td class="cev">Access-control matrix · read-access log extract</td>
+          </tr>
+          <tr>
+            <td class="cid">AL-03</td>
+            <td class="cq">Can we audit it?</td>
+            <td class="cctl">An append-only, hash-chained log records every statement
+            ingested, every reconciliation, every report generated, and every access.
+            Each entry embeds the hash of the previous one — tampering breaks the
+            chain and is evident on verification.</td>
+            <td class="cev">Full-log CSV export · chain-verification procedure</td>
+          </tr>
+          <tr>
+            <td class="cid">AL-04</td>
+            <td class="cq">What can it break?</td>
+            <td class="cctl">Nothing. Alpinae is read-only: no write path to any bank,
+            custodian, or system of record exists in the software. Decommissioning
+            requires no unwinding — export, delete, done.</td>
+            <td class="cev">Architecture note · exit &amp; deletion procedure</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="comp-diagram">
-        <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="All infrastructure inside one Swiss region; advisors connect over TLS; nothing leaves toward foreign clouds or external AI APIs">
-          <defs>
-            <marker id="arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-              <path d="M1,1 L7,4 L1,7" fill="none" stroke="#5C6660" stroke-width="1.2"/>
-            </marker>
-          </defs>
-
-          <g id="dg-region">
-            <rect x="200" y="24" width="380" height="212" rx="12" fill="#FFFFFF" stroke="#1A2420" stroke-width="1.2"/>
-            <text x="390" y="48" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10.5" letter-spacing="1.5" fill="#1A2420">SWITZERLAND · ONE REGION · SWISS-OWNED</text>
-          </g>
-
-          <rect x="224" y="66" width="160" height="46" rx="6" fill="#FAF7F2" stroke="#E4DED2"/>
-          <text x="304" y="86" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A2420">Application</text>
-          <text x="304" y="101" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5C6660">reconciliation · reports</text>
-
-          <rect x="396" y="66" width="160" height="46" rx="6" fill="#FAF7F2" stroke="#E4DED2"/>
-          <text x="476" y="86" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A2420">Database</text>
-          <text x="476" y="101" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5C6660">encrypted at rest</text>
-
-          <g id="dg-audit">
-            <rect x="224" y="158" width="160" height="46" rx="6" fill="#FAF7F2" stroke="#E4DED2"/>
-            <text x="304" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A2420">Statement archive</text>
-            <text x="304" y="193" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5C6660">immutable · checksummed</text>
-            <rect x="396" y="158" width="160" height="46" rx="6" fill="#FAF7F2" stroke="#E4DED2"/>
-            <text x="476" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A2420">Backups &amp; audit log</text>
-            <text x="476" y="193" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5C6660">append-only · in-country</text>
-          </g>
-
-          <line x1="304" y1="112" x2="304" y2="158" stroke="#E4DED2"/>
-          <line x1="476" y1="112" x2="476" y2="158" stroke="#E4DED2"/>
-          <line x1="384" y1="89" x2="396" y2="89" stroke="#E4DED2"/>
-
-          <g id="dg-advisors">
-            <rect x="20" y="104" width="130" height="52" rx="6" fill="#FFFFFF" stroke="#E4DED2"/>
-            <text x="85" y="126" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A2420">Your advisors</text>
-            <text x="85" y="142" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5C6660">browser · read-only</text>
-            <line x1="150" y1="130" x2="196" y2="130" stroke="#5C6660" stroke-width="1" marker-end="url(#arr2)"/>
-            <text x="174" y="119" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">TLS·MFA</text>
-          </g>
-
-          <g id="dg-egress">
-            <rect x="632" y="102" width="108" height="56" rx="6" fill="none" stroke="#E4DED2" stroke-dasharray="4 4"/>
-            <text x="686" y="124" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="#5C6660">Foreign clouds,</text>
-            <text x="686" y="140" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="#5C6660">external AI APIs</text>
-            <line x1="580" y1="130" x2="600" y2="130" stroke="#5C6660" stroke-width="1"/>
-            <line x1="614" y1="130" x2="630" y2="130" stroke="#E4DED2" stroke-width="1" stroke-dasharray="3 3"/>
-            <path class="keep-flag" d="M602,125 L612,135 M612,125 L602,135" stroke="#A63A2E" stroke-width="1.6" fill="none"/>
-            <text class="keep-flag" x="607" y="152" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#A63A2E">nothing leaves</text>
-          </g>
-        </svg>
-        <p class="dg-caption">
-          Compute, database, statement archive, audit log, and backups in one Swiss
-          region. Advisors connect read-only over TLS with mandatory two-factor
-          authentication. No processor outside Switzerland — including for
-          AI-assisted document parsing.
-        </p>
-      </div>
+    <div class="residency">
+      <div class="ritem"><span class="rk">Data location</span><span class="rv">Switzerland · one region</span></div>
+      <div class="ritem"><span class="rk">Provider</span><span class="rv">Swiss-owned</span></div>
+      <div class="ritem"><span class="rk">Sub-processors</span><span class="rv">None</span></div>
+      <div class="ritem"><span class="rk">External AI APIs</span><span class="rv">None — parsing stays in-region</span></div>
+      <div class="ritem"><span class="rk">Encryption</span><span class="rv">At rest &amp; in transit</span></div>
+      <div class="ritem"><span class="rk">Access</span><span class="rv">MFA · role-based · read-only</span></div>
     </div>
 
     <div class="guardrail">
@@ -304,6 +277,12 @@
       Alpinae stops and asks you first. One client's positions never appear in
       another client's report.</span>
     </div>
+
+    <p class="comp-cta">
+      The complete compliance pack — architecture note, audit-log sample, exit
+      procedure — is available under NDA.
+      <a href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20compliance%20pack">Request it →</a>
+    </p>
   </div>
 </section>
 
@@ -417,45 +396,6 @@
   }
   window.addEventListener('scroll', check, { passive: true });
   check();
-})();
-
-/* Compliance: the four questions light in sequence, with the matching part of
-   the diagram; hovering a question pins its pair. */
-(function () {
-  var seq = [['q-data', 'dg-region'], ['q-access', 'dg-advisors'],
-             ['q-audit', 'dg-audit'], ['q-break', 'dg-egress']];
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  var section = document.getElementById('compliance');
-  var i = 0, timer = null;
-  function clear() {
-    seq.forEach(function (p) {
-      document.getElementById(p[0]).classList.remove('lit');
-      document.getElementById(p[1]).classList.remove('lit');
-    });
-  }
-  function light(n) {
-    clear();
-    document.getElementById(seq[n][0]).classList.add('lit');
-    document.getElementById(seq[n][1]).classList.add('lit');
-  }
-  function start() {
-    if (timer) return;
-    light(i);
-    timer = setInterval(function () { i = (i + 1) % seq.length; light(i); }, 2600);
-  }
-  function stop() { clearInterval(timer); timer = null; clear(); }
-  function visible() {
-    var r = section.getBoundingClientRect();
-    return r.top < window.innerHeight * 0.8 && r.bottom > window.innerHeight * 0.2;
-  }
-  function watch() { visible() ? start() : stop(); }
-  window.addEventListener('scroll', watch, { passive: true });
-  watch();
-  seq.forEach(function (p, n) {
-    var card = document.getElementById(p[0]);
-    card.addEventListener('mouseenter', function () { stop(); light(n); });
-    card.addEventListener('mouseleave', function () { i = n; start(); });
-  });
 })();
 </script>
 
