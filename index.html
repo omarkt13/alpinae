@@ -302,7 +302,7 @@
             <button class="cchip on" type="button">01 · Residency</button>
             <button class="cchip" type="button">02 · Access</button>
             <button class="cchip" type="button">03 · Auditability</button>
-            <button class="cchip" type="button">04 · Write path</button>
+            <button class="cchip" type="button">04 · Failure mode</button>
             <button class="cchip" type="button">05 · Segregation</button>
           </div>
           <h4 id="cq">Where is the data?</h4>
@@ -453,12 +453,12 @@
       t: 'An append-only, hash-chained log records every statement ingested, every reconciliation, every report generated, and every access. Tampering breaks the chain and is evident on verification.',
       ev: 'full-log CSV export · chain-verification procedure',
       targets: ['vg-log', 'vg-arch'] },
-    { q: 'What can it break?',
-      t: 'Nothing. Alpinae is read-only: no write path to any bank, custodian, or system of record exists in the software. Stop using it tomorrow and nothing in your firm changes.',
+    { q: 'What happens when it breaks?',
+      t: 'Your firm keeps working. Alpinae is read-only — no write path to any bank, custodian, or system of record exists — so an outage costs you a convenience, never a capability. Your statements remain at your custodians; your reports still go out. Stop using it tomorrow and nothing changes.',
       ev: 'architecture note · exit & deletion procedure',
       targets: ['vg-egress'] },
     { q: 'Can a statement land in the wrong client?',
-      t: "Every uploaded file's account holder is read and compared to the client space before anything is parsed. A mismatch blocks reconciliation until a person decides — one client's positions never appear in another client's report.",
+      t: "Every uploaded file's account holder is read and compared to the client space before anything is parsed. A mismatch blocks reconciliation until you decide — one client's positions never appear in another client's report.",
       ev: 'mismatch flags & resolutions in the audit log · live in the demo',
       targets: ['vg-gate'] }
   ];
