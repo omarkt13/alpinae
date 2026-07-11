@@ -4,420 +4,428 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alpinae — Consolidated reconciliation &amp; reporting for Swiss wealth managers</title>
-<meta name="description" content="Alpinae consolidates your proprietary fund and third-party custodian statements into one accurate, fully traceable exposure view. Swiss-hosted. Read-only.">
+<meta name="description" content="Alpinae consolidates your proprietary fund and third-party custodian statements into one accurate, fully traceable exposure view. Swiss made and hosted.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/landing.css">
 </head>
 <body>
 
-<nav class="mk-nav">
-  <a class="wordmark" href="index.html">Alpinae<span class="dot">.</span></a>
-  <div class="links">
-    <a href="#product">Product</a>
-    <a href="#compliance">Compliance</a>
-    <a href="#what-it-is-not">What it is not</a>
-    <a href="demo/advisor.html">Demo</a>
-    <a class="btn btn-primary btn-sm" href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20pilot">Request a pilot</a>
+<nav class="nav">
+  <div class="container nav-inner">
+    <a class="wordmark" href="index.html">Alpinae<span class="dot">.</span></a>
+    <div class="nav-links">
+      <a href="#product">Product</a>
+      <a href="#compliance">Compliance</a>
+      <a href="#what-it-is-not">What it is not</a>
+      <a href="demo/advisor.html">Demo</a>
+      <a class="btn btn-primary btn-sm" href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20pilot">Request a pilot</a>
+    </div>
   </div>
 </nav>
 
-<hr class="mk-rule">
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <p class="eyebrow">For FINMA- and CSSF-regulated wealth managers</p>
+      <h1>The simple, secure way to reconcile, aggregate, and communicate client data.</h1>
+      <p class="sub">
+        Alpinae consolidates your proprietary fund and every third-party custodian
+        statement into one accurate, traceable exposure view — delivered in the
+        report format you already send. Swiss made and Swiss hosted. Full FINMA
+        and CSSF compliance.
+      </p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="demo/advisor.html">See the advisor demo</a>
+        <a class="btn btn-ghost" href="demo/client.html">See the client view</a>
+      </div>
+    </div>
 
-<header class="mk-section hero">
-  <p class="eyebrow">For FINMA- and CSSF-regulated wealth managers</p>
-  <h1 style="margin-top:16px;">The simple, secure way to reconcile, aggregate, and communicate client data.</h1>
-  <p class="sub">
-    Alpinae consolidates your proprietary fund and every third-party custodian
-    statement into one accurate, traceable exposure view — delivered in the report
-    format you already send. Swiss made and Swiss hosted. Full FINMA and CSSF
-    compliance.
-  </p>
-  <div class="ctas">
-    <a class="btn btn-primary" href="demo/advisor.html">See the advisor demo</a>
-    <a class="btn btn-ghost" href="demo/client.html">See the client view</a>
+    <div class="snapshot" aria-label="Example consolidated position">
+      <div class="snapshot-head">
+        <span class="who">A. Keller</span>
+        <span class="src">4 sources · reconciled</span>
+      </div>
+      <p class="label">Total consolidated</p>
+      <div class="total">CHF 12,401,268</div>
+      <p class="asof">as of 30 Jun 2026 · base CHF</p>
+      <div class="rows">
+        <div class="row"><span class="lbl">Multi-asset funds</span><span class="bar"><i style="width:47.8%"></i></span><span class="val">47.8%</span></div>
+        <div class="row"><span class="lbl">Equities</span><span class="bar"><i style="width:25.8%"></i></span><span class="val">25.8%</span></div>
+        <div class="row"><span class="lbl">Fixed income</span><span class="bar"><i style="width:11.9%"></i></span><span class="val">11.9%</span></div>
+        <div class="row"><span class="lbl">Cash &amp; equiv.</span><span class="bar"><i style="width:14.5%"></i></span><span class="val">14.5%</span></div>
+      </div>
+      <div class="snapshot-foot">
+        <span class="flag">⚑ 1 valuation-date flag</span>
+        <span>every figure traceable</span>
+      </div>
+    </div>
   </div>
-  <p class="provenance">
-    Data never leaves Switzerland. Read-only, always. Every figure traceable
-    to its source statement.
-  </p>
 </header>
 
-<hr class="mk-rule">
-
-<section class="mk-section" id="product">
-  <p class="eyebrow">The problem</p>
-  <h2 class="mk-h2" style="margin-top:14px;">"What is this client's total exposure right now?" should not be a project.</h2>
-  <p class="mk-lede">
-    When a client holds your fund plus mandates at three outside banks, answering that
-    question means collecting four differently-formatted statements and rebuilding the
-    picture in a spreadsheet. It is slow, it is error-prone, and in a regulated
-    environment a manual error reaching a client — or a regulator — is a serious problem.
-  </p>
-
-  <div class="mk-grid cols-3">
-    <div class="mk-card">
-      <span class="step-no">01</span>
-      <h3>Drop the statements</h3>
-      <p>Your fund's Excel printout and each custodian's statement, dragged into the
-      client's space. Alpinae reads the account holder on every file and flags any
-      mismatch before it touches a number.</p>
-    </div>
-    <div class="mk-card">
-      <span class="step-no">02</span>
-      <h3>Alpinae reconciles</h3>
-      <p>Instrument names are matched across custodians, currencies normalised,
-      valuation dates checked. The result: one consolidated exposure view, with the
-      arithmetic shown.</p>
-    </div>
-    <div class="mk-card">
-      <span class="step-no">03</span>
-      <h3>Your report, your format</h3>
-      <p>The consolidated view lands in the reporting format you already send —
-      no manual assembly, nothing to re-learn. You review, you approve, you send.</p>
-    </div>
+<div class="facts">
+  <div class="container facts-inner">
+    <span class="fact">Swiss made &amp; hosted</span>
+    <span class="fact">Read-only, always</span>
+    <span class="fact">FINMA &amp; CSSF aligned</span>
+    <span class="fact">Every figure traceable</span>
   </div>
+</div>
 
-  <!-- Flow diagram: many statements -> one view (animated) -->
-  <div style="margin-top:56px;overflow-x:auto;">
-    <div id="flow-figure" style="max-width:720px;">
-    <svg viewBox="0 0 760 300" style="width:100%;min-width:560px;display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four differently-formatted statements flow into Alpinae and out as one consolidated view">
-      <defs>
-        <marker id="arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-          <path d="M1,1 L7,4 L1,7" fill="none" stroke="var(--ink-soft)" stroke-width="1.2"/>
-        </marker>
-        <marker id="arr-pine" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-          <path d="M1,1 L7,4 L1,7" fill="none" stroke="var(--pine)" stroke-width="1.4"/>
-        </marker>
-      </defs>
-
-      <!-- Source documents -->
-      <g class="anim-src" id="as1">
-        <rect x="20" y="16" width="190" height="58" rx="6" fill="var(--paper-raised)" stroke="var(--hairline)"/>
-        <text x="36" y="40" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Fund printout · proprietary</text>
-        <text x="36" y="57" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">XLSX · CHF · 9 rows</text>
-      </g>
-      <g class="anim-src" id="as2">
-        <rect x="20" y="86" width="190" height="58" rx="6" fill="var(--paper-raised)" stroke="var(--hairline)"/>
-        <text x="36" y="110" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Custody · Geneva</text>
-        <text x="36" y="127" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">PDF · CHF/USD · 13 rows</text>
-      </g>
-      <g class="anim-src" id="as3">
-        <rect x="20" y="156" width="190" height="58" rx="6" fill="var(--paper-raised)" stroke="var(--hairline)"/>
-        <text x="36" y="180" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Mandate · Luxembourg</text>
-        <text x="36" y="197" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">PDF · EUR · 5 rows</text>
-      </g>
-      <g class="anim-src" id="as4">
-        <rect x="20" y="226" width="190" height="58" rx="6" fill="var(--paper-raised)" stroke="var(--hairline)"/>
-        <text x="36" y="250" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Portfolio · Stockholm</text>
-        <text x="36" y="267" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">PDF · SEK · 7 rows</text>
-      </g>
-
-      <!-- Connectors into the engine -->
-      <path id="p1" class="anim-path" pathLength="1" d="M210,45 C280,45 258,136 320,142" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
-      <path id="p2" class="anim-path" pathLength="1" d="M210,115 C262,115 268,144 320,147" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
-      <path id="p3" class="anim-path" pathLength="1" d="M210,185 C262,185 268,156 320,153" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
-      <path id="p4" class="anim-path" pathLength="1" d="M210,255 C280,255 258,164 320,158" fill="none" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr)"/>
-
-      <!-- Data pulses travelling the connectors -->
-      <circle class="flow-dot" r="2.6" fill="var(--pine)">
-        <animateMotion dur="1.6s" begin="1.8s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion>
-      </circle>
-      <circle class="flow-dot" r="2.6" fill="var(--pine)">
-        <animateMotion dur="1.6s" begin="2.1s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion>
-      </circle>
-      <circle class="flow-dot" r="2.6" fill="var(--pine)">
-        <animateMotion dur="1.6s" begin="2.4s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion>
-      </circle>
-      <circle class="flow-dot" r="2.6" fill="var(--pine)">
-        <animateMotion dur="1.6s" begin="2.7s" repeatCount="indefinite"><mpath href="#p4"/></animateMotion>
-      </circle>
-
-      <!-- Engine -->
-      <g>
-        <rect class="eng-rect" x="322" y="106" width="166" height="88" rx="8" fill="var(--paper-raised)" stroke="var(--pine)" stroke-width="1.3"/>
-        <text x="405" y="136" text-anchor="middle" font-family="'EB Garamond', serif" font-size="19" font-weight="600" fill="var(--ink)">Alpinae</text>
-        <text x="405" y="156" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">verify · match · normalise</text>
-        <text x="405" y="171" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">every figure traced</text>
-      </g>
-
-      <!-- Output -->
-      <path id="pout" class="anim-path" pathLength="1" d="M488,150 C520,150 528,150 556,150" fill="none" stroke="var(--pine)" stroke-width="1.3" marker-end="url(#arr-pine)"/>
-      <g class="anim-out">
-        <rect x="558" y="96" width="182" height="108" rx="8" fill="var(--paper-raised)" stroke="var(--hairline)"/>
-        <text x="574" y="122" font-family="Inter, sans-serif" font-size="12.5" font-weight="600" fill="var(--ink)">Consolidated view</text>
-        <text x="574" y="146" font-family="'IBM Plex Mono', monospace" font-size="15" font-weight="500" fill="var(--ink)">CHF 12,401,268</text>
-        <line x1="574" y1="160" x2="724" y2="160" stroke="var(--hairline)"/>
-        <text x="574" y="178" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">8 positions · as of 30 Jun</text>
-        <text x="574" y="192" font-family="'IBM Plex Mono', monospace" font-size="10.5" fill="var(--ink-soft)">34 source rows · 1 flag</text>
-      </g>
-
-      <!-- Cursor click on the consolidated view -->
-      <circle id="ripple" cx="642" cy="154" r="5" fill="none" stroke="var(--pine)" stroke-width="1.6"/>
-      <g class="anim-cursor" transform="translate(730,290)">
-        <path d="M0,0 L0,16 L4.6,12.6 L8,19.6 L10.4,18.4 L7,11.4 L12.6,11.4 Z"
-              fill="var(--ink)" stroke="#fff" stroke-width="1.2"/>
-      </g>
-    </svg>
-    </div>
-  </div>
-
-  <!-- Product figure: a real consolidated table -->
-  <div class="consol-figure">
-    <div class="figure-head">
-      <div>
-        <strong style="font-size:14.5px;">Consolidated exposure — A. Keller</strong>
-        <span class="badge" style="margin-left:10px;">4 sources</span>
-      </div>
-      <span class="num" style="font-size:12.5px;color:var(--ink-soft);">as of 30 Jun 2026 · base CHF</span>
-    </div>
-    <div style="overflow-x:auto;">
-      <table class="holdings">
-        <thead>
-          <tr>
-            <th>Instrument</th><th>Held at</th><th class="num">Quantity</th>
-            <th class="num">Value (CHF)</th><th class="num">Weight</th><th>Source</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="group-row">
-            <td>Nestlé SA · CH0038863350</td><td>2 custodians</td>
-            <td class="num">11,700</td><td class="num">1,301,742</td><td class="num">10.5%</td>
-            <td><a class="trace-btn" href="demo/advisor.html">⌕ trace</a></td>
-          </tr>
-          <tr class="src-row">
-            <td>"NESTLE SA REG SHS"</td><td>Banque Cantonale Privée</td>
-            <td class="num">8,200</td><td class="num">912,314</td><td class="num"></td>
-            <td class="num" style="font-size:12px;">stmt p.2 · l.14</td>
-          </tr>
-          <tr class="src-row">
-            <td>"Nestle N"</td><td>Edmond Frères &amp; Cie</td>
-            <td class="num">3,500</td><td class="num">389,428</td><td class="num"></td>
-            <td class="num" style="font-size:12px;">stmt p.1 · l.6</td>
-          </tr>
-          <tr class="group-row">
-            <td>US Treasury 4.25% 2031 · US91282CJK15</td><td>2 custodians</td>
-            <td class="num">1,650,000</td><td class="num">1,470,480</td><td class="num">11.9%</td>
-            <td><a class="trace-btn" href="demo/advisor.html">⌕ trace</a></td>
-          </tr>
-          <tr class="group-row">
-            <td>Valmont Global Allocation Fund</td><td>Proprietary</td>
-            <td class="num">38,500</td><td class="num">4,819,815</td><td class="num">38.9%</td>
-            <td><a class="trace-btn" href="demo/advisor.html">⌕ trace</a></td>
-          </tr>
-          <tr class="src-row">
-            <td>… 5 further positions</td><td></td>
-            <td class="num"></td><td class="num">4,809,231</td><td class="num">38.7%</td>
-            <td></td>
-          </tr>
-          <tr class="total-row">
-            <td>Total consolidated</td><td></td><td></td>
-            <td class="num">12,401,268</td><td class="num">100.0%</td><td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  <p style="margin-top:14px;font-size:13px;color:var(--ink-soft);">
-    Illustrative data. Every consolidated figure carries a trace back to the statement,
-    page, and line it came from — including the FX rate applied.
-  </p>
-</section>
-
-<hr class="mk-rule">
-
-<section class="mk-section" id="compliance">
-  <p class="eyebrow">Data protection &amp; audit</p>
-  <h2 class="mk-h2" style="margin-top:14px;">Ready for the questions your compliance officer will ask.</h2>
-
-  <div class="mk-grid cols-2">
-    <div class="mk-card qcard" id="q-data">
-      <h3>Where is the data?</h3>
-      <p>Switzerland. Compute, database, statement archive, and backups in one Swiss
-      region with a Swiss-owned provider. No US-controlled processor in the chain,
-      no data leaves the jurisdiction — including for any AI processing.</p>
-    </div>
-    <div class="mk-card qcard" id="q-access">
-      <h3>Who can see it?</h3>
-      <p>Role-based access with mandatory two-factor authentication. Advisors see only
-      their assigned clients; compliance sees everything plus the audit trail. Every
-      read is logged — including administrators'.</p>
-    </div>
-    <div class="mk-card qcard" id="q-audit">
-      <h3>Can we audit it?</h3>
-      <p>An append-only, tamper-evident log records every statement ingested, every
-      reconciliation, every report generated, and every access — exportable for your
-      own compliance file at any time.</p>
-    </div>
-    <div class="mk-card qcard" id="q-break">
-      <h3>What can it break?</h3>
-      <p>Nothing. Alpinae cannot place orders, move money, or write to any bank,
-      custodian, or system of record — the capability does not exist. Stop using it
-      tomorrow and nothing in your firm changes.</p>
-    </div>
-  </div>
-
-  <!-- Swiss data-perimeter diagram -->
-  <div style="margin-top:48px;overflow-x:auto;">
-    <svg viewBox="0 0 760 260" style="width:100%;max-width:720px;min-width:560px;display:block;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="All infrastructure inside one Swiss region; advisors connect over TLS; nothing leaves toward foreign clouds or external AI APIs">
-      <defs>
-        <marker id="arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-          <path d="M1,1 L7,4 L1,7" fill="none" stroke="var(--ink-soft)" stroke-width="1.2"/>
-        </marker>
-      </defs>
-
-      <!-- Perimeter -->
-      <g id="dg-region">
-      <rect x="200" y="24" width="380" height="212" rx="12" fill="var(--paper-raised)" stroke="var(--ink)" stroke-width="1.2"/>
-      <text x="390" y="48" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10.5" letter-spacing="1.5" fill="var(--ink)">SWITZERLAND · ONE REGION · SWISS-OWNED PROVIDER</text>
-      </g>
-
-      <!-- Inside boxes -->
-      <rect x="224" y="66" width="160" height="46" rx="6" fill="var(--paper)" stroke="var(--hairline)"/>
-      <text x="304" y="86" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Application</text>
-      <text x="304" y="101" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="var(--ink-soft)">reconciliation · reports</text>
-
-      <rect x="396" y="66" width="160" height="46" rx="6" fill="var(--paper)" stroke="var(--hairline)"/>
-      <text x="476" y="86" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Database</text>
-      <text x="476" y="101" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="var(--ink-soft)">encrypted at rest</text>
-
-      <g id="dg-audit">
-      <rect x="224" y="158" width="160" height="46" rx="6" fill="var(--paper)" stroke="var(--hairline)"/>
-      <text x="304" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Statement archive</text>
-      <text x="304" y="193" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="var(--ink-soft)">immutable · checksummed</text>
-
-      <rect x="396" y="158" width="160" height="46" rx="6" fill="var(--paper)" stroke="var(--hairline)"/>
-      <text x="476" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Backups &amp; audit log</text>
-      <text x="476" y="193" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="var(--ink-soft)">append-only · in-country</text>
-      </g>
-
-      <line x1="304" y1="112" x2="304" y2="158" stroke="var(--hairline)"/>
-      <line x1="476" y1="112" x2="476" y2="158" stroke="var(--hairline)"/>
-      <line x1="384" y1="89" x2="396" y2="89" stroke="var(--hairline)"/>
-
-      <!-- Advisors entering -->
-      <g id="dg-advisors">
-      <rect x="20" y="104" width="130" height="52" rx="6" fill="var(--paper-raised)" stroke="var(--hairline)"/>
-      <text x="85" y="126" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="var(--ink)">Your advisors</text>
-      <text x="85" y="142" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="var(--ink-soft)">browser · read-only</text>
-      <line x1="150" y1="130" x2="196" y2="130" stroke="var(--ink-soft)" stroke-width="1" marker-end="url(#arr2)"/>
-      <text x="174" y="119" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="var(--ink-soft)">TLS·MFA</text>
-      </g>
-
-      <!-- Blocked egress -->
-      <g id="dg-egress">
-      <rect x="632" y="102" width="108" height="56" rx="6" fill="none" stroke="var(--hairline)" stroke-dasharray="4 4"/>
-      <text x="686" y="124" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="var(--ink-soft)">Foreign clouds,</text>
-      <text x="686" y="140" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="var(--ink-soft)">external AI APIs</text>
-      <line x1="580" y1="130" x2="600" y2="130" stroke="var(--ink-soft)" stroke-width="1"/>
-      <line x1="614" y1="130" x2="630" y2="130" stroke="var(--hairline)" stroke-width="1" stroke-dasharray="3 3"/>
-      <path class="keep-flag" d="M602,125 L612,135 M612,125 L602,135" stroke="var(--flag)" stroke-width="1.6" fill="none"/>
-      <text class="keep-flag" x="607" y="152" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="var(--flag)">nothing leaves</text>
-      </g>
-    </svg>
-    <p style="margin-top:12px;font-size:13px;color:var(--ink-soft);max-width:720px;">
-      Compute, database, statement archive, audit log, and backups in one Swiss region.
-      Advisors connect read-only over TLS with mandatory two-factor authentication.
-      No processor outside Switzerland — including for AI-assisted document parsing.
+<section class="section" id="product">
+  <div class="container">
+    <p class="eyebrow">The problem</p>
+    <h2 class="section-title">"What is this client's total exposure right now?" should not be a project.</h2>
+    <p class="section-lede">
+      When a client holds your fund plus mandates at three outside banks, answering
+      that question means collecting four differently-formatted statements and
+      rebuilding the picture in a spreadsheet. Slow, error-prone — and in a
+      regulated environment, a manual error reaching a client or a regulator is a
+      serious problem.
     </p>
-  </div>
 
-  <div class="callout flag" style="max-width:760px;margin-top:36px;">
-    <span class="glyph">⚑</span>
-    <span>If a statement doesn't match the client space it was dropped into,
-    Alpinae stops and asks you first. One client's positions never appear in
-    another client's report.</span>
-  </div>
-</section>
-
-<hr class="mk-rule">
-
-<section class="mk-section" id="what-it-is-not">
-  <p class="eyebrow">By design</p>
-  <h2 class="mk-h2" style="margin-top:14px;">What Alpinae is not.</h2>
-  <p class="mk-lede">Alpinae is additive by design: it sits on top of what you already run, and asks you to change nothing.</p>
-
-  <div class="notlist">
-    <div class="row">
-      <strong>Not a CRM</strong>
-      <span>No system-of-record migration, no data entry, no dependency on your CRM —
-      or anyone else's. A lightweight client directory routes statements to the right
-      client space; that's all.</span>
-    </div>
-    <div class="row">
-      <strong>Not a replacement for Excel</strong>
-      <span>Your fund printout stays an Excel printout. Your report stays in your format.
-      Alpinae removes the reconciliation labour between the two.</span>
-    </div>
-    <div class="row">
-      <strong>Not a decision-maker</strong>
-      <span>Alpinae computes; you approve. Nothing reaches a client or a regulator
-      without your sign-off, and every warning waits for your decision.</span>
-    </div>
-    <div class="row">
-      <strong>Not a client portal — until you say so</strong>
-      <span>Internal by default. A read-only client view exists and is switched on per
-      client, only when you decide it should be.</span>
+    <div class="steps">
+      <div class="step">
+        <span class="no">01</span>
+        <h3>Drop the statements</h3>
+        <p>Your fund's Excel printout and each custodian's statement, dragged into
+        the client's space. Alpinae reads the account holder on every file and
+        flags any mismatch before it touches a number.</p>
+      </div>
+      <div class="step">
+        <span class="no">02</span>
+        <h3>Alpinae reconciles</h3>
+        <p>Instrument names matched across custodians, currencies normalised,
+        valuation dates checked. One consolidated exposure view, with the
+        arithmetic shown.</p>
+      </div>
+      <div class="step">
+        <span class="no">03</span>
+        <h3>Your report, your format</h3>
+        <p>The consolidated view lands in the reporting format you already send —
+        no manual assembly, nothing to re-learn. You review, you approve, you send.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="mk-section tight">
-  <div class="mk-cta-band">
+<section class="section">
+  <div class="container">
+    <p class="eyebrow">In practice</p>
+    <h2 class="section-title">Four statements in. One reconciled truth out.</h2>
+
+    <div class="screen" id="screen" data-stage="3">
+      <div class="screen-bar">
+        <span class="dots"><i></i><i></i><i></i></span>
+        <span class="url">app.alpinae.ch · A. Keller · Q2 2026</span>
+        <button class="replay" id="replay" type="button">↻ replay</button>
+      </div>
+      <div class="screen-body">
+
+        <div class="files">
+          <div class="file">
+            <svg width="13" height="16" viewBox="0 0 13 16" fill="none"><path d="M1 1h7l4 4v10H1z" stroke="#5C6660" stroke-width="1.1"/><path d="M8 1v4h4" stroke="#5C6660" stroke-width="1.1"/></svg>
+            <div><div class="fname">Valmont fund printout</div><div class="fmeta">XLSX · CHF · 9 rows</div></div>
+          </div>
+          <div class="file">
+            <svg width="13" height="16" viewBox="0 0 13 16" fill="none"><path d="M1 1h7l4 4v10H1z" stroke="#5C6660" stroke-width="1.1"/><path d="M8 1v4h4" stroke="#5C6660" stroke-width="1.1"/></svg>
+            <div><div class="fname">BCP custody statement</div><div class="fmeta">PDF · CHF/USD · 13 rows</div></div>
+          </div>
+          <div class="file">
+            <svg width="13" height="16" viewBox="0 0 13 16" fill="none"><path d="M1 1h7l4 4v10H1z" stroke="#5C6660" stroke-width="1.1"/><path d="M8 1v4h4" stroke="#5C6660" stroke-width="1.1"/></svg>
+            <div><div class="fname">Edmond Frères mandate</div><div class="fmeta">PDF · EUR · 5 rows</div></div>
+          </div>
+          <div class="file">
+            <svg width="13" height="16" viewBox="0 0 13 16" fill="none"><path d="M1 1h7l4 4v10H1z" stroke="#5C6660" stroke-width="1.1"/><path d="M8 1v4h4" stroke="#5C6660" stroke-width="1.1"/></svg>
+            <div><div class="fname">Nordkap portfolio</div><div class="fmeta">PDF · SEK · 7 rows</div></div>
+          </div>
+        </div>
+
+        <div class="process">
+          <div class="proc-track"><i></i></div>
+          <span class="proc-txt done" id="proc-txt">reconciled ✓ · 34 rows → 8 positions · 1 flag</span>
+        </div>
+
+        <div class="result">
+          <div class="result-head">
+            <span class="rh-title">Consolidated exposure — A. Keller</span>
+            <span class="rh-meta">as of 30 Jun 2026 · base CHF</span>
+          </div>
+          <div style="overflow-x:auto;">
+            <table class="rtable">
+              <thead>
+                <tr>
+                  <th>Instrument</th><th>Held at</th><th class="r">Value (CHF)</th><th class="r">Weight</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Valmont Global Allocation Fund</td>
+                  <td><span class="sub">Proprietary</span></td>
+                  <td class="r">4,819,815</td><td class="r">38.9%</td>
+                </tr>
+                <tr>
+                  <td>Nestlé SA · CH0038863350</td>
+                  <td><span class="sub">2 custodians</span></td>
+                  <td class="r">1,301,742</td><td class="r">10.5%</td>
+                </tr>
+                <tr>
+                  <td>US Treasury 4.25% 2031</td>
+                  <td><span class="sub">2 custodians</span></td>
+                  <td class="r">1,470,480</td><td class="r">11.9%</td>
+                </tr>
+                <tr>
+                  <td>Investor AB ser. B<span class="chip-flag">27 JUN</span></td>
+                  <td><span class="sub">Nordkap AM</span></td>
+                  <td class="r">512,236</td><td class="r">4.1%</td>
+                </tr>
+                <tr>
+                  <td><span class="sub">… 4 further positions</span></td>
+                  <td></td>
+                  <td class="r">4,296,995</td><td class="r">34.6%</td>
+                </tr>
+                <tr class="rtotal">
+                  <td>Total consolidated</td><td></td>
+                  <td class="r">12,401,268</td><td class="r">100.0%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="result-caption">
+            Every figure traceable to its source statement — page, line, and FX rate.
+            <a href="demo/advisor.html">Open the full demo →</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="compliance">
+  <div class="container">
+    <p class="eyebrow">Data protection &amp; audit</p>
+    <h2 class="section-title">Ready for the questions your compliance officer will ask.</h2>
+
+    <div class="comp-grid">
+      <div class="qa-list">
+        <div class="qa" id="q-data">
+          <h3>Where is the data?</h3>
+          <p>Switzerland. Compute, database, statement archive, and backups in one
+          Swiss region with a Swiss-owned provider. No US-controlled processor in
+          the chain, no data leaves the jurisdiction — including for any AI
+          processing.</p>
+        </div>
+        <div class="qa" id="q-access">
+          <h3>Who can see it?</h3>
+          <p>Role-based access with mandatory two-factor authentication. Advisors
+          see only their assigned clients; compliance sees everything plus the
+          audit trail. Every read is logged — including administrators'.</p>
+        </div>
+        <div class="qa" id="q-audit">
+          <h3>Can we audit it?</h3>
+          <p>An append-only, tamper-evident log records every statement ingested,
+          every reconciliation, every report generated, and every access —
+          exportable for your own compliance file at any time.</p>
+        </div>
+        <div class="qa" id="q-break">
+          <h3>What can it break?</h3>
+          <p>Nothing. Alpinae cannot place orders, move money, or write to any
+          bank, custodian, or system of record — the capability does not exist.
+          Stop using it tomorrow and nothing in your firm changes.</p>
+        </div>
+      </div>
+
+      <div class="comp-diagram">
+        <svg viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="All infrastructure inside one Swiss region; advisors connect over TLS; nothing leaves toward foreign clouds or external AI APIs">
+          <defs>
+            <marker id="arr2" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M1,1 L7,4 L1,7" fill="none" stroke="#5C6660" stroke-width="1.2"/>
+            </marker>
+          </defs>
+
+          <g id="dg-region">
+            <rect x="200" y="24" width="380" height="212" rx="12" fill="#FFFFFF" stroke="#1A2420" stroke-width="1.2"/>
+            <text x="390" y="48" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10.5" letter-spacing="1.5" fill="#1A2420">SWITZERLAND · ONE REGION · SWISS-OWNED</text>
+          </g>
+
+          <rect x="224" y="66" width="160" height="46" rx="6" fill="#FAF7F2" stroke="#E4DED2"/>
+          <text x="304" y="86" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A2420">Application</text>
+          <text x="304" y="101" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5C6660">reconciliation · reports</text>
+
+          <rect x="396" y="66" width="160" height="46" rx="6" fill="#FAF7F2" stroke="#E4DED2"/>
+          <text x="476" y="86" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A2420">Database</text>
+          <text x="476" y="101" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5C6660">encrypted at rest</text>
+
+          <g id="dg-audit">
+            <rect x="224" y="158" width="160" height="46" rx="6" fill="#FAF7F2" stroke="#E4DED2"/>
+            <text x="304" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A2420">Statement archive</text>
+            <text x="304" y="193" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5C6660">immutable · checksummed</text>
+            <rect x="396" y="158" width="160" height="46" rx="6" fill="#FAF7F2" stroke="#E4DED2"/>
+            <text x="476" y="178" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A2420">Backups &amp; audit log</text>
+            <text x="476" y="193" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5C6660">append-only · in-country</text>
+          </g>
+
+          <line x1="304" y1="112" x2="304" y2="158" stroke="#E4DED2"/>
+          <line x1="476" y1="112" x2="476" y2="158" stroke="#E4DED2"/>
+          <line x1="384" y1="89" x2="396" y2="89" stroke="#E4DED2"/>
+
+          <g id="dg-advisors">
+            <rect x="20" y="104" width="130" height="52" rx="6" fill="#FFFFFF" stroke="#E4DED2"/>
+            <text x="85" y="126" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#1A2420">Your advisors</text>
+            <text x="85" y="142" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9.5" fill="#5C6660">browser · read-only</text>
+            <line x1="150" y1="130" x2="196" y2="130" stroke="#5C6660" stroke-width="1" marker-end="url(#arr2)"/>
+            <text x="174" y="119" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">TLS·MFA</text>
+          </g>
+
+          <g id="dg-egress">
+            <rect x="632" y="102" width="108" height="56" rx="6" fill="none" stroke="#E4DED2" stroke-dasharray="4 4"/>
+            <text x="686" y="124" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="#5C6660">Foreign clouds,</text>
+            <text x="686" y="140" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" fill="#5C6660">external AI APIs</text>
+            <line x1="580" y1="130" x2="600" y2="130" stroke="#5C6660" stroke-width="1"/>
+            <line x1="614" y1="130" x2="630" y2="130" stroke="#E4DED2" stroke-width="1" stroke-dasharray="3 3"/>
+            <path class="keep-flag" d="M602,125 L612,135 M612,125 L602,135" stroke="#A63A2E" stroke-width="1.6" fill="none"/>
+            <text class="keep-flag" x="607" y="152" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#A63A2E">nothing leaves</text>
+          </g>
+        </svg>
+        <p class="dg-caption">
+          Compute, database, statement archive, audit log, and backups in one Swiss
+          region. Advisors connect read-only over TLS with mandatory two-factor
+          authentication. No processor outside Switzerland — including for
+          AI-assisted document parsing.
+        </p>
+      </div>
+    </div>
+
+    <div class="guardrail">
+      <span class="glyph">⚑</span>
+      <span>If a statement doesn't match the client space it was dropped into,
+      Alpinae stops and asks you first. One client's positions never appear in
+      another client's report.</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="what-it-is-not">
+  <div class="container">
+    <p class="eyebrow">By design</p>
+    <h2 class="section-title">What Alpinae is not.</h2>
+    <p class="section-lede">Alpinae is additive by design: it sits on top of what you already run, and asks you to change nothing.</p>
+
+    <div class="notlist">
+      <div class="nrow">
+        <strong>Not a CRM</strong>
+        <span>No system-of-record migration, no data entry, no dependency on your
+        CRM — or anyone else's. A lightweight client directory routes statements
+        to the right client space; that's all.</span>
+      </div>
+      <div class="nrow">
+        <strong>Not a replacement for Excel</strong>
+        <span>Your fund printout stays an Excel printout. Your report stays in
+        your format. Alpinae removes the reconciliation labour between the two.</span>
+      </div>
+      <div class="nrow">
+        <strong>Not a decision-maker</strong>
+        <span>Alpinae computes; you approve. Nothing reaches a client or a
+        regulator without your sign-off, and every warning waits for your
+        decision.</span>
+      </div>
+      <div class="nrow">
+        <strong>Not a client portal — until you say so</strong>
+        <span>Internal by default. A read-only client view exists and is switched
+        on per client, only when you decide it should be.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <h2>See it on one real account.</h2>
+        <p>The pilot is simple: one client, their actual statement set, reconciled
+        and traceable. If the numbers aren't right, you'll know in a week.</p>
+      </div>
+      <a class="btn" href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20pilot">Request a pilot</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
     <div>
-      <h2>See it on one real account.</h2>
-      <p>The pilot is simple: one client, their actual statement set, reconciled and
-      traceable. If the numbers aren't right, you'll know in a week.</p>
+      <span class="wordmark" style="font-size:17px;">Alpinae<span class="dot">.</span></span><br>
+      Consolidated reconciliation &amp; reporting.<br>Geneva · Luxembourg
     </div>
-    <a class="btn" href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20pilot">Request a pilot</a>
-  </div>
-</section>
-
-<hr class="mk-rule">
-
-<footer class="mk-footer">
-  <div>
-    <span class="wordmark" style="font-size:17px;">Alpinae<span class="dot">.</span></span><br>
-    Consolidated reconciliation &amp; reporting.<br>Geneva · Luxembourg
-  </div>
-  <div style="text-align:right;">
-    <a href="demo/advisor.html">Advisor demo</a> · <a href="demo/client.html">Client view</a><br>
-    All demo data is fictional.
+    <div style="text-align:right;">
+      <a href="demo/advisor.html">Advisor demo</a> · <a href="demo/client.html">Client view</a><br>
+      All demo data is fictional.
+    </div>
   </div>
 </footer>
 
-
 <script>
-/* Flow animation: sources -> pulses -> engine -> consolidated -> cursor click -> table reveal */
+/* The reconciliation screen: statements arrive -> processing -> the table builds in place.
+   Static end-state (stage 3) without JS or with reduced motion. */
 (function () {
-  var wrap = document.getElementById('flow-figure');
-  var fig = document.querySelector('.consol-figure');
-  if (!wrap || !fig) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  wrap.classList.add('flow-anim');
-  fig.classList.add('pre');
+  var screen = document.getElementById('screen');
+  var procTxt = document.getElementById('proc-txt');
+  var replay = document.getElementById('replay');
+  if (!screen) return;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var DONE = 'reconciled ✓ · 34 rows → 8 positions · 1 flag';
+  var STEPS = [
+    'reading account holders — 4 of 4 verified',
+    'parsing 34 rows across 4 formats',
+    'matching instruments — 6 ISIN-exact · 2 confirmed',
+    'normalising 4 currencies → CHF · SNB rates'
+  ];
+  var timers = [];
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function play() {
+    timers.forEach(clearTimeout);
+    timers = [];
+    screen.dataset.stage = '0';
+    procTxt.classList.remove('done');
+    procTxt.textContent = '';
+    // force reflow so stage-0 states apply before the sequence starts
+    void screen.offsetHeight;
+    at(60, function () { screen.dataset.stage = '1'; });
+    at(1500, function () { screen.dataset.stage = '2'; procTxt.textContent = STEPS[0]; });
+    at(2150, function () { procTxt.textContent = STEPS[1]; });
+    at(2800, function () { procTxt.textContent = STEPS[2]; });
+    at(3450, function () { procTxt.textContent = STEPS[3]; });
+    at(4050, function () {
+      screen.dataset.stage = '3';
+      procTxt.classList.add('done');
+      procTxt.textContent = DONE;
+    });
+  }
+  replay.addEventListener('click', play);
+  if (reduced) return;
   function inView() {
-    var r = wrap.getBoundingClientRect();
+    var r = screen.getBoundingClientRect();
     var visible = Math.min(r.bottom, window.innerHeight) - Math.max(r.top, 0);
-    return visible > r.height * 0.4;
+    return visible > Math.min(r.height, window.innerHeight) * 0.45;
   }
   function check() {
     if (!inView()) return;
     window.removeEventListener('scroll', check);
-    wrap.classList.add('play');
-    setTimeout(function () { fig.classList.add('revealed'); }, 5300);
+    play();
   }
   window.addEventListener('scroll', check, { passive: true });
   check();
 })();
 
-/* Compliance: cycle the four questions and light the matching part of the diagram */
+/* Compliance: the four questions light in sequence, with the matching part of
+   the diagram; hovering a question pins its pair. */
 (function () {
   var seq = [['q-data', 'dg-region'], ['q-access', 'dg-advisors'],
              ['q-audit', 'dg-audit'], ['q-break', 'dg-egress']];
-  if (seq.some(function (p) { return !document.getElementById(p[0]) || !document.getElementById(p[1]); })) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var section = document.getElementById('compliance');
   var i = 0, timer = null;
   function clear() {
     seq.forEach(function (p) {
@@ -433,15 +441,14 @@
   function start() {
     if (timer) return;
     light(i);
-    timer = setInterval(function () { i = (i + 1) % seq.length; light(i); }, 2400);
+    timer = setInterval(function () { i = (i + 1) % seq.length; light(i); }, 2600);
   }
   function stop() { clearInterval(timer); timer = null; clear(); }
-  var section = document.getElementById('compliance');
-  function sectionVisible() {
+  function visible() {
     var r = section.getBoundingClientRect();
     return r.top < window.innerHeight * 0.8 && r.bottom > window.innerHeight * 0.2;
   }
-  function watch() { sectionVisible() ? start() : stop(); }
+  function watch() { visible() ? start() : stop(); }
   window.addEventListener('scroll', watch, { passive: true });
   watch();
   seq.forEach(function (p, n) {
@@ -451,5 +458,6 @@
   });
 })();
 </script>
+
 </body>
 </html>
