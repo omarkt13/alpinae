@@ -16,6 +16,21 @@ disk-constrained). Do not introduce npm/bun/Vite here without explicit approval.
 - `assets/` — shared CSS + mock data
 - Serve with `python3 -m http.server 4173`.
 
+## Publishing (GitHub Pages)
+
+Live site: https://omarkt13.github.io/alpinae/ — served from the **`gh-pages`
+orphan branch, which must contain ONLY `index.html`, `demo/`, `assets/`,
+`.nojekyll`**. Never point Pages at `main`: the repo (and its history) holds
+internal docs (SPEC.md, USER-JOBS.md, ARCHITECTURE.md) with confidential
+discovery details that must not be public. Likewise never make this repo
+public — history would expose them.
+
+To publish updates:
+```sh
+git checkout gh-pages && git checkout main -- index.html demo assets \
+  && git commit -am "Publish site" && git push && git checkout main
+```
+
 ## Design
 
 Always read `DESIGN.md` before visual changes. Short version: ivory paper
