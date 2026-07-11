@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alpinae — Advisor portal (demo)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+
+<div class="demo-banner">
+  Demo environment — all firms, clients, and figures are fictional.
+  <a href="#" onclick="tourStart(); return false;">Restart tour</a> ·
+  <a href="../index.html">About Alpinae</a> · <a href="client.html">Client view</a>
+</div>
+
+<div class="app">
+  <aside class="app-side">
+    <a class="wordmark" href="../index.html">Alpinae<span class="dot">.</span></a>
+    <a class="navlink active" id="nav-clients" href="#" onclick="sideNav(this); showDirectory(); return false;">Clients</a>
+    <a class="navlink" href="#" onclick="sideNav(this); openClient('keller','report'); return false;">Reports</a>
+    <a class="navlink" href="#" onclick="sideNav(this); openClient('keller','audit'); return false;">Audit log</a>
+    <div class="spacer"></div>
+    <div class="whoami">
+      <strong>Olivier Marchand</strong><br>
+      Advisor · Valmont &amp; Cie<br>
+      <span class="badge badge-pine" style="margin-top:6px;">MFA active</span>
+    </div>
+  </aside>
+
+  <main class="app-main">
+
+    <!-- ============ VIEW: CLIENT DIRECTORY ============ -->
+    <section id="view-directory">
+      <div class="app-header"><h1>Clients</h1></div>
+      <p class="app-sub">Valmont &amp; Cie · 6 client spaces</p>
+
+      <div class="dir-table-wrap" style="overflow-x:auto;">
+        <table class="holdings">
+          <thead>
+            <tr>
+              <th>Client</th><th class="num">Sources</th><th class="num">Consolidated (CHF)</th>
+              <th>Last reconciled</th><th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="openClient('keller','overview')">
+              <td><strong>A. Keller</strong></td><td class="num">4</td>
+              <td class="num">12,401,268</td><td class="num">2 Jul 2026</td>
+              <td><span class="badge badge-ok">Reconciled</span></td>
+            </tr>
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="demoNote()">
+              <td><strong>Familie Brandt-Meyer</strong></td><td class="num">5</td>
+              <td class="num">28,114,502</td><td class="num">30 Jun 2026</td>
+              <td><span class="badge badge-flag">Date mismatch</span></td>
+            </tr>
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="demoNote()">
+              <td><strong>H. &amp; M. Fontaine</strong></td><td class="num">3</td>
+              <td class="num">8,733,910</td><td class="num">27 Jun 2026</td>
+              <td><span class="badge">1 statement pending</span></td>
+            </tr>
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="demoNote()">
+              <td><strong>Ekström Family Trust</strong></td><td class="num">4</td>
+              <td class="num">19,306,447</td><td class="num">1 Jul 2026</td>
+              <td><span class="badge badge-ok">Reconciled</span></td>
+            </tr>
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="demoNote()">
+              <td><strong>C. von Arx</strong></td><td class="num">2</td>
+              <td class="num">5,240,081</td><td class="num">2 Jul 2026</td>
+              <td><span class="badge badge-ok">Reconciled</span></td>
+            </tr>
+            <tr class="client-row" tabindex="0" onkeydown="if(event.key==='Enter')this.click()" onclick="demoNote()">
+              <td><strong>Osei Family Holdings</strong></td><td class="num">4</td>
+              <td class="num">15,872,336</td><td class="num">25 Jun 2026</td>
+              <td><span class="badge">2 statements pending</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p id="demo-note" style="display:none;margin-top:14px;">
+        <span class="demo-chip">This demo is built out for <strong>&nbsp;A. Keller&nbsp;</strong> — open that client space to explore.</span>
+      </p>
+    </section>
+
+    <!-- ============ VIEW: CLIENT DETAIL (A. Keller) ============ -->
+    <section id="view-client" style="display:none;">
+      <p style="font-size:13px;margin-bottom:6px;"><a href="#" onclick="showDirectory(); return false;">← Clients</a></p>
+      <div class="app-header">
+        <h1>A. Keller</h1>
+        <span class="badge badge-ok">Reconciled · 2 Jul 2026</span>
+      </div>
+      <p class="app-sub">Client space · 4 sources · base currency CHF</p>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="overview" onclick="showTab('overview')">Overview</button>
+        <button class="tab" data-tab="statements" onclick="showTab('statements')">Statements</button>
+        <button class="tab" data-tab="recon" onclick="showTab('recon')">Reconciliation</button>
+        <button class="tab" data-tab="report" onclick="showTab('report')">Report</button>
+        <button class="tab" data-tab="audit" onclick="showTab('audit')">Audit log</button>
+      </div>
+
+      <!-- ---- TAB: Overview ---- -->
+      <div class="tab-panel active" id="tab-overview">
+        <div class="stats">
+          <div class="stat">
+            <div class="label">Total consolidated</div>
+            <div class="value">CHF 12,401,268</div>
+            <div class="hint">as of 30 Jun 2026</div>
+          </div>
+          <div class="stat">
+            <div class="label">Sources</div>
+            <div class="value">4</div>
+            <div class="hint">1 proprietary · 3 third-party</div>
+          </div>
+          <div class="stat">
+            <div class="label">Data-quality flags</div>
+            <div class="value" style="color:var(--flag);">1</div>
+            <div class="hint">stale valuation date (Nordkap)</div>
+          </div>
+          <div class="stat">
+            <div class="label">Last report</div>
+            <div class="value">Q2 2026</div>
+            <div class="hint">generated 2 Jul · approved O.M.</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Allocation by asset class</h3>
+          <div class="alloc">
+            <div class="arow"><span class="alabel">Multi-asset funds</span><span class="bar"><i style="width:47.8%"></i></span><span class="aval">47.8%</span></div>
+            <div class="arow"><span class="alabel">Equities</span><span class="bar"><i style="width:25.8%"></i></span><span class="aval">25.8%</span></div>
+            <div class="arow"><span class="alabel">Fixed income</span><span class="bar"><i style="width:11.9%"></i></span><span class="aval">11.9%</span></div>
+            <div class="arow"><span class="alabel">Cash &amp; equivalents</span><span class="bar"><i style="width:14.5%"></i></span><span class="aval">14.5%</span></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Sources</h3>
+          <div class="src-list">
+            <div class="src-item">
+              <div><div class="name">Valmont Global Allocation Fund</div><div class="meta">proprietary · Excel printout</div></div>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <span class="num" style="font-size:13px;">CHF 4,819,815</span>
+                <span class="badge badge-ok">30 Jun 2026</span>
+              </div>
+            </div>
+            <div class="src-item">
+              <div><div class="name">Banque Cantonale Privée, Geneva</div><div class="meta">custody statement · PDF</div></div>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <span class="num" style="font-size:13px;">CHF 3,940,120</span>
+                <span class="badge badge-ok">30 Jun 2026</span>
+              </div>
+            </div>
+            <div class="src-item">
+              <div><div class="name">Edmond Frères &amp; Cie, Luxembourg</div><div class="meta">mandate statement · PDF</div></div>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <span class="num" style="font-size:13px;">CHF 2,150,445</span>
+                <span class="badge badge-ok">30 Jun 2026</span>
+              </div>
+            </div>
+            <div class="src-item">
+              <div><div class="name">Nordkap Asset Management, Stockholm</div><div class="meta">portfolio statement · PDF · SEK</div></div>
+              <div style="display:flex;gap:12px;align-items:center;">
+                <span class="num" style="font-size:13px;">CHF 1,490,888</span>
+                <span class="badge badge-flag">27 Jun 2026 — stale</span>
+              </div>
+            </div>
+          </div>
+          <div class="callout flag" style="margin-bottom:0;">
+            <span class="glyph">⚑</span>
+            <span>Nordkap is valued 3 days earlier than the other sources. This is flagged
+            here and stamped on any report generated from this snapshot.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- TAB: Statements ---- -->
+      <div class="tab-panel" id="tab-statements">
+        <div class="panel">
+          <h3>Statements in this space — Q2 2026</h3>
+          <div class="src-list">
+            <div class="src-item">
+              <div><div class="name">Valmont_Fund_Printout_2026-06-30.xlsx</div><div class="meta">sha256 4c1e…a9f2 · archive ch-gva-2 · ingested 1 Jul 09:02 · O. Marchand · 9 rows</div></div>
+              <span class="stagechip consolidated">Consolidated</span>
+            </div>
+            <div class="src-item">
+              <div><div class="name">BCP_Custody_2026-06-30.pdf</div><div class="meta">sha256 9f3a…c21e · archive ch-gva-2 · ingested 1 Jul 09:04 · O. Marchand · 13 rows</div></div>
+              <span class="stagechip consolidated">Consolidated</span>
+            </div>
+            <div class="src-item">
+              <div><div class="name">EdmondFreres_Mandate_2026-06-30.pdf</div><div class="meta">sha256 77b0…e4d8 · archive ch-gva-2 · ingested 1 Jul 09:04 · O. Marchand · 5 rows</div></div>
+              <span class="stagechip consolidated">Consolidated</span>
+            </div>
+            <div class="src-item">
+              <div><div class="name">Nordkap_Portfolio_2026-06-27.pdf</div><div class="meta">sha256 b2c9…1f07 · archive ch-gva-2 · ingested 1 Jul 09:06 · O. Marchand · 7 rows · valuation 27 Jun ⚑</div></div>
+              <span class="stagechip consolidated">Consolidated</span>
+            </div>
+          </div>
+
+          <div class="dropzone" id="dropzone"
+               ondragover="event.preventDefault(); this.classList.add('drag');"
+               ondragleave="this.classList.remove('drag');"
+               ondrop="event.preventDefault(); this.classList.remove('drag'); simulateDrop();">
+            Drag statements into A. Keller's space — multiple files at once is fine.<br>
+            <button class="btn btn-ghost btn-sm" onclick="simulateDrop()">Simulate a drop of 3 files</button>
+          </div>
+          <div class="queue" id="queue"></div>
+          <div id="queue-summary"></div>
+        </div>
+      </div>
+
+      <!-- ---- TAB: Reconciliation ---- -->
+      <div class="tab-panel" id="tab-recon">
+
+        <div class="funnel-wrap">
+          <div class="funnel" id="recon-funnel"></div>
+          <div id="funnel-note"></div>
+        </div>
+
+        <details class="xpanel" id="match-panel">
+          <summary>Matching decisions — 6 ISIN-exact · 2 confirmed · 1 rule</summary>
+          <div class="xbody" style="overflow-x:auto;">
+            <table class="trace-table">
+              <thead>
+                <tr><th>Source line</th><th>Statement</th><th>Matched to</th><th>Method</th><th>Confirmed</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>"NESTLE SA REG SHS"</td><td>BCP</td><td>Nestlé SA · CH0038863350</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"Nestle N"</td><td>Edmond Frères</td><td>Nestlé SA · CH0038863350</td><td>name similarity 0.94 — no ISIN on line</td><td><strong>O. Marchand · 1 Jul</strong></td></tr>
+                <tr><td>"US TREASURY N/B 4.25 12/31/31"</td><td>BCP</td><td>UST 4.25% 2031 · US91282CJK15</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"UST 4¼ 2031"</td><td>Nordkap</td><td>UST 4.25% 2031 · US91282CJK15</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"European IG Bond Fund"</td><td>Edmond Frères</td><td>European IG Bond Fund · LU0348612345</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"ROCHE HLDG AG GENUSSSCHEIN"</td><td>BCP</td><td>Roche Holding AG GS · CH0012032048</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"INVESTOR AB SER. B"</td><td>Nordkap</td><td>Investor AB ser. B · SE0015811963</td><td>ISIN exact</td><td>automatic</td></tr>
+                <tr><td>"Fondsanteile Valmont Global"</td><td>Valmont printout</td><td>Valmont Global Allocation Fund</td><td>proprietary register</td><td>automatic</td></tr>
+                <tr><td>"Current account CHF/USD", "Liquidités EUR", "Likvida medel SEK"</td><td>BCP · Edmond · Nordkap</td><td>Cash &amp; equivalents</td><td>cash-account rule</td><td>automatic</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="xpanel" id="exceptions-panel">
+          <summary>Exceptions — 1 open · 0 unmatched rows</summary>
+          <div class="xbody">
+            <div class="callout flag" style="margin-top:0;">
+              <span class="glyph">⚑</span>
+              <span><strong>Valuation-date mismatch (open):</strong> Nordkap valued 27 Jun;
+              all other sources 30 Jun. Stamped on every report from this snapshot.
+              Clears when a 30 Jun Nordkap statement is ingested.</span>
+            </div>
+            <p style="font-size:13px;color:var(--ink-soft);">
+              No unmatched rows. Rows that cannot be matched with confidence land here
+              and block approval until resolved.
+            </p>
+          </div>
+        </details>
+
+        <div class="dir-table-wrap" style="overflow-x:auto;">
+          <table class="holdings">
+            <thead>
+              <tr>
+                <th>Instrument</th><th>Held at</th><th class="num">Quantity</th>
+                <th class="num">Value (CHF)</th><th class="num">Weight</th><th>Trace</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="group-row">
+                <td>Valmont Global Allocation Fund</td><td>Proprietary</td>
+                <td class="num">38,500</td><td class="num">4,819,815</td><td class="num">38.9%</td>
+                <td><button class="trace-btn" onclick="openTrace('fund')">⌕ trace</button></td>
+              </tr>
+              <tr class="group-row">
+                <td>Cash &amp; equivalents</td><td>3 custodians</td>
+                <td class="num">—</td><td class="num">1,808,617</td><td class="num">14.5%</td>
+                <td><button class="trace-btn" onclick="openTrace('cash')">⌕ trace</button></td>
+              </tr>
+              <tr class="group-row">
+                <td>US Treasury 4.25% 2031 · US91282CJK15</td><td>2 custodians</td>
+                <td class="num">1,650,000</td><td class="num">1,470,480</td><td class="num">11.9%</td>
+                <td><button class="trace-btn" onclick="openTrace('ust')">⌕ trace</button></td>
+              </tr>
+              <tr class="src-row">
+                <td>"US TREASURY N/B 4.25 12/31/31"</td><td>Banque Cantonale Privée</td>
+                <td class="num">1,000,000</td><td class="num">878,723</td><td></td>
+                <td class="num" style="font-size:12px;">p.3 · l.02</td>
+              </tr>
+              <tr class="src-row">
+                <td>"UST 4¼ 2031"</td><td>Nordkap AM</td>
+                <td class="num">650,000</td><td class="num">591,757</td><td></td>
+                <td class="num" style="font-size:12px;">p.2 · l.09</td>
+              </tr>
+              <tr class="group-row">
+                <td>Nestlé SA · CH0038863350</td><td>2 custodians</td>
+                <td class="num">11,700</td><td class="num">1,301,742</td><td class="num">10.5%</td>
+                <td><button class="trace-btn" onclick="openTrace('nestle')">⌕ trace</button></td>
+              </tr>
+              <tr class="src-row">
+                <td>"NESTLE SA REG SHS"</td><td>Banque Cantonale Privée</td>
+                <td class="num">8,200</td><td class="num">912,314</td><td></td>
+                <td class="num" style="font-size:12px;">p.2 · l.14</td>
+              </tr>
+              <tr class="src-row">
+                <td>"Nestle N"</td><td>Edmond Frères &amp; Cie</td>
+                <td class="num">3,500</td><td class="num">389,428</td><td></td>
+                <td class="num" style="font-size:12px;">p.1 · l.06</td>
+              </tr>
+              <tr class="group-row">
+                <td>European IG Bond Fund · LU0348612345</td><td>Edmond Frères &amp; Cie</td>
+                <td class="num">9,840</td><td class="num">1,102,530</td><td class="num">8.9%</td>
+                <td><button class="trace-btn" onclick="openTrace('efbond')">⌕ trace</button></td>
+              </tr>
+              <tr class="group-row">
+                <td>Roche Holding AG GS · CH0012032048</td><td>Banque Cantonale Privée</td>
+                <td class="num">2,900</td><td class="num">839,260</td><td class="num">6.8%</td>
+                <td><button class="trace-btn" onclick="openTrace('roche')">⌕ trace</button></td>
+              </tr>
+              <tr class="group-row">
+                <td>ASML Holding NV · NL0010273215</td><td>Banque Cantonale Privée</td>
+                <td class="num">700</td><td class="num">546,588</td><td class="num">4.4%</td>
+                <td><button class="trace-btn" onclick="openTrace('asml')">⌕ trace</button></td>
+              </tr>
+              <tr class="group-row">
+                <td>Investor AB ser. B · SE0015811963 <span class="badge badge-flag" style="margin-left:6px;">27 Jun</span></td><td>Nordkap AM</td>
+                <td class="num">24,000</td><td class="num">512,236</td><td class="num">4.1%</td>
+                <td><button class="trace-btn" onclick="openTrace('investor')">⌕ trace</button></td>
+              </tr>
+              <tr class="total-row">
+                <td>Total consolidated</td><td></td><td></td>
+                <td class="num">12,401,268</td><td class="num">100.0%</td><td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ---- TAB: Report ---- -->
+      <div class="tab-panel" id="tab-report">
+        <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="generateReport()">Generate report</button>
+          <button class="btn btn-ghost btn-sm" disabled title="Demo — export disabled">Export · firm template (.xlsx)</button>
+          <button class="btn btn-ghost btn-sm" disabled title="Demo — export disabled">Export · PDF</button>
+        </div>
+        <div id="report-result"></div>
+        <div class="report-sheet">
+          <div class="rpt-head">
+            <div class="firm">Valmont &amp; Cie</div>
+            <div class="meta">Consolidated Position Statement · A. Keller · as of 30 June 2026 · base CHF</div>
+          </div>
+          <h4>Summary</h4>
+          <table class="trace-table">
+            <tr><td>Total consolidated assets</td><td style="text-align:right;">CHF 12,401,268</td></tr>
+            <tr><td>Valmont Global Allocation Fund</td><td style="text-align:right;">CHF 4,819,815</td></tr>
+            <tr><td>Banque Cantonale Privée, Geneva</td><td style="text-align:right;">CHF 3,940,120</td></tr>
+            <tr><td>Edmond Frères &amp; Cie, Luxembourg</td><td style="text-align:right;">CHF 2,150,445</td></tr>
+            <tr><td>Nordkap Asset Management, Stockholm *</td><td style="text-align:right;">CHF 1,490,888</td></tr>
+          </table>
+          <h4>Allocation</h4>
+          <table class="trace-table">
+            <tr><td>Multi-asset funds</td><td style="text-align:right;">47.8%</td></tr>
+            <tr><td>Equities</td><td style="text-align:right;">25.8%</td></tr>
+            <tr><td>Fixed income</td><td style="text-align:right;">11.9%</td></tr>
+            <tr><td>Cash &amp; equivalents</td><td style="text-align:right;">14.5%</td></tr>
+          </table>
+          <div class="foot">
+            * Nordkap positions valued 27 June 2026; all other sources 30 June 2026.
+            Every figure in this report is traceable to its source statement
+            (Alpinae ref. RPT-2026-Q2-KEL-004). Generated 2 Jul 2026 · approved O. Marchand.
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- TAB: Audit log ---- -->
+      <div class="tab-panel" id="tab-audit">
+        <div class="panel" style="padding:0;overflow-x:auto;">
+          <table class="holdings" id="audit-table">
+            <thead>
+              <tr><th>Timestamp</th><th>Actor</th><th>Event</th><th>Object</th><th>Chain</th></tr>
+            </thead>
+            <tbody>
+              <tr class="audit-row"><td>2026-07-02 10:31:44</td><td>o.marchand</td><td>REPORT_GENERATED</td><td>RPT-2026-Q2-KEL-004</td><td class="num">h#0047 ← h#0046</td></tr>
+              <tr class="audit-row"><td>2026-07-02 10:30:12</td><td>o.marchand</td><td>RECON_APPROVED</td><td>keller · 4 sources · CHF 12,401,268</td><td class="num">h#0046 ← h#0045</td></tr>
+              <tr class="audit-row"><td>2026-07-02 10:29:58</td><td>system</td><td>DATE_MISMATCH_FLAGGED</td><td>Nordkap_Portfolio_2026-06-27.pdf (27 Jun vs 30 Jun)</td><td class="num">h#0045 ← h#0044</td></tr>
+              <tr class="audit-row"><td>2026-07-02 10:29:57</td><td>system</td><td>RECON_COMPUTED</td><td>keller · 34 extracted rows → 8 positions</td><td class="num">h#0044 ← h#0043</td></tr>
+              <tr class="audit-row"><td>2026-07-01 09:06:40</td><td>o.marchand</td><td>ALIAS_CONFIRMED</td><td>"Nestle N" ≡ CH0038863350</td><td class="num">h#0043 ← h#0042</td></tr>
+              <tr class="audit-row"><td>2026-07-01 09:06:21</td><td>system</td><td>STATEMENT_PARSED</td><td>Nordkap_Portfolio_2026-06-27.pdf · 7 rows</td><td class="num">h#0042 ← h#0041</td></tr>
+              <tr class="audit-row"><td>2026-07-01 09:06:02</td><td>o.marchand</td><td>STATEMENT_INGESTED</td><td>Nordkap_Portfolio_2026-06-27.pdf · sha256 b2c9…1f07</td><td class="num">h#0041 ← h#0040</td></tr>
+              <tr class="audit-row"><td>2026-07-01 09:04:35</td><td>o.marchand</td><td>STATEMENT_INGESTED</td><td>EdmondFreres_Mandate_2026-06-30.pdf · sha256 77b0…e4d8</td><td class="num">h#0040 ← h#0039</td></tr>
+              <tr class="audit-row"><td>2026-07-01 09:04:11</td><td>o.marchand</td><td>STATEMENT_INGESTED</td><td>BCP_Custody_2026-06-30.pdf · sha256 9f3a…c21e</td><td class="num">h#0039 ← h#0038</td></tr>
+              <tr class="audit-row"><td>2026-07-01 09:02:47</td><td>o.marchand</td><td>STATEMENT_INGESTED</td><td>Valmont_Fund_Printout_2026-06-30.xlsx · sha256 4c1e…a9f2</td><td class="num">h#0038 ← h#0037</td></tr>
+              <tr class="audit-row"><td>2026-07-01 08:58:03</td><td>c.dubois (compliance)</td><td>ACCESS_READ</td><td>keller · reconciliation view</td><td class="num">h#0037 ← h#0036</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap;">
+          <span class="num" style="font-size:12px;color:var(--ink-soft);">append-only · hash-chained · complete since account opening</span>
+          <button class="btn btn-ghost btn-sm" disabled title="Demo — export disabled">Export CSV</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- ============ MODAL: file-to-client guardrail ============ -->
+<div class="modal-scrim" id="guardrail-modal">
+  <div class="modal">
+    <span class="badge badge-flag">Holder mismatch</span>
+    <h3 style="margin-top:12px;">This statement doesn't appear to belong to A. Keller.</h3>
+    <p>Alpinae read the account holder before anything else happened:</p>
+    <div class="stmt-quote">
+      EdmondFreres_Mandate_2026-06-30_b.pdf<br>
+      Account holder: <strong>H. &amp; M. FONTAINE</strong> · acct ••4471<br>
+      Dropped into client space: <strong>A. KELLER</strong>
+    </div>
+    <p>The file is archived but blocked from parsing and reconciliation until you decide.
+    Both this flag and your decision are recorded in the audit log.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="resolveGuardrail('cancel')">Quarantine file</button>
+      <button class="btn btn-primary btn-sm" onclick="resolveGuardrail('reassign')">Reassign to H. &amp; M. Fontaine</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: duplicate/conflict ============ -->
+<div class="modal-scrim" id="conflict-modal">
+  <div class="modal" style="max-width:600px;">
+    <span class="badge badge-flag">Conflicting duplicate</span>
+    <h3 style="margin-top:12px;">A statement for this custodian and period already exists — and the figures differ.</h3>
+    <p>BCP_Custody_2026-06-30_v2.pdf covers the same account and valuation date as the
+    statement already consolidated. 12 of 13 rows are identical; 1 differs:</p>
+    <div style="overflow-x:auto;">
+      <table class="compare-table">
+        <thead>
+          <tr><th>Row</th><th>Existing (ingested 1 Jul)</th><th>New — v2</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Nestlé SA · quantity</td>
+            <td class="num">8,200</td>
+            <td class="num delta">8,450</td>
+          </tr>
+          <tr>
+            <td>Nestlé SA · value</td>
+            <td class="num">CHF 912,314</td>
+            <td class="num delta">CHF 940,128</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Banks occasionally reissue corrected statements. If you supersede, the original
+    stays in the archive with full history — it is never deleted. Either way, nothing
+    changes in the consolidated view until you approve a new reconciliation run.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="resolveConflict('quarantine')">Quarantine v2 — keep existing</button>
+      <button class="btn btn-primary btn-sm" onclick="resolveConflict('supersede')">Supersede — v2 is the correction</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MODAL: trace ============ -->
+<div class="modal-scrim" id="trace-modal" onclick="if(event.target===this) closeTrace();">
+  <div class="modal" style="max-width:640px;">
+    <span class="badge badge-pine">Trace</span>
+    <h3 style="margin-top:12px;" id="trace-title"></h3>
+    <div style="overflow-x:auto;">
+      <table class="trace-table" id="trace-rows">
+        <thead>
+          <tr><th>Source statement</th><th>Loc.</th><th>Raw line</th><th>Original</th><th>FX</th><th>CHF</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <p style="font-size:12.5px;margin-top:14px;">FX: SNB reference rate at the source's valuation date.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost btn-sm" onclick="closeTrace()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ DEMO TOUR (demo chrome) ============ -->
+<div class="tour" id="tour" style="display:none;">
+  <div class="tour-step" id="tour-step-label"></div>
+  <h4 id="tour-title"></h4>
+  <p id="tour-body"></p>
+  <div class="tour-dots" id="tour-dots"></div>
+  <div class="tour-actions">
+    <button class="tour-btn ghost" id="tour-back" onclick="tourGo(tourI - 1)">Back</button>
+    <button class="tour-btn" id="tour-next" onclick="tourNext()">Next</button>
+    <button class="tour-skip" onclick="tourEnd()">Skip tour ✕</button>
+  </div>
+</div>
+
+<script>
+/* ---------- View & tab switching ---------- */
+function sideNav(el) {
+  document.querySelectorAll('.app-side .navlink').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
+function showDirectory() {
+  sideNav(document.getElementById('nav-clients'));
+  document.getElementById('view-directory').style.display = '';
+  document.getElementById('view-client').style.display = 'none';
+  window.scrollTo(0, 0);
+}
+function openClient(id, tab) {
+  document.getElementById('view-directory').style.display = 'none';
+  document.getElementById('view-client').style.display = '';
+  showTab(tab || 'overview');
+  window.scrollTo(0, 0);
+}
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t =>
+    t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.tab-panel').forEach(p =>
+    p.classList.toggle('active', p.id === 'tab-' + name));
+}
+function demoNote() {
+  document.getElementById('demo-note').style.display = 'block';
+}
+function generateReport() {
+  document.getElementById('report-result').innerHTML =
+    '<div class="callout ok"><span class="glyph">✓</span><span>' +
+    'Report <span class="num">RPT-2026-Q2-KEL-005</span> generated from the approved ' +
+    '2 Jul snapshot and recorded in the audit log.</span></div>';
+  appendAudit('o.marchand', 'REPORT_GENERATED', 'RPT-2026-Q2-KEL-005');
+}
+
+/* ---------- Reconciliation funnel (rendered from state, updates live) ---------- */
+const RECON = {
+  extract: { rows: 34, statements: 4 },
+  match: { instruments: 8, isin: 6, confirmed: 2, unmatched: 0 },
+  normalise: { currencies: 4, base: 'CHF', exceptions: 1 },
+  consolidate: { total: '12,401,268', positions: 8, approvedBy: 'O. Marchand', approvedAt: '2 Jul 10:30' },
+  pending: []
+};
+function renderFunnel() {
+  const r = RECON;
+  document.getElementById('recon-funnel').innerHTML =
+    '<div class="fstage clickable" role="button" tabindex="0" ' +
+      'onclick="showTab(\'statements\')" onkeydown="if(event.key===\'Enter\')this.click()">' +
+      '<span class="fno">1 · Extract</span>' +
+      '<div class="fval">' + r.extract.rows + ' <span class="funit">rows</span></div>' +
+      '<div class="fmeta">from ' + r.extract.statements + ' statements · page &amp; line referenced</div>' +
+      '<span class="fopen">view statements</span></div>' +
+    '<div class="fstage clickable" role="button" tabindex="0" ' +
+      'onclick="openXpanel(\'match-panel\')" onkeydown="if(event.key===\'Enter\')this.click()">' +
+      '<span class="fno">2 · Match</span>' +
+      '<div class="fval">' + r.match.instruments + ' <span class="funit">instruments</span></div>' +
+      '<div class="fmeta">' + r.match.isin + ' ISIN-exact · ' + r.match.confirmed + ' confirmed · ' +
+        r.match.unmatched + ' unmatched</div>' +
+      '<span class="fopen">open decisions</span></div>' +
+    '<div class="fstage clickable" role="button" tabindex="0" ' +
+      'onclick="openXpanel(\'exceptions-panel\')" onkeydown="if(event.key===\'Enter\')this.click()">' +
+      '<span class="fno">3 · Normalise</span>' +
+      '<div class="fval">' + r.normalise.currencies + ' <span class="funit">currencies → ' + r.normalise.base + '</span></div>' +
+      '<div class="fmeta">SNB rates per valuation date · ' + r.normalise.exceptions +
+        ' exception' + (r.normalise.exceptions === 1 ? '' : 's') + '</div>' +
+      '<span class="fopen">open exceptions</span></div>' +
+    '<div class="fstage">' +
+      '<span class="fno">4 · Consolidate</span>' +
+      '<div class="fval">' + r.consolidate.total + ' <span class="funit">CHF</span></div>' +
+      '<div class="fmeta">' + r.consolidate.positions + ' positions · approved ' +
+        r.consolidate.approvedBy + ' · ' + r.consolidate.approvedAt + '</div></div>';
+  document.getElementById('funnel-note').innerHTML = r.pending.length === 0 ? '' :
+    '<div class="funnel-note"><span class="num">⏳</span><span><strong>' + r.pending.length +
+    ' staged statement' + (r.pending.length === 1 ? '' : 's') + '</strong> awaiting the next run (' +
+    r.pending.join(' · ') + '). This snapshot stays frozen until you approve a re-consolidation.</span></div>';
+}
+function stagePending(name) {
+  if (!RECON.pending.includes(name)) RECON.pending.push(name);
+  renderFunnel();
+}
+function openXpanel(id) {
+  const el = document.getElementById(id);
+  el.open = true;
+  el.scrollIntoView({ block: 'center', behavior: 'smooth' });
+}
+
+/* ---------- Audit chain ---------- */
+let chainN = 48;
+function appendAudit(actor, event, object) {
+  const ts = '2026-07-10 ' + new Date().toTimeString().slice(0, 8);
+  const tbody = document.querySelector('#audit-table tbody');
+  const tr = document.createElement('tr');
+  tr.className = 'audit-row';
+  tr.innerHTML = '<td>' + ts + '</td><td>' + actor + '</td><td>' + event +
+    '</td><td>' + object + '</td><td class="num">h#00' + chainN + ' ← h#00' + (chainN - 1) + '</td>';
+  chainN++;
+  tbody.prepend(tr);
+}
+
+/* ---------- Multi-file drop simulation ---------- */
+let dropRan = false;
+const QFILES = [
+  { id: 'qf-bcp', name: 'BCP_Custody_2026-06-30_v2.pdf' },
+  { id: 'qf-edm', name: 'EdmondFreres_Mandate_2026-06-30_b.pdf' },
+  { id: 'qf-nor', name: 'Nordkap_Portfolio_2026-06-30.pdf' }
+];
+
+function simulateDrop() {
+  if (dropRan) return;
+  dropRan = true;
+  const q = document.getElementById('queue');
+  q.innerHTML = QFILES.map(f =>
+    '<div class="queue-item" id="' + f.id + '">' +
+      '<div><div class="qname">' + f.name + '</div>' +
+      '<div class="qstatus"><span class="spin"></span>Archiving · checksumming · reading account holder…</div></div>' +
+      '<div class="qactions"></div>' +
+    '</div>'
+  ).join('');
+
+  setTimeout(() => {
+    setQueue('qf-bcp', 'q-flag',
+      'Holder verified ✓ · parsed 13 rows · <strong style="color:var(--flag);">conflicts with an existing statement for the same period</strong>',
+      '<button class="btn btn-primary btn-sm" onclick="openConflict()">Review conflict</button>');
+    appendAudit('system', 'DUPLICATE_CONFLICT_FLAGGED', 'BCP_Custody_2026-06-30_v2.pdf vs 9f3a…c21e · 1 row differs');
+  }, 900);
+
+  setTimeout(() => {
+    setQueue('qf-edm', 'q-flag',
+      '<strong style="color:var(--flag);">Holder mismatch</strong> — statement reads "H. &amp; M. FONTAINE", this space is A. Keller. Parsing blocked.',
+      '<button class="btn btn-primary btn-sm" onclick="openGuardrail()">Review mismatch</button>');
+    appendAudit('system', 'MISMATCH_FLAGGED', 'holder "H. & M. FONTAINE" ≠ space "A. KELLER"');
+  }, 1500);
+
+  setTimeout(() => {
+    setQueue('qf-nor', 'q-ok',
+      'Holder verified ✓ · parsed 7 rows · valuation 30 Jun — fresher than the current 27 Jun statement, clears the stale-date flag',
+      '<span class="stagechip staged">Staged</span> <button class="btn btn-ghost btn-sm" onclick="approveNordkap(this)">Approve for next run</button>');
+    appendAudit('system', 'STATEMENT_PARSED', 'Nordkap_Portfolio_2026-06-30.pdf · 7 rows · staged');
+  }, 2100);
+}
+
+function setQueue(id, cls, statusHtml, actionsHtml) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.remove('q-flag', 'q-ok');
+  if (cls) el.classList.add(cls);
+  el.querySelector('.qstatus').innerHTML = statusHtml;
+  el.querySelector('.qactions').innerHTML = actionsHtml || '';
+  maybeSummarise();
+}
+
+function approveNordkap(btn) {
+  setQueue('qf-nor', 'q-ok',
+    'Approved · queued for the next reconciliation run. The consolidated view stays on the approved 2 Jul snapshot until you approve the new run.',
+    '<span class="stagechip staged">Staged · approved</span>');
+  appendAudit('o.marchand', 'STAGING_APPROVED', 'Nordkap_Portfolio_2026-06-30.pdf → next recon run');
+  stagePending('Nordkap 30 Jun');
+}
+
+/* Guardrail (holder mismatch) */
+function openGuardrail() { document.getElementById('guardrail-modal').classList.add('open'); }
+function resolveGuardrail(decision) {
+  document.getElementById('guardrail-modal').classList.remove('open');
+  if (decision === 'reassign') {
+    setQueue('qf-edm', '', 'Reassigned to <strong>H. &amp; M. Fontaine</strong> — will be parsed in that client space. Nothing entered A. Keller’s data.',
+      '<span class="stagechip reassigned">Reassigned</span>');
+    appendAudit('o.marchand', 'MISMATCH_RESOLVED', 'EdmondFreres_Mandate_2026-06-30_b.pdf → fontaine');
+  } else {
+    setQueue('qf-edm', '', 'Quarantined — archived but excluded from all parsing and reconciliation.',
+      '<span class="stagechip quarantined">Quarantined</span>');
+    appendAudit('o.marchand', 'MISMATCH_QUARANTINED', 'EdmondFreres_Mandate_2026-06-30_b.pdf');
+  }
+}
+
+/* Duplicate conflict */
+function openConflict() { document.getElementById('conflict-modal').classList.add('open'); }
+function resolveConflict(decision) {
+  document.getElementById('conflict-modal').classList.remove('open');
+  if (decision === 'supersede') {
+    setQueue('qf-bcp', 'q-ok',
+      'Staged as correction · supersedes the 1 Jul ingest (which stays in the archive, marked <span class="stagechip superseded">Superseded</span>). Takes effect at the next approved reconciliation run.',
+      '<span class="stagechip staged">Staged</span>');
+    appendAudit('o.marchand', 'STATEMENT_SUPERSEDED', 'BCP 9f3a…c21e superseded by v2 · reason: bank correction');
+    stagePending('BCP v2 correction');
+  } else {
+    setQueue('qf-bcp', '',
+      'Quarantined — the existing statement remains authoritative. v2 stays in the archive for reference.',
+      '<span class="stagechip quarantined">Quarantined</span>');
+    appendAudit('o.marchand', 'DUPLICATE_QUARANTINED', 'BCP_Custody_2026-06-30_v2.pdf');
+  }
+}
+
+function maybeSummarise() {
+  const pending = document.querySelectorAll('#queue .spin, #queue .btn').length;
+  const done = document.querySelectorAll('#queue .stagechip').length;
+  if (pending === 0 && done >= 3) {
+    document.getElementById('queue-summary').innerHTML =
+      '<div class="callout ok"><span class="glyph">✓</span><span><strong>All 3 files resolved.</strong> ' +
+      'Each decision is in the audit log. The consolidated view never moved during any of this — ' +
+      'it only changes when you approve a reconciliation run.</span></div>';
+  }
+}
+
+/* ---------- Trace demo ---------- */
+const TRACES = {
+  fund: {
+    title: 'Valmont Global Allocation Fund — CHF 4,819,815',
+    rows: [['Valmont_Fund_Printout_2026-06-30.xlsx', 'Holdings!B12', '38,500 units · NAV 125.19', 'CHF 4,819,815', '—', '4,819,815']]
+  },
+  nestle: {
+    title: 'Nestlé SA (CH0038863350) — CHF 1,301,742 across 2 custodians',
+    rows: [
+      ['BCP_Custody_2026-06-30.pdf', 'p.2 l.14', '"NESTLE SA REG SHS 8’200"', 'CHF 912,314', '—', '912,314'],
+      ['EdmondFreres_Mandate_2026-06-30.pdf', 'p.1 l.06', '"Nestle N 3,500"', 'CHF 389,428', '—', '389,428']
+    ]
+  },
+  ust: {
+    title: 'US Treasury 4.25% 2031 (US91282CJK15) — CHF 1,470,480 across 2 custodians',
+    rows: [
+      ['BCP_Custody_2026-06-30.pdf', 'p.3 l.02', '"US TREASURY N/B 4.25 12/31/31 nom 1’000’000"', 'USD 986,000', '0.8912 (30 Jun)', '878,723'],
+      ['Nordkap_Portfolio_2026-06-27.pdf', 'p.2 l.09', '"UST 4¼ 2031 nom 650,000 incl. accrued"', 'USD 662,588', '0.8931 (27 Jun)', '591,757']
+    ]
+  },
+  efbond: {
+    title: 'European IG Bond Fund (LU0348612345) — CHF 1,102,530',
+    rows: [['EdmondFreres_Mandate_2026-06-30.pdf', 'p.1 l.09', '"European IG Bond Fund 9,840 units"', 'EUR 1,147,035', '0.9612 (30 Jun)', '1,102,530']]
+  },
+  roche: {
+    title: 'Roche Holding AG GS (CH0012032048) — CHF 839,260',
+    rows: [['BCP_Custody_2026-06-30.pdf', 'p.2 l.16', '"ROCHE HLDG AG GENUSSSCHEIN 2’900"', 'CHF 839,260', '—', '839,260']]
+  },
+  asml: {
+    title: 'ASML Holding NV (NL0010273215) — CHF 546,588',
+    rows: [['BCP_Custody_2026-06-30.pdf', 'p.2 l.19', '"ASML HOLDING NV EUR0.09 700"', 'EUR 568,652', '0.9612 (30 Jun)', '546,588']]
+  },
+  investor: {
+    title: 'Investor AB ser. B (SE0015811963) — CHF 512,236 · valued 27 Jun',
+    rows: [['Nordkap_Portfolio_2026-06-27.pdf', 'p.1 l.03', '"INVESTOR AB SER. B 24,000"', 'SEK 6,101,679', '0.08395 (27 Jun)', '512,236']]
+  },
+  cash: {
+    title: 'Cash & equivalents — CHF 1,808,617 across 3 custodians',
+    rows: [
+      ['BCP_Custody_2026-06-30.pdf', 'p.4 l.01', '"Current account CHF"', 'CHF 520,000', '—', '520,000'],
+      ['BCP_Custody_2026-06-30.pdf', 'p.4 l.02', '"Current account USD"', 'USD 272,930', '0.8912 (30 Jun)', '243,235'],
+      ['EdmondFreres_Mandate_2026-06-30.pdf', 'p.2 l.01', '"Liquidités EUR"', 'EUR 685,068', '0.9612 (30 Jun)', '658,487'],
+      ['Nordkap_Portfolio_2026-06-27.pdf', 'p.2 l.11', '"Likvida medel SEK"', 'SEK 4,608,636', '0.08395 (27 Jun)', '386,895']
+    ]
+  }
+};
+function openTrace(key) {
+  const t = TRACES[key];
+  if (!t) return;
+  document.getElementById('trace-title').textContent = t.title;
+  const tbody = document.querySelector('#trace-rows tbody');
+  tbody.innerHTML = t.rows.map(r =>
+    '<tr>' + r.map((c, i) =>
+      '<td' + (i === 5 ? ' style="text-align:right;font-weight:600;"' : '') + '>' + c + '</td>'
+    ).join('') + '</tr>'
+  ).join('');
+  document.getElementById('trace-modal').classList.add('open');
+}
+function closeTrace() {
+  document.getElementById('trace-modal').classList.remove('open');
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-scrim').forEach(m => m.classList.remove('open'));
+  }
+});
+
+/* ---------- Demo tour (all demo explanation lives HERE, not on product surfaces) ---------- */
+const TOUR = [
+  {
+    nav: () => showDirectory(),
+    target: '#view-directory .dir-table-wrap',
+    title: 'The client directory',
+    body: 'Each client is a space that receives their statements and shows their consolidated total, sources, and last reconciliation. It routes files to the right client — it is not a CRM and holds nothing more than it needs. Open A. Keller, or press Next.'
+  },
+  {
+    nav: () => openClient('keller', 'overview'),
+    target: '#tab-overview .stats',
+    title: 'One screen: where does this client stand?',
+    body: 'Total consolidated value, allocation, and every source with its valuation date. Anything stale or inconsistent is flagged in red — never hidden, never auto-corrected.'
+  },
+  {
+    nav: () => openClient('keller', 'statements'),
+    target: '#dropzone',
+    title: 'Where statements go',
+    body: 'Every file you drop is archived unchanged and checksummed, checked against the client’s name, parsed row by row, then staged. Nothing touches the consolidated view until you approve a run. Try the simulated drop: three files arrive — one belongs to another client, one conflicts with an existing statement. Alpinae stops and asks; it never resolves a conflict silently.'
+  },
+  {
+    nav: () => openClient('keller', 'recon'),
+    target: '#recon-funnel',
+    title: 'Reconciliation, shown working',
+    body: 'A live funnel: 34 extracted rows become 8 matched instruments, normalised to CHF, consolidated into one approved total. Click a stage to open what sits behind it. Name matches below full confidence wait in Exceptions — Alpinae never merges on a guess. And ⌕ trace on any figure shows the statement, page, line, and FX rate behind it.'
+  },
+  {
+    nav: () => openClient('keller', 'report'),
+    target: '#tab-report .report-sheet',
+    title: 'Your report, assembled for you',
+    body: 'The consolidated view renders into your firm’s existing template — nothing retyped. Every figure resolves back to its source statement, and generating a report is itself a logged event. Try the Generate button.'
+  },
+  {
+    nav: () => openClient('keller', 'audit'),
+    target: '#tab-audit .panel',
+    title: 'The audit log',
+    body: 'Append-only and hash-chained: each entry embeds the hash of the one before, so tampering is evident. Ingestions, flags, your decisions, approvals, report generations — and every read, including administrators’. Exportable for your compliance file.'
+  }
+];
+let tourI = 0;
+function tourGo(i) {
+  if (i < 0 || i >= TOUR.length) return;
+  tourI = i;
+  const s = TOUR[i];
+  s.nav();
+  document.querySelectorAll('.tour-target').forEach(el => el.classList.remove('tour-target'));
+  document.getElementById('tour').style.display = '';
+  document.getElementById('tour-step-label').textContent = 'Demo tour · step ' + (i + 1) + ' of ' + TOUR.length;
+  document.getElementById('tour-title').textContent = s.title;
+  document.getElementById('tour-body').textContent = s.body;
+  document.getElementById('tour-dots').innerHTML =
+    TOUR.map((_, d) => '<i class="' + (d === i ? 'on' : '') + '"></i>').join('');
+  document.getElementById('tour-back').disabled = (i === 0);
+  document.getElementById('tour-next').textContent = (i === TOUR.length - 1) ? 'Finish' : 'Next';
+  setTimeout(() => {
+    const t = document.querySelector(s.target);
+    if (t) {
+      t.classList.add('tour-target');
+      t.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }
+  }, 60);
+}
+function tourNext() {
+  if (tourI === TOUR.length - 1) { tourEnd(); return; }
+  tourGo(tourI + 1);
+}
+function tourEnd() {
+  document.getElementById('tour').style.display = 'none';
+  document.querySelectorAll('.tour-target').forEach(el => el.classList.remove('tour-target'));
+}
+function tourStart() { tourGo(0); }
+document.addEventListener('DOMContentLoaded', () => { renderFunnel(); tourGo(0); });
+</script>
+
+</body>
+</html>
