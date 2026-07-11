@@ -20,9 +20,9 @@
 <div class="app">
   <aside class="app-side">
     <a class="wordmark" href="../index.html">Alpinae<span class="dot">.</span></a>
-    <a class="navlink active" href="#" onclick="showDirectory(); return false;">Clients</a>
-    <a class="navlink" href="#" onclick="openClient('keller','report'); return false;">Reports</a>
-    <a class="navlink" href="#" onclick="openClient('keller','audit'); return false;">Audit log</a>
+    <a class="navlink active" id="nav-clients" href="#" onclick="sideNav(this); showDirectory(); return false;">Clients</a>
+    <a class="navlink" href="#" onclick="sideNav(this); openClient('keller','report'); return false;">Reports</a>
+    <a class="navlink" href="#" onclick="sideNav(this); openClient('keller','audit'); return false;">Audit log</a>
     <div class="spacer"></div>
     <div class="whoami">
       <strong>Olivier Marchand</strong><br>
@@ -339,7 +339,7 @@
       <!-- ---- TAB: Report ---- -->
       <div class="tab-panel" id="tab-report">
         <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
-          <button class="btn btn-primary btn-sm" onclick="generateReport()">Generate Q3 report</button>
+          <button class="btn btn-primary btn-sm" onclick="generateReport()">Generate report</button>
           <button class="btn btn-ghost btn-sm" disabled title="Demo — export disabled">Export · firm template (.xlsx)</button>
           <button class="btn btn-ghost btn-sm" disabled title="Demo — export disabled">Export · PDF</button>
         </div>
@@ -494,7 +494,12 @@
 
 <script>
 /* ---------- View & tab switching ---------- */
+function sideNav(el) {
+  document.querySelectorAll('.app-side .navlink').forEach(n => n.classList.remove('active'));
+  el.classList.add('active');
+}
 function showDirectory() {
+  sideNav(document.getElementById('nav-clients'));
   document.getElementById('view-directory').style.display = '';
   document.getElementById('view-client').style.display = 'none';
   window.scrollTo(0, 0);
@@ -517,9 +522,9 @@ function demoNote() {
 function generateReport() {
   document.getElementById('report-result').innerHTML =
     '<div class="callout ok"><span class="glyph">✓</span><span>' +
-    'Report <span class="num">RPT-2026-Q3-KEL-005</span> generated from the approved ' +
+    'Report <span class="num">RPT-2026-Q2-KEL-005</span> generated from the approved ' +
     '2 Jul snapshot and recorded in the audit log.</span></div>';
-  appendAudit('o.marchand', 'REPORT_GENERATED', 'RPT-2026-Q3-KEL-005');
+  appendAudit('o.marchand', 'REPORT_GENERATED', 'RPT-2026-Q2-KEL-005');
 }
 
 /* ---------- Reconciliation funnel (rendered from state, updates live) ---------- */
@@ -707,12 +712,12 @@ const TRACES = {
     title: 'US Treasury 4.25% 2031 (US91282CJK15) — CHF 1,470,480 across 2 custodians',
     rows: [
       ['BCP_Custody_2026-06-30.pdf', 'p.3 l.02', '"US TREASURY N/B 4.25 12/31/31 nom 1’000’000"', 'USD 986,000', '0.8912 (30 Jun)', '878,723'],
-      ['Nordkap_Portfolio_2026-06-27.pdf', 'p.2 l.09', '"UST 4¼ 2031 nom 650,000 incl. accrued"', 'USD 663,999', '0.8912 (27 Jun)', '591,757']
+      ['Nordkap_Portfolio_2026-06-27.pdf', 'p.2 l.09', '"UST 4¼ 2031 nom 650,000 incl. accrued"', 'USD 662,588', '0.8931 (27 Jun)', '591,757']
     ]
   },
   efbond: {
     title: 'European IG Bond Fund (LU0348612345) — CHF 1,102,530',
-    rows: [['EdmondFreres_Mandate_2026-06-30.pdf', 'p.1 l.09', '"European IG Bond Fund 9,840 units"', 'EUR 1,147,036', '0.9612 (30 Jun)', '1,102,530']]
+    rows: [['EdmondFreres_Mandate_2026-06-30.pdf', 'p.1 l.09', '"European IG Bond Fund 9,840 units"', 'EUR 1,147,035', '0.9612 (30 Jun)', '1,102,530']]
   },
   roche: {
     title: 'Roche Holding AG GS (CH0012032048) — CHF 839,260',
@@ -720,7 +725,7 @@ const TRACES = {
   },
   asml: {
     title: 'ASML Holding NV (NL0010273215) — CHF 546,588',
-    rows: [['BCP_Custody_2026-06-30.pdf', 'p.2 l.19', '"ASML HOLDING NV EUR0.09 700"', 'EUR 568,637', '0.9612 (30 Jun)', '546,588']]
+    rows: [['BCP_Custody_2026-06-30.pdf', 'p.2 l.19', '"ASML HOLDING NV EUR0.09 700"', 'EUR 568,652', '0.9612 (30 Jun)', '546,588']]
   },
   investor: {
     title: 'Investor AB ser. B (SE0015811963) — CHF 512,236 · valued 27 Jun',
@@ -730,8 +735,8 @@ const TRACES = {
     title: 'Cash & equivalents — CHF 1,808,617 across 3 custodians',
     rows: [
       ['BCP_Custody_2026-06-30.pdf', 'p.4 l.01', '"Current account CHF"', 'CHF 520,000', '—', '520,000'],
-      ['BCP_Custody_2026-06-30.pdf', 'p.4 l.02', '"Current account USD"', 'USD 272,929', '0.8912 (30 Jun)', '243,235'],
-      ['EdmondFreres_Mandate_2026-06-30.pdf', 'p.2 l.01', '"Liquidités EUR"', 'EUR 685,072', '0.9612 (30 Jun)', '658,487'],
+      ['BCP_Custody_2026-06-30.pdf', 'p.4 l.02', '"Current account USD"', 'USD 272,930', '0.8912 (30 Jun)', '243,235'],
+      ['EdmondFreres_Mandate_2026-06-30.pdf', 'p.2 l.01', '"Liquidités EUR"', 'EUR 685,068', '0.9612 (30 Jun)', '658,487'],
       ['Nordkap_Portfolio_2026-06-27.pdf', 'p.2 l.11', '"Likvida medel SEK"', 'SEK 4,608,636', '0.08395 (27 Jun)', '386,895']
     ]
   }
