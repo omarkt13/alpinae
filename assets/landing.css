@@ -416,20 +416,6 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
 .comp-screen .vg.lit .keep-flag { stroke: var(--flag); }
 .comp-screen .vg.lit text.keep-flag { fill: var(--flag); stroke: none; }
 
-/* Flow pulses — horizontal only */
-#d-adv, #d-gate, #d-egress { opacity: 0; }
-.comp-screen[data-cstep="1"] #d-adv { opacity: 1; animation: flowIn 1.3s linear infinite; }
-.comp-screen[data-cstep="4"] #d-gate { opacity: 1; animation: flowIn 1.3s linear infinite; }
-.comp-screen[data-cstep="3"] #d-egress { opacity: 1; animation: flowBlocked 1.2s linear infinite; }
-@keyframes flowIn { from { transform: translateX(0); } to { transform: translateX(44px); } }
-@keyframes flowBlocked {
-  0% { transform: translateX(0); opacity: 1; }
-  85% { opacity: 1; }
-  100% { transform: translateX(22px); opacity: 0; }
-}
-.comp-screen[data-cstep="0"] #vg-region > rect { animation: regionPulse 2.4s ease-in-out infinite; }
-@keyframes regionPulse { 50% { stroke-width: 2.2; } }
-
 /* Step overlay */
 .comp-caption {
   border-top: 1px solid var(--hairline);
