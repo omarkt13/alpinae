@@ -8,14 +8,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/landing.css">
+<link rel="stylesheet" href="assets/landing.css?v=20260713-2">
 </head>
 <body>
 
 <nav class="nav">
   <div class="container nav-inner">
     <a class="wordmark" href="index.html">Alpinae<span class="dot">.</span></a>
-    <div class="nav-links">
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">
+      <span>Menu</span><i aria-hidden="true"></i>
+    </button>
+    <div class="nav-links" id="nav-links">
       <a href="#product">Product</a>
       <a href="#compliance">Compliance</a>
       <a href="#what-it-is-not">What it is not</a>
@@ -37,9 +40,10 @@
         and CSSF compliance.
       </p>
       <div class="ctas">
-        <a class="btn btn-primary" href="demo/advisor.html">See the advisor demo</a>
-        <a class="btn btn-ghost" href="demo/client.html">See the client view</a>
+        <a class="btn btn-primary" href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20pilot">Request a pilot</a>
+        <a class="btn btn-ghost" href="demo/advisor.html">Explore the advisor demo</a>
       </div>
+      <div class="hero-assurance"><span>One client</span><span>One week</span><span>No integration</span><a href="demo/client.html">Client view →</a></div>
     </div>
 
     <div class="snapshot" aria-label="Example consolidated position">
@@ -72,6 +76,233 @@
     <span class="fact">Every figure traceable</span>
   </div>
 </div>
+
+<section class="alpine-band" aria-label="Swiss alpine landscape">
+  <svg class="alpine-scene" viewBox="0 0 1200 430" preserveAspectRatio="xMidYMid slice" role="img"
+       aria-labelledby="alpine-title alpine-description" xmlns="http://www.w3.org/2000/svg">
+    <title id="alpine-title">A train crossing a Swiss alpine valley</title>
+    <desc id="alpine-description">A calm, layered mountain landscape drawn in Alpinae cream, forest green, charcoal and warm ochre.</desc>
+    <defs>
+      <linearGradient id="alpine-sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#FAF7F2"/><stop offset="1" stop-color="#EAE4D9"/>
+      </linearGradient>
+      <linearGradient id="alpine-meadow" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0" stop-color="#708060"/><stop offset="1" stop-color="#3F5B46"/>
+      </linearGradient>
+      <clipPath id="alpine-clip"><rect width="1200" height="430" rx="12"/></clipPath>
+      <filter id="alpine-shadow" x="-20%" y="-50%" width="140%" height="200%">
+        <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#142B23" flood-opacity=".24"/>
+      </filter>
+      <symbol id="alpine-pine" viewBox="0 0 20 38">
+        <path d="M10 0 4.5 12H8L2 24h6v14h4V24h6l-6-12h3.5Z" fill="#17382E"/>
+      </symbol>
+      <symbol id="alpine-car" viewBox="0 0 82 25">
+        <rect x="1" y="1" width="80" height="20" rx="3" fill="#B78D43" stroke="#17382E" stroke-width="2"/>
+        <path d="M7 6h67v8H7Z" fill="#203C34"/>
+        <g fill="#F2EADF"><rect x="10" y="7" width="10" height="6" rx="1"/><rect x="24" y="7" width="10" height="6" rx="1"/><rect x="38" y="7" width="10" height="6" rx="1"/><rect x="52" y="7" width="10" height="6" rx="1"/><rect x="66" y="7" width="5" height="6" rx="1"/></g>
+        <circle cx="16" cy="22" r="2.5" fill="#142B23"/><circle cx="66" cy="22" r="2.5" fill="#142B23"/>
+      </symbol>
+    </defs>
+
+    <g clip-path="url(#alpine-clip)">
+      <rect width="1200" height="430" fill="url(#alpine-sky)"/>
+      <circle cx="797" cy="87" r="58" fill="#F5EFE5"/>
+
+      <!-- Restrained cloud groups leave breathing room around the peaks. -->
+      <g fill="#FFFFFF" opacity=".9">
+        <path d="M45 83c13-27 53-31 72-7 15-34 65-39 88-7 35-8 67 12 72 42H27c1-12 7-21 18-28Z"/>
+        <path d="M459 70c11-22 43-26 60-7 15-28 56-29 73-2 29-5 54 11 59 35H445c0-11 5-20 14-26Z"/>
+        <path d="M937 61c13-26 51-30 70-7 20-31 67-28 82 6 29-3 54 14 57 40H918c1-17 7-30 19-39Z"/>
+      </g>
+
+      <!-- Distant left range: broad forms rather than a row of spikes. -->
+      <path d="M0 264 84 194l50 30 74-92 89 100 80-64 104 102 68 26v72H0Z" fill="#7C837A"/>
+      <path d="m0 264 84-70 50 30 74-92 28 98 61 2 80-64 41 108 63-6 68 26v74H0Z" fill="#5C6660"/>
+      <path d="m151 202 57-70 58 65-43-25-22 36-29 12Z" fill="#F8F4ED"/>
+      <path d="m332 204 45-36 61 60-45-23-25 24Z" fill="#EAE4D9"/>
+
+      <!-- Central snow massif frames the valley opening. -->
+      <path d="M394 304 497 220l64 35 105-142 90 113 75-60 117 129v74H381Z" fill="#69716A"/>
+      <path d="m497 220 64 35 105-142 90 113 75-60 50 55-55-22-46 50-46-29-68 91-52-55-63 36Z" fill="#FEFCF8"/>
+      <path d="m561 255 53 1 52-143 27 130 41-23 46 103 51-157 42 120 75 9v77H526Z" fill="#4D5751"/>
+      <path d="m666 113 27 130-20-23-18 18-24-8 13-63Z" fill="#F8F4ED"/>
+      <path d="m614 256 52-143 27 130-29 29-28 52Z" fill="#737A70"/>
+
+      <!-- The right wall echoes the Eiger without becoming a black block. -->
+      <path d="M815 303 866 245l23-104 56-42 41-99h214v316l-177 51Z" fill="#515952"/>
+      <path d="m906 270 29-126 54-38L1028 0h172v284l-113 54Z" fill="#343F38"/>
+      <path d="m1033 0-40 109 65-30-8 76 66-31-18 88 102-36V0Z" fill="#26332D"/>
+      <g fill="#F8F4ED">
+        <path d="m914 162 22-44 53-12-24 46-45 31Z"/>
+        <path d="m970 250 38-57 43-4-29 39 70-25-38 45-58 22Z"/>
+        <path d="m834 286 52-45 42 11-39 39Z"/>
+      </g>
+      <g fill="none" stroke="#687069" stroke-width="3" opacity=".55">
+        <path d="m1082 28-14 78 22 53-25 85"/><path d="m1137 18-12 82 18 52-19 76"/>
+        <path d="m987 118-7 65 19 37"/><path d="m931 160-1 62 18 40"/>
+      </g>
+
+      <!-- Soft, overlapping hill contours pull the eye into the centre. -->
+      <path d="M0 300c148-67 287-39 418 17 110 47 202 50 322 5 166-62 302-91 460-60v168H0Z" fill="#8B9770"/>
+      <path d="M0 327c141-48 278-24 410 28 115 45 222 45 343 2 163-58 310-67 447-38v111H0Z" fill="url(#alpine-meadow)"/>
+      <path d="M0 365c124-37 255-25 378 16 139 46 260 48 398 7 161-48 302-46 424-17v59H0Z" fill="#214236"/>
+      <path d="M0 307c106-22 205-10 299 25 68 25 128 36 181 31-106 9-197 2-278-17C128 329 60 327 0 342Z" fill="#A0A97A" opacity=".7"/>
+      <path d="M684 353c137-57 310-75 516-46v42c-162-24-302-10-421 29Z" fill="#97A36F" opacity=".72"/>
+
+      <!-- Pine clusters are intentionally small and irregular. -->
+      <g opacity=".96">
+        <use href="#alpine-pine" x="61" y="317" width="14" height="27"/><use href="#alpine-pine" x="84" y="305" width="18" height="34"/>
+        <use href="#alpine-pine" x="119" y="322" width="13" height="25"/><use href="#alpine-pine" x="154" y="307" width="19" height="36"/>
+        <use href="#alpine-pine" x="197" y="324" width="14" height="27"/><use href="#alpine-pine" x="237" y="333" width="12" height="23"/>
+        <use href="#alpine-pine" x="280" y="330" width="15" height="29"/><use href="#alpine-pine" x="336" y="341" width="17" height="32"/>
+        <use href="#alpine-pine" x="774" y="327" width="13" height="25"/><use href="#alpine-pine" x="816" y="312" width="17" height="32"/>
+        <use href="#alpine-pine" x="862" y="300" width="19" height="36"/><use href="#alpine-pine" x="912" y="306" width="15" height="28"/>
+        <use href="#alpine-pine" x="957" y="290" width="18" height="34"/><use href="#alpine-pine" x="1007" y="298" width="14" height="27"/>
+        <use href="#alpine-pine" x="1052" y="286" width="18" height="35"/><use href="#alpine-pine" x="1110" y="300" width="15" height="29"/>
+      </g>
+
+      <!-- Foreground textures, winding track and a small dark-green tarn. -->
+      <path d="M0 392c156-31 295-9 426 23 113 27 229 21 358-14 159-43 298-41 416-17v46H0Z" fill="#17382E"/>
+      <path d="M0 414c174-23 330-7 466 16H0Z" fill="#142B23"/>
+      <path d="M963 384c27-13 69-14 97-3 25 10 18 26-11 34-31 9-82 5-97-8-8-7-3-15 11-23Z" fill="#183B32"/>
+      <path d="M972 386c23-6 55-7 78-1-16 7-60 11-84 7Z" fill="#667B68" opacity=".72"/>
+      <g fill="none" stroke="#CFC19E" stroke-linecap="round">
+        <path d="M1124 319c-37 29-64 62-81 101" stroke-width="7"/><path d="M1124 319c-37 29-64 62-81 101" stroke="#526052" stroke-width="1.5"/>
+        <path d="M18 397c108-24 194-23 272-4" stroke-width="1" opacity=".65"/>
+        <path d="M718 378c120-29 230-30 328-11" stroke-width="1" opacity=".6"/>
+      </g>
+
+      <path d="M118 423c165-39 322-42 472-25 158 19 314 14 477-23" fill="none" stroke="#142B23" stroke-width="10"/>
+      <path d="M118 421c165-39 322-42 472-25 158 19 314 14 477-23" fill="none" stroke="#D1C29F" stroke-width="5"/>
+      <path d="M118 419c165-39 322-42 472-25 158 19 314 14 477-23" fill="none" stroke="#FAF7F2" stroke-width="1"/>
+
+      <!-- A smaller train acts as a focal accent instead of dominating the scene. -->
+      <g transform="translate(311 384) rotate(-1)" filter="url(#alpine-shadow)">
+        <use href="#alpine-car" x="0" y="4" width="82" height="25"/><use href="#alpine-car" x="79" y="1" width="82" height="25"/>
+        <use href="#alpine-car" x="158" y="0" width="82" height="25"/><use href="#alpine-car" x="237" y="2" width="82" height="25"/>
+      </g>
+
+      <!-- Final art direction: editorial alpine engraving. The restrained linework,
+           hatching and contour fields replace the earlier flat poster treatment. -->
+      <g id="alpine-engraving">
+        <defs>
+          <pattern id="rock-hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(18)">
+            <line x1="0" y1="0" x2="0" y2="9" stroke="#1E4033" stroke-width="1" opacity=".2"/>
+          </pattern>
+          <pattern id="rock-crosshatch" width="12" height="12" patternUnits="userSpaceOnUse">
+            <path d="M0 12 12 0M-3 3 3-3M9 15l6-6" fill="none" stroke="#1E4033" stroke-width=".8" opacity=".14"/>
+          </pattern>
+          <symbol id="engraved-pine" viewBox="0 0 14 30">
+            <path d="M7 0 3 9h2L1.5 17h3L1 24h5v6h2v-6h5l-3.5-7h3L9 9h2Z" fill="#1E4033"/>
+          </symbol>
+          <symbol id="alpine-fir" viewBox="0 0 20 46">
+            <path d="M10 0c-1 5-3 9-6 13l3-1c-2 5-4 9-7 13l5-2c-1 5-3 9-5 13l8-3v13h4V33l8 3c-3-5-4-9-5-13l5 2c-4-5-6-9-7-13l3 1c-3-4-5-8-6-13Z" fill="currentColor"/>
+            <path d="M10 8v31" stroke="#142B23" stroke-width=".65" opacity=".5"/>
+          </symbol>
+          <symbol id="fir-stand" viewBox="0 0 160 66">
+            <g color="#44614C" opacity=".55">
+              <use href="#alpine-fir" x="9" y="19" width="17" height="40"/><use href="#alpine-fir" x="31" y="13" width="19" height="45"/>
+              <use href="#alpine-fir" x="58" y="20" width="16" height="38"/><use href="#alpine-fir" x="82" y="11" width="20" height="47"/>
+              <use href="#alpine-fir" x="113" y="17" width="18" height="42"/><use href="#alpine-fir" x="137" y="23" width="15" height="36"/>
+            </g>
+            <g color="#17382E">
+              <use href="#alpine-fir" x="0" y="24" width="16" height="38"/><use href="#alpine-fir" x="19" y="8" width="22" height="52"/>
+              <use href="#alpine-fir" x="47" y="17" width="18" height="43"/><use href="#alpine-fir" x="68" y="2" width="25" height="58"/>
+              <use href="#alpine-fir" x="98" y="14" width="20" height="47"/><use href="#alpine-fir" x="124" y="7" width="23" height="54"/>
+              <use href="#alpine-fir" x="146" y="26" width="14" height="34"/>
+            </g>
+          </symbol>
+        </defs>
+
+        <rect width="1200" height="430" fill="#F8F5EF"/>
+        <g fill="none" stroke="#BDB5A8" stroke-width=".75" opacity=".42">
+          <path d="M0 54c173 12 320 8 443-12 147-24 308-22 483 6 94 15 185 17 274 7"/>
+          <path d="M0 72c146 9 282 4 408-15 158-23 329-20 513 10 101 17 194 19 279 11"/>
+        </g>
+        <g fill="#FDFBF7" stroke="#D7CFC3" stroke-width="1">
+          <path d="M46 104c9-23 36-33 58-21 15-29 56-33 76-7 24-8 50 6 56 29Z"/>
+          <path d="M393 77c11-25 43-32 65-14 18-31 65-29 79 7 27-2 47 12 54 34H376c1-11 6-20 17-27Z"/>
+          <path d="M807 92c10-22 39-28 58-12 18-27 57-24 71 6 22 1 39 12 46 31H791c1-10 6-18 16-25Z"/>
+        </g>
+
+        <!-- The distant valley is softly modelled; only the right rock face carries dense hatch. -->
+        <path d="M0 288 68 231l49 24 71-73 69 62 59-36 82 71 61 22v62H0Z" fill="#E7E4DB" stroke="#526058" stroke-width="1.2"/>
+        <path d="m0 288 68-57 49 24 71-73 20 69 49-7 59-36 25 77 57-6 61 22v62H0Z" fill="url(#rock-crosshatch)"/>
+        <path d="m145 226 43-44 38 34-30-14-18 25-18 8Z" fill="#FDFBF7"/>
+        <path d="M365 320 449 260l67 22 72-82 59 48 63-51 86 107v59H352Z" fill="#E2E1D8" stroke="#526058" stroke-width="1.15"/>
+        <path d="m449 260 67 22 72-82 59 48 63-51 42 51-47-19-29 35-32-17-46 54-35-32-53 34Z" fill="#FDFBF7"/>
+        <path d="m516 282 47 21 25-103 20 79 39-31 38 80 25-131 42 106 44 1v59H501Z" fill="url(#rock-hatch)" stroke="#526058" stroke-width="1"/>
+
+        <path d="M742 323 801 270l24-107 55-37 47-126h273v315l-196 59Z" fill="#D9DAD2" stroke="#354B41" stroke-width="1.5"/>
+        <path d="m839 294 24-121 55-39L966 0h234v289l-145 58Z" fill="url(#rock-hatch)"/>
+        <path d="m966 0-48 134 55-27 3 79 57-32-15 84 88-35 94-10V0Z" fill="url(#rock-crosshatch)"/>
+        <g fill="#FDFBF7" stroke="#D8D1C6" stroke-width=".7">
+          <path d="m828 203 34-47 56-22-31 57-44 30Z"/>
+          <path d="m908 286 38-62 45-6-30 42 78-29-43 51-65 20Z"/>
+          <path d="m752 309 54-42 39 9-31 37Z"/>
+        </g>
+        <g fill="none" stroke="#1E4033" stroke-width="1" opacity=".38">
+          <path d="m995 28-17 71 17 43-25 91"/><path d="m1038 17-16 83 20 51-23 91"/>
+          <path d="m1084 9-14 91 18 57-21 77"/><path d="m1132 4-13 77 22 64-25 85"/>
+          <path d="m911 142-10 65 18 49"/><path d="m860 170-5 58 16 48"/>
+        </g>
+
+        <!-- Depth follows the reference: overlapping meadow shoulders descend into a distant valley. -->
+        <path d="M0 303C154 256 328 276 489 319c53 14 94 20 126 16 125-17 256-82 377-91 76-6 144 1 208 17v169H0Z" fill="#DCE2D5" stroke="#526058" stroke-width="1"/>
+        <path d="M0 335c137-35 274-19 407 25 93 31 169 36 238 18 154-41 288-91 420-87 50 1 95 8 135 19v120H0Z" fill="#AEBB93"/>
+        <path d="M0 369c126-29 248-17 370 20 112 34 221 42 330 19 160-34 315-50 500-18v40H0Z" fill="#6E876B"/>
+        <path d="M0 402c135-31 263-19 384 9 105 24 219 25 339 2 155-29 306-32 477-2v19H0Z" fill="#214236"/>
+        <path d="M0 381c96-29 186-28 269-4-104-5-194 7-269 33Z" fill="#355943" opacity=".72"/>
+        <path d="M697 408c133-40 282-52 503-27v29c-188-21-341-9-461 20Z" fill="#355943" opacity=".68"/>
+
+        <!-- Contours wrap the rolling slopes and compress naturally toward the valley floor. -->
+        <g fill="none" stroke="#526C5B" stroke-width="1" opacity=".76">
+          <path d="M0 317c143-38 290-19 431 25 82 25 149 31 202 22 138-24 270-83 399-89 62-3 118 2 168 13"/>
+          <path d="M0 345c132-31 264-15 395 27 101 32 187 37 264 20 145-34 281-75 412-71 46 1 89 7 129 16"/>
+          <path d="M0 375c124-26 246-13 366 23 116 35 226 40 333 18 156-33 309-42 501-11"/>
+        </g>
+        <g fill="none" stroke="#E8E2D7" stroke-width=".8" opacity=".66">
+          <path d="M24 392c94-18 182-14 264 8"/><path d="M41 408c88-14 166-8 238 10"/>
+          <path d="M747 398c119-24 236-27 351-12"/><path d="M781 415c94-17 190-18 287-7"/>
+        </g>
+
+        <!-- Dense fir stands shrink and soften toward the valley, creating a forest rather than icon rows. -->
+        <g>
+          <use href="#fir-stand" x="18" y="318" width="205" height="84"/>
+          <use href="#fir-stand" x="176" y="321" width="157" height="65" opacity=".9"/>
+          <use href="#fir-stand" x="310" y="316" width="112" height="46" opacity=".75"/>
+          <use href="#fir-stand" x="415" y="314" width="72" height="30" opacity=".58"/>
+          <use href="#fir-stand" x="689" y="311" width="67" height="28" opacity=".56"/>
+          <use href="#fir-stand" x="747" y="308" width="98" height="40" opacity=".7"/>
+          <use href="#fir-stand" x="827" y="301" width="137" height="56" opacity=".84"/>
+          <use href="#fir-stand" x="938" y="280" width="205" height="84"/>
+        </g>
+
+        <!-- A narrow walking trail bends through the meadow; it is deliberately not road-width. -->
+        <path d="M625 361c77 12 134 29 178 69" fill="none" stroke="#D1C19B" stroke-width="4" stroke-linecap="round"/>
+        <path d="M625 361c77 12 134 29 178 69" fill="none" stroke="#526058" stroke-width=".8" stroke-linecap="round"/>
+        <path d="M926 399c28-12 69-12 95-1 22 9 15 22-12 28-29 7-72 2-86-9-8-7-6-12 3-18Z" fill="#17382E"/>
+
+        <!-- The railway follows the lower hillside contour, then curves away on the right as in the reference. -->
+        <path d="M58 429c178-37 349-48 518-37 160 10 305 0 438-32 61-15 101-41 127-78" fill="none" stroke="#17382E" stroke-width="9"/>
+        <path d="M58 426c178-37 349-48 518-37 160 10 305 0 438-32 61-15 101-41 127-78" fill="none" stroke="#D1C19B" stroke-width="4.5"/>
+        <path d="M58 424c178-37 349-48 518-37 160 10 305 0 438-32 61-15 101-41 127-78" fill="none" stroke="#F8F5EF" stroke-width=".8"/>
+        <g filter="url(#alpine-shadow)">
+          <use href="#alpine-car" transform="translate(176 399) rotate(-6) scale(1.02 .97)" width="82" height="25"/>
+          <use href="#alpine-car" transform="translate(258 391) rotate(-4) scale(.96 .92)" width="82" height="25"/>
+          <use href="#alpine-car" transform="translate(336 386) rotate(-2) scale(.9 .87)" width="82" height="25"/>
+          <use href="#alpine-car" transform="translate(408 383) rotate(0) scale(.84 .82)" width="82" height="25"/>
+          <use href="#alpine-car" transform="translate(476 383) rotate(1) scale(.78 .77)" width="82" height="25"/>
+        </g>
+
+        <g font-family="'IBM Plex Mono', monospace" font-size="8" letter-spacing="1.2" fill="#5C6660">
+          <text x="32" y="29">ALPINE TRANSIT · BERNESE OBERLAND</text>
+          <text x="1168" y="29" text-anchor="end">46.584° N · 8.006° E</text>
+        </g>
+      </g>
+    </g>
+  </svg>
+</section>
 
 <section class="section" id="product">
   <div class="container">
@@ -110,7 +341,7 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section section-product">
   <div class="container">
     <p class="eyebrow">In practice</p>
     <h2 class="section-title">Four statements in. One reconciled truth out.</h2>
@@ -161,33 +392,33 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Valmont Global Allocation Fund</td>
-                  <td><span class="sub">Proprietary</span></td>
-                  <td class="r">4,819,815</td><td class="r">38.9%</td>
+                  <td data-label="Instrument">Valmont Global Allocation Fund</td>
+                  <td data-label="Held at"><span class="sub">Proprietary</span></td>
+                  <td class="r" data-label="Value (CHF)">4,819,815</td><td class="r" data-label="Weight">38.9%</td>
                 </tr>
                 <tr>
-                  <td>Nestlé SA · CH0038863350</td>
-                  <td><span class="sub">2 custodians</span></td>
-                  <td class="r">1,301,742</td><td class="r">10.5%</td>
+                  <td data-label="Instrument">Nestlé SA · CH0038863350</td>
+                  <td data-label="Held at"><span class="sub">2 custodians</span></td>
+                  <td class="r" data-label="Value (CHF)">1,301,742</td><td class="r" data-label="Weight">10.5%</td>
                 </tr>
                 <tr>
-                  <td>US Treasury 4.25% 2031</td>
-                  <td><span class="sub">2 custodians</span></td>
-                  <td class="r">1,470,480</td><td class="r">11.9%</td>
+                  <td data-label="Instrument">US Treasury 4.25% 2031</td>
+                  <td data-label="Held at"><span class="sub">2 custodians</span></td>
+                  <td class="r" data-label="Value (CHF)">1,470,480</td><td class="r" data-label="Weight">11.9%</td>
                 </tr>
                 <tr>
-                  <td>Investor AB ser. B<span class="chip-flag">27 JUN</span></td>
-                  <td><span class="sub">Nordkap AM</span></td>
-                  <td class="r">512,236</td><td class="r">4.1%</td>
+                  <td data-label="Instrument">Investor AB ser. B<span class="chip-flag">27 JUN</span></td>
+                  <td data-label="Held at"><span class="sub">Nordkap AM</span></td>
+                  <td class="r" data-label="Value (CHF)">512,236</td><td class="r" data-label="Weight">4.1%</td>
                 </tr>
                 <tr>
-                  <td><span class="sub">… 4 further positions</span></td>
-                  <td></td>
-                  <td class="r">4,296,995</td><td class="r">34.6%</td>
+                  <td data-label="Instrument"><span class="sub">… 4 further positions</span></td>
+                  <td data-label="Held at"></td>
+                  <td class="r" data-label="Value (CHF)">4,296,995</td><td class="r" data-label="Weight">34.6%</td>
                 </tr>
                 <tr class="rtotal">
-                  <td>Total consolidated</td><td></td>
-                  <td class="r">12,401,268</td><td class="r">100.0%</td>
+                  <td data-label="Instrument">Total consolidated</td><td data-label="Held at"></td>
+                  <td class="r" data-label="Value (CHF)">12,401,268</td><td class="r" data-label="Weight">100.0%</td>
                 </tr>
               </tbody>
             </table>
@@ -203,7 +434,7 @@
   </div>
 </section>
 
-<section class="section" id="compliance">
+<section class="section section-compliance" id="compliance">
   <div class="container">
     <p class="eyebrow">Data protection &amp; audit</p>
     <h2 class="section-title">Ready for the questions your compliance officer will ask.</h2>
@@ -212,102 +443,74 @@
       inspect and an artifact you can request.
     </p>
 
-    <div class="screen comp-screen" id="comp-screen" data-cstep="0">
+    <div class="screen comp-screen" id="comp-screen" data-cstep="0" data-playing="false">
       <div class="screen-bar">
         <span class="dots"><i></i><i></i><i></i></span>
-        <span class="url">compliance review · select a control</span>
+        <span class="url">controls.alpinae.ch</span>
+        <span class="comp-step-count"><b id="comp-current">01</b> / 05</span>
+        <button class="comp-play" id="comp-play" type="button" aria-label="Play compliance walkthrough"><span aria-hidden="true">▶</span> Walkthrough</button>
       </div>
       <div class="screen-body">
 
-        <svg viewBox="0 0 760 250" xmlns="http://www.w3.org/2000/svg" role="img"
-             aria-label="Advisors and statements enter one Swiss region over verified channels; application, database, archive and audit log inside; nothing leaves toward foreign clouds or external AI">
-          <defs>
-            <marker id="carr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto">
-              <path d="M1,1 L7,4 L1,7" fill="none" stroke="#5C6660" stroke-width="1.2"/>
-            </marker>
-          </defs>
+        <div class="compliance-map" role="img" aria-label="Verified inputs enter a Swiss-owned region containing four controlled services. No write path or data egress exists.">
+          <div class="map-ingress">
+            <span class="map-label">Verified ingress</span>
+            <div id="vg-adv" class="vg map-node">
+              <span class="map-icon" aria-hidden="true">◎</span>
+              <div><strong>Your advisors</strong><small>TLS 1.3 · MFA · scoped roles</small></div>
+              <span class="node-event event-access">access scoped · read logged</span>
+            </div>
+            <div id="vg-gate" class="vg map-node">
+              <span class="map-icon" aria-hidden="true">◇</span>
+              <div><strong>Statements</strong><small>Account-holder gate first</small></div>
+              <span class="node-event event-gate">holder mismatch · blocked</span>
+            </div>
+          </div>
 
-          <!-- Advisors (access) -->
-          <g id="vg-adv" class="vg">
-            <circle cx="100" cy="54" r="7" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <path d="M86,76 C86,65 114,65 114,76" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <text x="100" y="96" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#1A2420">Your advisors</text>
-            <text x="100" y="110" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">TLS · MFA · read-only</text>
-            <line x1="164" y1="80" x2="212" y2="80" stroke="#5C6660" stroke-width="1" marker-end="url(#carr)"/>
-          </g>
+          <div class="map-flow" aria-hidden="true"><i><b class="flow-signal"></b></i><span>READ ONLY</span><i></i></div>
 
-          <!-- Statements through holder check (segregation) -->
-          <g id="vg-gate" class="vg">
-            <path d="M88,140 h16 l8,8 v20 h-24 z" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <path d="M104,140 v8 h8" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <path d="M108,164 l4,4 l8,-9" fill="none" stroke="#5C6660" stroke-width="1.6"/>
-            <text x="100" y="190" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#1A2420">Statements</text>
-            <text x="100" y="204" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">holder check first</text>
-            <line x1="164" y1="166" x2="212" y2="166" stroke="#5C6660" stroke-width="1" marker-end="url(#carr)"/>
-          </g>
+          <div id="vg-region" class="vg swiss-boundary">
+            <div class="boundary-head">
+              <div><span class="ch-mark">CH</span><strong>Swiss control boundary</strong></div>
+              <span class="verified-mark">● VERIFIED</span>
+            </div>
+            <div class="boundary-meta">ONE REGION · SWISS-OWNED · NO SUB-PROCESSORS</div>
+            <div class="control-grid">
+              <div id="vg-app" class="vg control-node"><span class="control-no">01</span><strong>Application</strong><small>Read-only processing</small><span class="node-event event-app">policy check passed</span></div>
+              <div id="vg-db" class="vg control-node"><span class="control-no">02</span><strong>Database</strong><small>AES-256 at rest</small></div>
+              <div id="vg-arch" class="vg control-node"><span class="control-no">03</span><strong>Archive</strong><small>Immutable · checksummed</small></div>
+              <div id="vg-log" class="vg control-node"><span class="control-no">04</span><strong>Audit ledger</strong><small>Append-only · hash-chained</small><span class="node-event event-ledger">event 9f21… appended</span></div>
+            </div>
+            <div class="boundary-foot"><span>Data residency: Switzerland</span><span>Backup boundary: Switzerland</span></div>
+          </div>
 
-          <!-- Swiss region (residency) -->
-          <g id="vg-region" class="vg">
-            <rect x="220" y="24" width="352" height="204" rx="12" fill="#FFFFFF" stroke="#1A2420" stroke-width="1.2"/>
-            <text x="396" y="46" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" letter-spacing="1.4" fill="#1A2420">SWITZERLAND · ONE REGION · SWISS-OWNED</text>
-            <text x="396" y="214" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">no sub-processors</text>
-          </g>
-
-          <g id="vg-app" class="vg">
-            <rect x="298" y="62" width="24" height="18" rx="2.5" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <line x1="298" y1="67.5" x2="322" y2="67.5" stroke="#5C6660" stroke-width="1.1"/>
-            <text x="310" y="102" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#1A2420">Application</text>
-            <text x="310" y="116" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">read-only</text>
-          </g>
-
-          <g id="vg-db" class="vg">
-            <ellipse cx="482" cy="66" rx="12" ry="4.5" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <path d="M470,66 v13 c0,2.5 5.4,4.5 12,4.5 s12,-2 12,-4.5 v-13" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <text x="482" y="102" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#1A2420">Database</text>
-            <text x="482" y="116" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">encrypted at rest</text>
-          </g>
-
-          <g id="vg-arch" class="vg">
-            <path d="M299,132 h14 l7,7 v15 h-21 z" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <path d="M313,132 v7 h7" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <text x="310" y="176" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#1A2420">Archive</text>
-            <text x="310" y="190" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">immutable · checksummed</text>
-          </g>
-
-          <g id="vg-log" class="vg">
-            <rect x="466" y="135" width="14" height="9" rx="4.5" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <rect x="484" y="143" width="14" height="9" rx="4.5" fill="none" stroke="#5C6660" stroke-width="1.3"/>
-            <line x1="480" y1="142" x2="484" y2="145" stroke="#5C6660" stroke-width="1.3"/>
-            <text x="482" y="176" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#1A2420">Audit log</text>
-            <text x="482" y="190" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">append-only · hash-chained</text>
-          </g>
-
-          <!-- Blocked egress (write path) -->
-          <g id="vg-egress" class="vg">
-            <line x1="572" y1="120" x2="594" y2="120" stroke="#5C6660" stroke-width="1"/>
-            <path class="keep-flag" d="M598,115 L608,125 M608,115 L598,125" stroke="#A63A2E" stroke-width="1.6" fill="none"/>
-            <text class="keep-flag" x="603" y="105" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#A63A2E">nothing leaves</text>
-            <line x1="612" y1="120" x2="630" y2="120" stroke="#E4DED2" stroke-width="1" stroke-dasharray="3 3"/>
-            <path d="M652,116 a8,8 0 0 1 8,-7 a10,10 0 0 1 10,8 a7,7 0 0 1 -2,14 h-22 a8,8 0 0 1 -1,-15 z" fill="none" stroke="#5C6660" stroke-width="1.3" stroke-dasharray="3 3"/>
-            <text x="676" y="152" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#1A2420">Foreign clouds</text>
-            <text x="676" y="166" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">external AI APIs</text>
-          </g>
-        </svg>
+          <div id="vg-egress" class="vg map-egress">
+            <span class="egress-attempt" aria-hidden="true"><i></i></span>
+            <span class="blocked-mark" aria-hidden="true">×</span>
+            <strong>No data egress</strong>
+            <small>No external AI APIs<br>No custodian write path</small>
+          </div>
+        </div>
 
         <div class="comp-caption">
-          <div class="cchips" role="tablist">
-            <button class="cchip on" type="button">01 · Residency</button>
-            <button class="cchip" type="button">02 · Access</button>
-            <button class="cchip" type="button">03 · Auditability</button>
-            <button class="cchip" type="button">04 · Failure mode</button>
-            <button class="cchip" type="button">05 · Segregation</button>
+          <div class="cchips" role="tablist" aria-label="Compliance controls">
+            <button class="cchip on" type="button" role="tab" aria-selected="true" aria-controls="control-detail"><span>01</span>Residency</button>
+            <button class="cchip" type="button" role="tab" aria-selected="false" aria-controls="control-detail"><span>02</span>Access</button>
+            <button class="cchip" type="button" role="tab" aria-selected="false" aria-controls="control-detail"><span>03</span>Auditability</button>
+            <button class="cchip" type="button" role="tab" aria-selected="false" aria-controls="control-detail"><span>04</span>Failure mode</button>
+            <button class="cchip" type="button" role="tab" aria-selected="false" aria-controls="control-detail"><span>05</span>Segregation</button>
           </div>
-          <h4 id="cq">Where is the data?</h4>
-          <p id="ct">All compute, the database, the statement archive, and backups run in a
-          single Swiss region with a Swiss-owned provider. No US-controlled processor
-          anywhere in the chain — nothing leaves the jurisdiction, including
-          AI-assisted document parsing.</p>
-          <p id="cev" class="cev-line">Evidence on request — hosting contract &amp; region attestation · sub-processor register</p>
+          <div class="control-detail" id="control-detail" role="tabpanel" aria-live="polite">
+            <div class="detail-heading"><span class="detail-label">Control question</span><span class="control-status"><i></i>Verified control</span></div>
+            <div class="detail-copy" id="detail-copy">
+              <h4 id="cq">Where is the data?</h4>
+              <p id="ct">All compute, the database, the statement archive, and backups run in a
+            single Swiss region with a Swiss-owned provider. No US-controlled processor
+            anywhere in the chain — nothing leaves the jurisdiction, including
+            AI-assisted document parsing.</p>
+              <p class="cev-line"><span aria-hidden="true">▤</span><span><b>Evidence available</b><span id="cev">Hosting contract &amp; region attestation · sub-processor register</span></span></p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -361,6 +564,7 @@
         <h2>See it on one real account.</h2>
         <p>The pilot is simple: one client, their actual statement set, reconciled
         and traceable. If the numbers aren't right, you'll know in a week.</p>
+        <span class="cta-proof">One client · one week · no core-system integration</span>
       </div>
       <a class="btn" href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20pilot">Request a pilot</a>
     </div>
@@ -369,18 +573,37 @@
 
 <footer class="footer">
   <div class="container footer-inner">
-    <div>
+    <div class="footer-brand">
       <span class="wordmark" style="font-size:17px;">Alpinae<span class="dot">.</span></span><br>
       Consolidated reconciliation &amp; reporting.<br>Geneva · Luxembourg
     </div>
-    <div style="text-align:right;">
-      <a href="demo/advisor.html">Advisor demo</a> · <a href="demo/client.html">Client view</a><br>
-      All demo data is fictional.
+    <div class="footer-links">
+      <a href="demo/advisor.html">Advisor demo</a>
+      <a href="demo/client.html">Client view</a>
+      <a href="mailto:kutbi.omar@gmail.com?subject=Alpinae%20compliance%20pack">Compliance pack</a>
+      <span>All demo data is fictional.</span>
     </div>
   </div>
 </footer>
 
 <script>
+/* Compact navigation on small screens. */
+(function () {
+  var nav = document.querySelector('.nav');
+  var toggle = document.querySelector('.nav-toggle');
+  if (!nav || !toggle) return;
+  toggle.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  nav.querySelectorAll('.nav-links a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+})();
+
 /* The reconciliation screen: statements arrive -> processing -> the table builds in place.
    Static end-state (stage 3) without JS or with reduced motion. */
 (function () {
@@ -432,51 +655,144 @@
   check();
 })();
 
-/* The reconciliation screen: statements arrive -> processing -> the table builds in place.
-   Static end-state (stage 3) without JS or with reduced motion. */
+/* Compliance walkthrough: a quiet, inspectable control path rather than a slide show. */
 (function () {
   var card = document.getElementById('comp-screen');
   if (!card) return;
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var CS = [
     { q: 'Where is the data?',
       t: 'All compute, the database, the statement archive, and backups run in a single Swiss region with a Swiss-owned provider. No US-controlled processor anywhere in the chain — nothing leaves the jurisdiction, including AI-assisted document parsing.',
-      ev: 'hosting contract & region attestation · sub-processor register',
+      ev: 'Hosting contract & region attestation · sub-processor register',
       targets: ['vg-region', 'vg-app', 'vg-db', 'vg-arch', 'vg-log'] },
     { q: 'Who can see it?',
       t: "Role-based access with mandatory two-factor authentication. Advisors are scoped to their assigned clients; the compliance role reads everything plus the audit trail. Every read is logged — including administrators'.",
-      ev: 'access-control matrix · read-access log extract',
-      targets: ['vg-adv'] },
+      ev: 'Access-control matrix · read-access log extract',
+      targets: ['vg-adv', 'vg-app', 'vg-log'] },
     { q: 'Can we audit it?',
       t: 'An append-only, hash-chained log records every statement ingested, every reconciliation, every report generated, and every access. Tampering breaks the chain and is evident on verification.',
-      ev: 'full-log CSV export · chain-verification procedure',
+      ev: 'Full-log CSV export · chain-verification procedure',
       targets: ['vg-log', 'vg-arch'] },
     { q: 'What happens when it breaks?',
       t: 'Your firm keeps working. Alpinae is read-only — no write path to any bank, custodian, or system of record exists — so an outage costs you a convenience, never a capability. Your statements remain at your custodians; your reports still go out. Stop using it tomorrow and nothing changes.',
-      ev: 'architecture note · exit & deletion procedure',
+      ev: 'Architecture note · exit & deletion procedure',
       targets: ['vg-egress'] },
     { q: 'Can a statement land in the wrong client?',
       t: "Every uploaded file's account holder is read and compared to the client space before anything is parsed. A mismatch blocks reconciliation until you decide — one client's positions never appear in another client's report.",
-      ev: 'mismatch flags & resolutions in the audit log · live in the demo',
-      targets: ['vg-gate'] }
+      ev: 'Mismatch resolutions in the audit log · live control in the demo',
+      targets: ['vg-gate', 'vg-app'] }
   ];
   var ALL = ['vg-adv', 'vg-gate', 'vg-region', 'vg-app', 'vg-db', 'vg-arch', 'vg-log', 'vg-egress'];
   var chips = Array.prototype.slice.call(card.querySelectorAll('.cchip'));
   var q = document.getElementById('cq'), t = document.getElementById('ct'), ev = document.getElementById('cev');
-  function setStep(n) {
+  var copy = document.getElementById('detail-copy');
+  var current = document.getElementById('comp-current');
+  var playButton = document.getElementById('comp-play');
+  var timer = null;
+  var active = 0;
+  var hasPlayed = false;
+
+  function paintStep(n) {
+    active = n;
     card.dataset.cstep = n;
-    chips.forEach(function (c, k) { c.classList.toggle('on', k === n); });
-    q.textContent = CS[n].q;
-    t.textContent = CS[n].t;
-    ev.textContent = 'Evidence on request — ' + CS[n].ev;
+    current.textContent = String(n + 1).padStart(2, '0');
+    chips.forEach(function (c, k) {
+      c.classList.toggle('on', k === n);
+      c.setAttribute('aria-selected', k === n ? 'true' : 'false');
+      c.tabIndex = k === n ? 0 : -1;
+    });
+    if (window.innerWidth <= 640) {
+      chips[n].scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest', inline: 'nearest' });
+    }
     ALL.forEach(function (id) {
       var el = document.getElementById(id);
       var lit = CS[n].targets.indexOf(id) >= 0;
       el.classList.toggle('lit', lit);
-      el.classList.toggle('dim', !lit);
+      el.classList.toggle('dim', !lit && id !== 'vg-region');
     });
+    card.classList.remove('step-enter');
+    void card.offsetWidth;
+    card.classList.add('step-enter');
   }
-  chips.forEach(function (c, k) { c.addEventListener('click', function () { setStep(k); }); });
-  setStep(0);
+
+  function setStep(n, immediate) {
+    paintStep(n);
+    if (immediate || reduced) {
+      q.textContent = CS[n].q;
+      t.textContent = CS[n].t;
+      ev.textContent = CS[n].ev;
+      return;
+    }
+    copy.classList.add('is-changing');
+    window.setTimeout(function () {
+      q.textContent = CS[n].q;
+      t.textContent = CS[n].t;
+      ev.textContent = CS[n].ev;
+      copy.classList.remove('is-changing');
+    }, 130);
+  }
+
+  function updatePlayButton(label, icon) {
+    playButton.innerHTML = '<span aria-hidden="true">' + icon + '</span> ' + label;
+    playButton.setAttribute('aria-label', label + ' compliance walkthrough');
+  }
+
+  function stopWalkthrough(label) {
+    if (timer) window.clearInterval(timer);
+    timer = null;
+    card.dataset.playing = 'false';
+    updatePlayButton(label || 'Replay', label === 'Resume' ? '▶' : '↻');
+  }
+
+  function playWalkthrough() {
+    if (reduced) return;
+    if (timer) {
+      stopWalkthrough('Resume');
+      return;
+    }
+    setStep(active === CS.length - 1 ? 0 : active, false);
+    card.dataset.playing = 'true';
+    updatePlayButton('Pause', 'Ⅱ');
+    timer = window.setInterval(function () {
+      if (active >= CS.length - 1) {
+        stopWalkthrough('Replay');
+        return;
+      }
+      setStep(active + 1, false);
+    }, 2800);
+  }
+
+  chips.forEach(function (c, k) {
+    c.addEventListener('click', function () {
+      stopWalkthrough('Replay');
+      setStep(k, false);
+    });
+    c.addEventListener('keydown', function (event) {
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp' && event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      event.preventDefault();
+      var forward = event.key === 'ArrowDown' || event.key === 'ArrowRight';
+      var next = (k + (forward ? 1 : -1) + chips.length) % chips.length;
+      chips[next].focus();
+      stopWalkthrough('Replay');
+      setStep(next, false);
+    });
+  });
+  playButton.addEventListener('click', playWalkthrough);
+  card.addEventListener('focusin', function (event) {
+    if (timer && event.target !== playButton) stopWalkthrough('Resume');
+  });
+
+  setStep(0, true);
+  if (!reduced && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      if (!hasPlayed && entries[0].isIntersecting) {
+        hasPlayed = true;
+        window.setTimeout(playWalkthrough, 420);
+        observer.disconnect();
+      }
+    }, { threshold: 0.5 });
+    observer.observe(card);
+  }
 })();
 
 </script>
