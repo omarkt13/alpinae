@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alpinae — ASCII hero study</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAF7F2;
+    --ink: #1A2420;
+    --ink-soft: #5C6660;
+    --pine: #1E4033;
+    --pine-deep: #142B23;
+    --hairline: #E4DED2;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink); }
+  body { font-family: Inter, system-ui, sans-serif; }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .stage canvas { display: block; width: 100%; }
+
+  /* Optional veil, as the real hero would have, to test copy legibility */
+  .veil {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(90deg, rgb(250 247 242 / .92) 0%, rgb(250 247 242 / .72) 34%, rgb(250 247 242 / .12) 62%, rgb(250 247 242 / 0) 78%),
+      linear-gradient(180deg, rgb(250 247 242 / .35) 0%, rgb(250 247 242 / 0) 30%, rgb(250 247 242 / 0) 70%, rgb(250 247 242 / .55) 100%);
+    pointer-events: none;
+  }
+  .veil[hidden] { display: none; }
+
+  .copy {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; justify-content: center;
+    max-width: 1080px; margin: 0 auto; padding: 0 32px;
+    pointer-events: none;
+  }
+  .copy[hidden] { display: none; }
+  .copy .kicker {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 16px;
+  }
+  .copy h1 {
+    font-family: "EB Garamond", serif; font-weight: 600;
+    font-size: clamp(30px, 4.6vw, 58px); line-height: 1.08;
+    margin: 0; max-width: 13ch; color: var(--ink);
+  }
+  .copy p {
+    font-size: 16px; line-height: 1.55; color: var(--ink-soft);
+    max-width: 44ch; margin: 20px 0 0;
+  }
+
+  .bar {
+    display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    max-width: 1080px; margin: 0 auto; padding: 16px 32px;
+  }
+  .bar .label {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft);
+    margin-right: auto;
+  }
+  .bar button {
+    font: 500 12.5px Inter, sans-serif; color: var(--pine);
+    background: none; border: 1px solid var(--hairline); border-radius: 6px;
+    padding: 6px 14px; cursor: pointer;
+  }
+  .bar button:hover { background: rgb(30 64 51 / .05); }
+  .bar button[aria-pressed="true"] { background: var(--pine); color: var(--paper); border-color: var(--pine); }
+  .bar button:focus-visible { outline: 2px solid var(--pine); outline-offset: 2px; }
+
+  .sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+</style>
+</head>
+<body>
+
+<figure class="stage" id="stage" role="img" aria-label="Animated ASCII rendering of a Swiss alpine valley with a passing train">
+  <canvas id="scene" aria-hidden="true"></canvas>
+  <div class="veil" id="veil" hidden></div>
+  <div class="copy" id="copy" hidden>
+    <div class="kicker">Alpinae — Swiss-hosted reconciliation</div>
+    <h1>Every figure traceable to its source.</h1>
+    <p>A read-only consolidation layer for wealth managers. Nothing writes back. Nothing leaves Switzerland.</p>
+  </div>
+  <figcaption class="sr-only">Swiss alpine valley rendered in colored ASCII characters, with drifting clouds, wind over the meadow, and a small train crossing the valley floor.</figcaption>
+</figure>
+
+<div class="bar">
+  <span class="label" id="status">ASCII hero study · procedural · zero dependencies</span>
+  <button id="btn-motion" aria-pressed="true">Motion</button>
+  <button id="btn-veil" aria-pressed="false">Veil</button>
+  <button id="btn-copy" aria-pressed="false">Hero copy</button>
+  <button id="btn-seed">Reseed</button>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const COLS = 200;
+  const ROWS = 56;
+  const CELL_ASPECT = 1.9;               // cell height / cell width
+  const RAMP = '.`^",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
+  const PAPER = "#FAF7F2";
+  const FPS_INTERVAL = 80;               // ~12 fps — ASCII reads better slightly stepped
+
+  const TRACK_Y = ROWS - 12;             // rail row; train rides on TRACK_Y - 1
+  const MEADOW_Y = TRACK_Y + 1;
+
+  const stage = document.getElementById("stage");
+  const canvas = document.getElementById("scene");
+  const ctx = canvas.getContext("2d", { alpha: false });
+
+  const staticC = document.createElement("canvas");
+  const staticX = staticC.getContext("2d", { alpha: false });
+  const cloudC = document.createElement("canvas");
+  const cloudX = cloudC.getContext("2d");
+
+  let seed = 1913;                       // year the Lötschberg line opened
+  let scene = null;
+  let cellW = 0, cellH = 0, fontSize = 0;
+  let running = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let visible = true;
+  let lastFrame = -Infinity;
+
+  // ---------- deterministic noise ----------
+
+  function hash(x, y) {
+    let h = (x * 374761393 + y * 668265263 + seed * 974634211) | 0;
+    h = Math.imul(h ^ (h >>> 13), 1274126177);
+    return ((h ^ (h >>> 16)) >>> 0) / 4294967296;
+  }
+
+  function noise(x, y) {
+    const xi = Math.floor(x), yi = Math.floor(y);
+    const xf = x - xi, yf = y - yi;
+    const u = xf * xf * (3 - 2 * xf), v = yf * yf * (3 - 2 * yf);
+    const a = hash(xi, yi), b = hash(xi + 1, yi);
+    const c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1);
+    return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
+  }
+
+  function fbm(x, y, octaves) {
+    let sum = 0, amp = 0.5, freq = 1;
+    for (let i = 0; i < octaves; i += 1) {
+      sum += amp * noise(x * freq, y * freq);
+      freq *= 2;
+      amp *= 0.5;
+    }
+    return sum;
+  }
+
+  // Peaked 1-D profile in [0,1] for mountain crests
+  function ridge(x, freq, row) {
+    const n1 = 1 - Math.abs(2 * noise(x * freq, row) - 1);
+    const n2 = 1 - Math.abs(2 * noise(x * freq * 2.7, row + 40) - 1);
+    return n1 * 0.72 + n2 * 0.28;
+  }
+
+  // ---------- palette helpers ----------
+
+  function mix(hexA, hexB, t) {
+    t = Math.max(0, Math.min(1, t));
+    const a = parseInt(hexA.slice(1), 16), b = parseInt(hexB.slice(1), 16);
+    const r = Math.round((a >> 16) + (((b >> 16) & 255) - (a >> 16)) * t);
+    const g = Math.round(((a >> 8) & 255) + (((b >> 8) & 255) - ((a >> 8) & 255)) * t);
+    const bl = Math.round((a & 255) + ((b & 255) - (a & 255)) * t);
+    return `rgb(${r} ${g} ${bl})`;
+  }
+
+  const MEADOW = ["#5B7150", "#637B57", "#6C855E", "#758F66", "#7E986E"];
+
+  function rampChar(density) {
+    const i = Math.max(0, Math.min(RAMP.length - 1, Math.round(density * (RAMP.length - 1))));
+    return RAMP[i];
+  }
+
+  // ---------- scene build (pure data, resolution-independent) ----------
+
+  function buildScene() {
+    const chars = new Array(COLS * ROWS).fill(" ");
+    const colors = new Array(COLS * ROWS).fill(PAPER);
+    const meadowCells = [];               // { x, y, rampIndex, color }
+
+    const farCrest = new Array(COLS);
+    const nearCrest = new Array(COLS);
+    const forestTop = new Array(COLS);
+    const skyTop = new Array(COLS);       // cloud clip line
+
+    for (let x = 0; x < COLS; x += 1) {
+      // broad valley envelope so the ridgelines rise and fall across the frame
+      const broad = 0.55 + 0.45 * noise(x * 0.008, 5);
+      farCrest[x] = Math.round(26 - 20 * ridge(x, 0.02, 11) * broad);
+      nearCrest[x] = Math.round(41 - 17 * ridge(x, 0.011, 53) * (1.15 - broad * 0.45));
+      forestTop[x] = Math.round(TRACK_Y - 4 + 2.6 * noise(x * 0.07, 77));
+      skyTop[x] = Math.min(farCrest[x], nearCrest[x]);
+    }
+
+    const slopeAt = (arr, x) =>
+      (arr[Math.min(COLS - 1, x + 2)] - arr[Math.max(0, x - 2)]) / 4;
+
+    for (let y = 0; y < ROWS; y += 1) {
+      for (let x = 0; x < COLS; x += 1) {
+        const i = y * COLS + x;
+        const tex = fbm(x * 0.14, y * 0.14, 4);
+
+        if (y > TRACK_Y) {
+          // meadow — light and airy, animated by gusts
+          let d = 0.04 + 0.2 * fbm(x * 0.35, y * 0.35, 3);
+          if (hash(x * 7 + 2, y * 3 + 1) > 0.96) d += 0.22;   // odd tuft
+          const shade = Math.max(0, Math.min(MEADOW.length - 1,
+            Math.floor(fbm(x * 0.08, y * 0.2, 2) * MEADOW.length)));
+          chars[i] = rampChar(d);
+          colors[i] = MEADOW[shade];
+          meadowCells.push({
+            x, y,
+            rampIndex: Math.round(d * (RAMP.length - 1)),
+            color: MEADOW[shade],
+          });
+
+        } else if (y === TRACK_Y) {
+          chars[i] = "=";
+          colors[i] = "#A79D8C";
+
+        } else if (y >= forestTop[x]) {
+          // forest band — clumps of pine with meadow gaps
+          const clump = fbm(x * 0.05, y * 0.3, 2);
+          if (clump < 0.34) {
+            chars[i] = rampChar(0.08 + 0.1 * tex);
+            colors[i] = MEADOW[3];
+          } else {
+            chars[i] = rampChar(0.52 + 0.34 * tex);
+            colors[i] = mix("#1E4033", "#2E5B45", tex);
+          }
+
+        } else if (y >= nearCrest[x]) {
+          // near ridge — slope-lit rock, blank speckle for hatching
+          const depth = y - nearCrest[x];
+          const slope = slopeAt(nearCrest, x);
+          const light = 0.5 - Math.max(-2, Math.min(2, slope)) * 0.16; // west-lit
+          let d = 0.14 + 0.5 * tex * (1.35 - light);
+          if (depth <= 1) d = Math.max(d, 0.45);                       // crest outline
+          if (depth > 2 && tex < 0.26) continue;                       // hatching gap
+          chars[i] = rampChar(d);
+          colors[i] = mix("#707A72", "#3E4842", Math.min(1, d * 0.7 + (1 - light) * 0.45));
+
+        } else if (y >= farCrest[x]) {
+          // far ridge — snow near the crest, hazy rock fading to paper
+          const depth = y - farCrest[x];
+          const snowDepth = 2.5 + 3 * noise(x * 0.09, 91);
+          if (depth < snowDepth) {
+            if (depth > 0 && tex < 0.48) continue;                     // sparse snow
+            chars[i] = rampChar(0.05 + 0.1 * tex);
+            colors[i] = mix("#C4CBC4", "#ADB6AE", tex);
+          } else {
+            const slope = slopeAt(farCrest, x);
+            const light = 0.5 - Math.max(-2, Math.min(2, slope)) * 0.14;
+            const d = 0.1 + 0.34 * tex * (1.3 - light);
+            if (tex < 0.36) continue;                                  // airy fill
+            const haze = Math.min(1, depth / 16);
+            chars[i] = rampChar(d);
+            colors[i] = mix(mix("#8E988F", "#788279", tex), PAPER, haze * 0.55);
+          }
+
+        } else if (hash(x * 3 + 1, y * 5 + 2) > 0.992) {
+          // sky: near-empty, a few faint specks so it isn't a dead void
+          chars[i] = ".";
+          colors[i] = "#E7E1D5";
+        }
+      }
+    }
+
+    // clouds: soft ellipse blobs in the sky band, baked once
+    const clouds = [];
+    for (let c = 0; c < 6; c += 1) {
+      const cx = hash(c * 17 + 3, 5) * COLS;
+      const cy = 3 + hash(c * 29 + 7, 9) * 10;
+      const rx = 9 + hash(c * 41 + 1, 13) * 11;
+      const ry = 2 + hash(c * 53 + 5, 17) * 2;
+      for (let y = Math.max(0, Math.floor(cy - ry)); y <= Math.ceil(cy + ry); y += 1) {
+        for (let x = Math.floor(cx - rx); x <= Math.ceil(cx + rx); x += 1) {
+          const dx = (x - cx) / rx, dy = (y - cy) / ry;
+          const d = dx * dx + dy * dy;
+          if (d >= 1) continue;
+          const body = (1 - d) * (0.55 + 0.45 * noise(x * 0.4 + c * 9, y * 0.4));
+          if (body < 0.26) continue;
+          clouds.push({
+            x: ((x % COLS) + COLS) % COLS,
+            y,
+            char: rampChar(0.04 + body * 0.12),
+            color: mix("#DAD3C6", "#C6BEAF", body),
+          });
+        }
+      }
+    }
+
+    return { chars, colors, meadowCells, skyTop, clouds };
+  }
+
+  // ---------- rendering ----------
+
+  function setFont(target) {
+    target.font = `500 ${fontSize}px "SF Mono", ui-monospace, Menlo, Consolas, monospace`;
+    target.textBaseline = "top";
+  }
+
+  function paintStatic() {
+    staticX.fillStyle = PAPER;
+    staticX.fillRect(0, 0, staticC.width, staticC.height);
+    setFont(staticX);
+    for (let y = 0; y < ROWS; y += 1) {
+      for (let x = 0; x < COLS; x += 1) {
+        const i = y * COLS + x;
+        if (scene.chars[i] === " ") continue;
+        staticX.fillStyle = scene.colors[i];
+        staticX.fillText(scene.chars[i], x * cellW, y * cellH);
+      }
+    }
+  }
+
+  function paintClouds() {
+    cloudX.clearRect(0, 0, cloudC.width, cloudC.height);
+    setFont(cloudX);
+    for (const cell of scene.clouds) {
+      cloudX.fillStyle = cell.color;
+      cloudX.fillText(cell.char, cell.x * cellW, cell.y * cellH);
+    }
+  }
+
+  function resize() {
+    const cssW = Math.max(320, stage.clientWidth || 1080);
+    const cssH = cssW * (ROWS * CELL_ASPECT) / COLS;
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+
+    canvas.style.height = `${cssH}px`;
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    staticC.width = cloudC.width = canvas.width;
+    staticC.height = cloudC.height = canvas.height;
+
+    cellW = canvas.width / COLS;
+    cellH = canvas.height / ROWS;
+    fontSize = Math.min(cellH * 1.05, cellW * 1.6);   // keep glyphs inside cells
+
+    paintStatic();
+    paintClouds();
+  }
+
+  // ---------- clouds drift, clipped above the ridgelines ----------
+
+  function drawClouds(now) {
+    const offset = running ? ((now % 140000) / 140000) * canvas.width : 0;
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(canvas.width, 0);
+    for (let x = COLS - 1; x >= 0; x -= 1) {
+      ctx.lineTo((x + 0.5) * cellW, scene.skyTop[x] * cellH);
+    }
+    ctx.closePath();
+    ctx.clip();
+    ctx.drawImage(cloudC, -offset, 0);
+    ctx.drawImage(cloudC, canvas.width - offset, 0);
+    ctx.restore();
+  }
+
+  // ---------- wind gusts over the meadow ----------
+
+  const gusts = [];
+  let nextGustAt = 1500;
+
+  function spawnGust(now) {
+    gusts.push({
+      start: now,
+      duration: 9000 + hash(now | 0, 1) * 6000,
+      cy: MEADOW_Y + 2 + hash(now | 0, 2) * (ROWS - MEADOW_Y - 4),
+      rx: 16 + hash(now | 0, 3) * 22,
+      ry: 3 + hash(now | 0, 4) * 3.5,
+      dir: hash(now | 0, 5) < 0.5 ? -1 : 1,
+      strength: 0.5 + hash(now | 0, 6) * 0.4,
+    });
+    nextGustAt = now + 3000 + hash(now | 0, 7) * 5000;
+  }
+
+  function drawGusts(now) {
+    if (now >= nextGustAt && gusts.length < 3) spawnGust(now);
+    setFont(ctx);
+    for (let g = gusts.length - 1; g >= 0; g -= 1) {
+      const gust = gusts[g];
+      const progress = (now - gust.start) / gust.duration;
+      if (progress >= 1) { gusts.splice(g, 1); continue; }
+
+      const travel = COLS + gust.rx * 2;
+      const centerX = gust.dir > 0
+        ? -gust.rx + progress * travel
+        : COLS + gust.rx - progress * travel;
+      const envelope = Math.sin(Math.PI * progress) * gust.strength;
+      const phase = Math.floor(progress * 7);
+
+      for (const cell of scene.meadowCells) {
+        const dx = (cell.x - centerX) / gust.rx;
+        const dy = (cell.y - gust.cy) / gust.ry;
+        const d = dx * dx + dy * dy;
+        if (d >= 1) continue;
+        if (envelope * (1 - d) < 0.12) continue;
+
+        const flip = (cell.x * 13 + cell.y * 7 + phase) % 2 === 0 ? 2 : -2;
+        const j = Math.max(0, Math.min(RAMP.length - 1, cell.rampIndex + flip));
+
+        ctx.fillStyle = PAPER;
+        ctx.fillRect(cell.x * cellW, cell.y * cellH, cellW + 0.5, cellH + 0.5);
+        ctx.fillStyle = cell.color;
+        ctx.fillText(RAMP[j], cell.x * cellW, cell.y * cellH);
+      }
+    }
+  }
+
+  // ---------- the train ----------
+
+  const TRAIN_R = "[###][###][###]>";
+  const TRAIN_L = "<[###][###][###]";
+  const TRAIN_SPEED = 7.5;               // cells per second
+  let train = null;
+  let nextTrainAt = 4000;
+  let trainDir = 1;
+
+  function drawTrain(now) {
+    if (!train && now >= nextTrainAt) {
+      train = { start: now, dir: trainDir };
+      trainDir = -trainDir;
+    }
+    if (!train) return;
+
+    const body = train.dir > 0 ? TRAIN_R : TRAIN_L;
+    const traveled = ((now - train.start) / 1000) * TRAIN_SPEED;
+    const head = train.dir > 0 ? -body.length + traveled : COLS - traveled;
+
+    if (traveled > COLS + body.length) {
+      train = null;
+      nextTrainAt = now + 16000 + hash(now | 0, 8) * 18000;
+      return;
+    }
+
+    setFont(ctx);
+    const y = TRACK_Y - 1;
+    for (let k = 0; k < body.length; k += 1) {
+      const x = Math.round(head) + k;
+      if (x < 0 || x >= COLS) continue;
+      ctx.fillStyle = PAPER;
+      ctx.fillRect(x * cellW, y * cellH, cellW + 0.5, cellH + 0.5);
+      ctx.fillStyle = "#142B23";
+      ctx.fillText(body[k], x * cellW, y * cellH);
+    }
+  }
+
+  // ---------- frame loop ----------
+
+  function drawFrame(now) {
+    ctx.drawImage(staticC, 0, 0);
+    drawClouds(now);
+    if (running) {
+      drawGusts(now);
+      drawTrain(now);
+    }
+  }
+
+  function tick(now) {
+    if (running && visible && now - lastFrame >= FPS_INTERVAL) {
+      drawFrame(now);
+      lastFrame = now;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // ---------- wiring ----------
+
+  function rebuild() {
+    scene = buildScene();
+    resize();
+    drawFrame(performance.now());
+  }
+
+  new ResizeObserver(() => { resize(); drawFrame(performance.now()); }).observe(stage);
+  new IntersectionObserver(entries => { visible = entries[0].isIntersecting; }).observe(stage);
+  document.addEventListener("visibilitychange", () => { visible = !document.hidden; });
+
+  const btnMotion = document.getElementById("btn-motion");
+  btnMotion.setAttribute("aria-pressed", String(running));
+  btnMotion.addEventListener("click", () => {
+    running = !running;
+    btnMotion.setAttribute("aria-pressed", String(running));
+    if (!running) drawFrame(performance.now());
+  });
+
+  function bindToggle(buttonId, targetId) {
+    const button = document.getElementById(buttonId);
+    const target = document.getElementById(targetId);
+    button.addEventListener("click", () => {
+      target.hidden = !target.hidden;
+      button.setAttribute("aria-pressed", String(!target.hidden));
+    });
+  }
+  bindToggle("btn-veil", "veil");
+  bindToggle("btn-copy", "copy");
+
+  document.getElementById("btn-seed").addEventListener("click", () => {
+    seed = (Math.random() * 1e9) | 0;
+    gusts.length = 0;
+    train = null;
+    rebuild();
+  });
+
+  rebuild();
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>
