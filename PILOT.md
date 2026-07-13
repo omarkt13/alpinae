@@ -51,16 +51,23 @@ policy) → DPA review → sign → key + `ALPINAE_AI_DPA_CONFIRMED=yes`.
 - **Interim:** validation runs can use `local` (Ollama on our machine) —
   slower, weaker, but unblocks WS4 if the DPA lags.
 
-### WS3 — Engine build (Claude) · START NOW, no external dependencies
+### WS3 — Engine build (Claude) · DONE 15 Jul 2026
 
-| # | Task | Size |
+| # | Task | Status |
 |---|---|---|
-| 1 | Wire the assisted parser into extraction (`alpinae parse <sha> --engine assisted`), engine recorded per statement in the audit log | S |
-| 2 | Parsed-vs-attested valuation-date check → data-quality flag | S |
-| 3 | **Alpinae standard statement v1**: identity header (firm name + logo slot), summary, by-source with dates, positions with weights, **lineage annex sheet** (every contribution: source file, location, raw text, FX) | M |
-| 4 | `alpinae check --aggregate <csv>`: compare any aggregate against the approved run — unsubstantiated / missing / mismatched positions listed with amounts (productize the dry run's Blackstone catch) | M |
-| 5 | `alpinae audit export` → CSV for the firm's compliance file | S |
-| 6 | Ops hygiene: document/wrap the `PYTHONPATH=src` invocation quirk | S |
+| 1 | Wire the assisted parser into extraction (`alpinae parse <sha> --engine assisted`), engine recorded per statement in the audit log | ✅ |
+| 2 | Parsed-vs-attested valuation-date check → data-quality flag | ✅ |
+| 3 | **Alpinae standard statement v1**: identity header (firm name + logo slot), summary, by-source with dates, positions with weights, **lineage annex sheet** (every contribution: source file, location, raw text, FX) | ✅ |
+| 4 | `alpinae check --run-id N --aggregate <csv>`: compare any aggregate against the approved run — unsubstantiated / missing / mismatched positions listed with amounts (productize the dry run's Blackstone catch) | ✅ |
+| 5 | `alpinae audit export` → CSV for the firm's compliance file | ✅ |
+| 6 | Ops hygiene: document/wrap the `PYTHONPATH=src` invocation quirk (`./alpinae.sh`) | ✅ |
+
+Beyond plan (same date): the full phase-1 backend surface landed early —
+users & sessions in the store, `auth.py` (scrypt passwords, opt-in TOTP,
+hashed session tokens), and a FastAPI app (`alpinae serve`) exposing the
+whole pipeline over HTTP with session-cookie auth, CSRF, and
+advisor/compliance/admin roles. The concierge pilot still runs on the CLI;
+the API is the hosted-pilot foundation, not a pilot dependency.
 
 ### WS4 — Validation sprint (joint) · T0 = statements + parser path in hand
 
