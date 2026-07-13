@@ -112,8 +112,15 @@
   const COLS = 200;
   const ROWS = 56;
   const CELL_ASPECT = 1.9;               // cell height / cell width
-  const RAMP = '.`^",:;Il!i~+_-?][}{1)(|\\/tfjrxnuvczXYUJCLQ0OZmwqpdbkhao*#MW&8%B@$';
   const PAPER = "#FAF7F2";
+
+  // Curated per-region ramps — a single global ramp puts punctuation noise
+  // ("?][}{") in the midtones, which reads as static rather than terrain.
+  const SNOW_RAMP = "`.':-=";
+  const FAR_RAMP = ".,:;!~+=zx";
+  const NEAR_RAMP = ":;~+=xzXH#8";
+  const FOREST_RAMP = "!iy+YT#";
+  const MEADOW_RAMP = ".,'\":;~ii";
   const FPS_INTERVAL = 80;               // ~12 fps — ASCII reads better slightly stepped
 
   const TRACK_Y = ROWS - 12;             // rail row; train rides on TRACK_Y - 1
@@ -162,11 +169,24 @@
     return sum;
   }
 
-  // Peaked 1-D profile in [0,1] for mountain crests
-  function ridge(x, freq, row) {
-    const n1 = 1 - Math.abs(2 * noise(x * freq, row) - 1);
-    const n2 = 1 - Math.abs(2 * noise(x * freq * 2.7, row + 40) - 1);
-    return n1 * 0.72 + n2 * 0.28;
+  // Ridgelines are art-directed, not generated: noise alone has no
+  // composition. Control points define the silhouette; noise only jitters it.
+  const FAR_PTS = [
+    [0, 26], [18, 20], [34, 9], [44, 15], [56, 11], [70, 22], [88, 26],
+    [104, 17], [117, 6], [126, 13], [139, 10], [152, 19], [168, 25],
+    [184, 20], [199, 26],
+  ];
+  const NEAR_PTS = [
+    [0, 36], [16, 31], [34, 35], [52, 30], [72, 34], [90, 29], [108, 35],
+    [126, 32], [144, 36], [162, 30], [182, 34], [199, 32],
+  ];
+
+  function polyline(points, x) {
+    for (let p = 0; p < points.length - 1; p += 1) {
+      const [x0, y0] = points[p], [x1, y1] = points[p + 1];
+      if (x >= x0 && x <= x1) return y0 + (y1 - y0) * (x - x0) / (x1 - x0);
+    }
+    return points[points.length - 1][1];
   }
 
   // ---------- palette helpers ----------
@@ -182,10 +202,12 @@
 
   const MEADOW = ["#5B7150", "#637B57", "#6C855E", "#758F66", "#7E986E"];
 
-  function rampChar(density) {
-    const i = Math.max(0, Math.min(RAMP.length - 1, Math.round(density * (RAMP.length - 1))));
-    return RAMP[i];
+  function pick(ramp, t) {
+    const i = Math.max(0, Math.min(ramp.length - 1, Math.round(t * (ramp.length - 1))));
+    return ramp[i];
   }
+
+  const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
 
   // ---------- scene build (pure data, resolution-independent) ----------
 
@@ -200,33 +222,52 @@
     const skyTop = new Array(COLS);       // cloud clip line
 
     for (let x = 0; x < COLS; x += 1) {
-      // broad valley envelope so the ridgelines rise and fall across the frame
-      const broad = 0.55 + 0.45 * noise(x * 0.008, 5);
-      farCrest[x] = Math.round(26 - 20 * ridge(x, 0.02, 11) * broad);
-      nearCrest[x] = Math.round(41 - 17 * ridge(x, 0.011, 53) * (1.15 - broad * 0.45));
-      forestTop[x] = Math.round(TRACK_Y - 4 + 2.6 * noise(x * 0.07, 77));
+      farCrest[x] = Math.round(polyline(FAR_PTS, x) + 1.6 * (noise(x * 0.35, 21) - 0.5));
+      nearCrest[x] = Math.round(polyline(NEAR_PTS, x) + 1.6 * (noise(x * 0.3, 63) - 0.5));
+      // fingered forest edge — two octaves so the treeline isn't a flat rule
+      forestTop[x] = Math.round(TRACK_Y - 5
+        + 4.5 * (noise(x * 0.09, 77) - 0.5)
+        + 2.0 * (noise(x * 0.28, 131) - 0.5));
       skyTop[x] = Math.min(farCrest[x], nearCrest[x]);
     }
 
     const slopeAt = (arr, x) =>
       (arr[Math.min(COLS - 1, x + 2)] - arr[Math.max(0, x - 2)]) / 4;
 
+    // Directional light (upper-left): a face whose crest descends to the right
+    // turns away from the light → shadow; a rising face is lit. Smoothed over a
+    // wide window so the whole flank shares one tone instead of speckling.
+    // 0 = deep shadow, 1 = full sun.
+    const lightAt = (arr, x) => {
+      const s = (arr[Math.min(COLS - 1, x + 4)] - arr[Math.max(0, x - 4)]) / 8;
+      return clamp(0.5 - s * 0.52, 0.05, 0.97);
+    };
+    const farLit = new Array(COLS);
+    const nearLit = new Array(COLS);
+    for (let x = 0; x < COLS; x += 1) {
+      farLit[x] = lightAt(farCrest, x);
+      nearLit[x] = lightAt(nearCrest, x);
+    }
+
     for (let y = 0; y < ROWS; y += 1) {
       for (let x = 0; x < COLS; x += 1) {
         const i = y * COLS + x;
-        const tex = fbm(x * 0.14, y * 0.14, 4);
+        // x/y frequencies compensate for tall cells so the noise is
+        // isotropic on screen — otherwise it bands horizontally
+        const tex = fbm(x * 0.11, y * 0.21, 4);
 
         if (y > TRACK_Y) {
           // meadow — light and airy, animated by gusts
-          let d = 0.04 + 0.2 * fbm(x * 0.35, y * 0.35, 3);
-          if (hash(x * 7 + 2, y * 3 + 1) > 0.96) d += 0.22;   // odd tuft
+          let t = 0.7 * fbm(x * 0.3, y * 0.55, 3);
+          if (hash(x * 7 + 2, y * 3 + 1) > 0.95) t += 0.45;   // odd tuft
           const shade = Math.max(0, Math.min(MEADOW.length - 1,
             Math.floor(fbm(x * 0.08, y * 0.2, 2) * MEADOW.length)));
-          chars[i] = rampChar(d);
+          chars[i] = pick(MEADOW_RAMP, t);
           colors[i] = MEADOW[shade];
           meadowCells.push({
             x, y,
-            rampIndex: Math.round(d * (RAMP.length - 1)),
+            rampIndex: Math.max(0, Math.min(MEADOW_RAMP.length - 1,
+              Math.round(t * (MEADOW_RAMP.length - 1)))),
             color: MEADOW[shade],
           });
 
@@ -235,43 +276,74 @@
           colors[i] = "#A79D8C";
 
         } else if (y >= forestTop[x]) {
-          // forest band — clumps of pine with meadow gaps
-          const clump = fbm(x * 0.05, y * 0.3, 2);
-          if (clump < 0.34) {
-            chars[i] = rampChar(0.08 + 0.1 * tex);
-            colors[i] = MEADOW[3];
+          // forest band — scattered pine clumps over meadow, so the treeline
+          // reads as stippled stands rather than a solid dark rule
+          const clump = fbm(x * 0.14, y * 0.34, 2);
+          if (clump < 0.52) {
+            continue;                                                  // meadow gap → paper
+          } else if (clump < 0.6) {
+            chars[i] = pick(MEADOW_RAMP, 0.4);                         // sparse scrub
+            colors[i] = MEADOW[2];
           } else {
-            chars[i] = rampChar(0.52 + 0.34 * tex);
-            colors[i] = mix("#1E4033", "#2E5B45", tex);
+            chars[i] = pick(FOREST_RAMP, 0.3 + 0.55 * tex);
+            colors[i] = mix("#265039", "#37664B", tex);
           }
 
         } else if (y >= nearCrest[x]) {
-          // near ridge — slope-lit rock, blank speckle for hatching
+          // near ridge — solid dark foothill mass, one tone per lit/shadow face
           const depth = y - nearCrest[x];
+          const lit = nearLit[x];
           const slope = slopeAt(nearCrest, x);
-          const light = 0.5 - Math.max(-2, Math.min(2, slope)) * 0.16; // west-lit
-          let d = 0.14 + 0.5 * tex * (1.35 - light);
-          if (depth <= 1) d = Math.max(d, 0.45);                       // crest outline
-          if (depth > 2 && tex < 0.26) continue;                       // hatching gap
-          chars[i] = rampChar(d);
-          colors[i] = mix("#707A72", "#3E4842", Math.min(1, d * 0.7 + (1 - light) * 0.45));
+          const base = forestTop[x] - nearCrest[x];
+          const foot = base > 0 ? depth / base : 1;                   // 0 crest → 1 base
+          // shadow faces get denser glyphs; a valley-shadow gradient darkens the base
+          const t = clamp(0.4 + (1 - lit) * 0.34 + foot * 0.1 + (tex - 0.5) * 0.12, 0, 0.8);
+          if (depth === 0) {
+            chars[i] = pick(NEAR_RAMP, 0.72);                          // crisp crest edge
+            colors[i] = "#313A34";
+          } else if (lit > 0.5 && tex < 0.15 + (lit - 0.5) * 1.3) {
+            continue;                                                  // sunlit face goes porous
+          } else if (Math.abs(slope) > 0.55 && lit < 0.4 && hash(x * 5, y * 9) < 0.55) {
+            chars[i] = slope < 0 ? "/" : "\\";                         // shadowed flank striation
+            colors[i] = "#333D37";
+          } else {
+            chars[i] = pick(NEAR_RAMP, t);
+            // lit face → mossy green-grey, shadow face → deep pine
+            colors[i] = mix("#333D37", "#6B7867", lit - foot * 0.18 + (tex - 0.5) * 0.12);
+          }
 
         } else if (y >= farCrest[x]) {
-          // far ridge — snow near the crest, hazy rock fading to paper
+          // far ridge — the star: snow-capped peaks with real light/shadow massing
           const depth = y - farCrest[x];
-          const snowDepth = 2.5 + 3 * noise(x * 0.09, 91);
+          const lit = farLit[x];
+          const slope = slopeAt(farCrest, x);
+          const height = 26 - farCrest[x];                            // 0 valley … ~20 summit
+          const snowDepth = Math.max(1.4, height * 0.62);
+          const band = nearCrest[x] - farCrest[x];
+          const haze = band > 0 ? depth / band : 0;                  // aerial fade toward base
+
           if (depth < snowDepth) {
-            if (depth > 0 && tex < 0.48) continue;                     // sparse snow
-            chars[i] = rampChar(0.05 + 0.1 * tex);
-            colors[i] = mix("#C4CBC4", "#ADB6AE", tex);
+            // snow: solid caps. Lit snow is cool grey (never paper-white, or it
+            // vanishes on ivory); shadow snow is a darker blue-grey giving volume.
+            const snowShade = clamp(0.4 + lit * 0.6 - (tex - 0.5) * 0.14, 0, 1);
+            chars[i] = pick(SNOW_RAMP, clamp(0.32 + (1 - lit) * 0.45 + (tex - 0.5) * 0.18, 0.14, 1));
+            colors[i] = mix("#8A968F", "#D2D8D2", snowShade);
+            if (depth === 0) colors[i] = "#828C86";                   // firm crest edge
           } else {
-            const slope = slopeAt(farCrest, x);
-            const light = 0.5 - Math.max(-2, Math.min(2, slope)) * 0.14;
-            const d = 0.1 + 0.34 * tex * (1.3 - light);
-            if (tex < 0.36) continue;                                  // airy fill
-            const haze = Math.min(1, depth / 16);
-            chars[i] = rampChar(d);
-            colors[i] = mix(mix("#8E988F", "#788279", tex), PAPER, haze * 0.55);
+            // rock: strong lit/shadow bands; sunlit faces go porous so the massif
+            // reads as lit-left / shadow-right instead of a solid block.
+            const rockShade = clamp(0.36 + lit * 0.62, 0, 1);
+            if (lit > 0.52 && tex < 0.12 + (lit - 0.5) * 1.2 && haze > 0.15) {
+              // paper shows through on sunny flanks
+            } else if (Math.abs(slope) > 0.5 && lit < 0.45 && hash(x * 5, y * 9) < 0.6) {
+              chars[i] = slope < 0 ? "/" : "\\";                       // shadowed striation
+              colors[i] = mix("#5E6862", PAPER, haze * 0.5);
+            } else {
+              const t = clamp(0.35 + (1 - lit) * 0.34 + (tex - 0.5) * 0.2, 0, 0.72);
+              chars[i] = pick(FAR_RAMP, t);
+              const rock = mix("#5E6862", "#B2BAB2", rockShade);
+              colors[i] = mix(rock, PAPER, haze * 0.55);              // melt into distance
+            }
           }
 
         } else if (hash(x * 3 + 1, y * 5 + 2) > 0.992) {
@@ -299,7 +371,7 @@
           clouds.push({
             x: ((x % COLS) + COLS) % COLS,
             y,
-            char: rampChar(0.04 + body * 0.12),
+            char: pick(SNOW_RAMP, 0.2 + body * 0.8),
             color: mix("#DAD3C6", "#C6BEAF", body),
           });
         }
@@ -417,12 +489,12 @@
         if (envelope * (1 - d) < 0.12) continue;
 
         const flip = (cell.x * 13 + cell.y * 7 + phase) % 2 === 0 ? 2 : -2;
-        const j = Math.max(0, Math.min(RAMP.length - 1, cell.rampIndex + flip));
+        const j = Math.max(0, Math.min(MEADOW_RAMP.length - 1, cell.rampIndex + flip));
 
         ctx.fillStyle = PAPER;
         ctx.fillRect(cell.x * cellW, cell.y * cellH, cellW + 0.5, cellH + 0.5);
         ctx.fillStyle = cell.color;
-        ctx.fillText(RAMP[j], cell.x * cellW, cell.y * cellH);
+        ctx.fillText(MEADOW_RAMP[j], cell.x * cellW, cell.y * cellH);
       }
     }
   }

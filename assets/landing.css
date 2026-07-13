@@ -251,24 +251,50 @@ h2.section-title { font-size: clamp(28px, 3.6vw, 40px); max-width: 640px; margin
   .fact:nth-child(3), .fact:nth-child(4) { border-top: 1px solid var(--hairline); }
 }
 
-/* ---------- Alpine landscape ---------- */
+/* ---------- Alpine landscape (animated ASCII) ---------- */
 
-.alpine-band {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 48px 32px 0;
+/* The scene sits below the hero but pulls up into it, so its drifting clouds
+   pass behind the CTA band. Hero content is lifted above it; the band never
+   intercepts pointer events. Top and bottom fade into paper. */
+.hero { position: relative; z-index: 1; }
+
+.ascii-band {
+  position: relative;
+  z-index: 0;
+  max-width: 1080px;
+  margin: -150px auto 0;
+  padding: 0 32px;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 90%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 90%, transparent 100%);
 }
-.alpine-scene {
+.ascii-band canvas {
   display: block;
   width: 100%;
-  height: 330px;
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
-  box-shadow: 0 1px 2px rgb(26 36 32 / 0.05), 0 22px 55px -30px rgb(20 43 35 / 0.28);
+  background: var(--paper);
+}
+/* Once the hero stacks (≤920px) the snapshot card sits directly above the
+   band, so the desktop-only "clouds behind the CTAs" pull-up would drag the
+   scene over the card. Drop the overlap and let it sit cleanly below. */
+@media (max-width: 920px) {
+  .ascii-band { margin-top: 16px; }
 }
 @media (max-width: 640px) {
-  .alpine-band { padding: 28px 20px 0; }
-  .alpine-scene { height: 210px; min-height: 0; }
+  .ascii-band { padding: 0 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* no motion to justify the pull-up; keep the still frame fully below the hero */
+  .ascii-band { margin-top: 24px; }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ---------- Sections ---------- */
