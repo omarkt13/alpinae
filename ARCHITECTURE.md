@@ -78,6 +78,15 @@ stay static and separate.
 
 ## 4. AI on client documents — Swiss-hosted options (evaluated Jul 2026)
 
+> **Decision (15 Jul 2026):** provider = **Infomaniak AI Tools** (their
+> published FINMA Circular 2018/3 mapping was the deciding artifact; Safe
+> Swiss Cloud is the named fallback), and parser strategy is
+> **general-first** — the AI-assisted parser is the default door for any
+> document, with recurring formats graduated to deterministic parsers.
+> This puts the Infomaniak DPA on the pilot's critical path. Details and
+> consequences: alpinae-engine/ARCHITECTURE.md.
+
+
 The constraint stands: raw client statements must never reach a US-hosted LLM
 API (Anthropic, OpenAI direct) — one API call breaks the entire Swiss story.
 But statement parsing *does* benefit from a vision-language model (custody PDFs
