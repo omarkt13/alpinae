@@ -66,7 +66,7 @@
 
 <div class="facts">
   <div class="container facts-inner">
-    <span class="fact">Swiss made &amp; hosted</span>
+    <span class="fact">🇨🇭 Swiss made &amp; hosted</span>
     <span class="fact">Read-only, always</span>
     <span class="fact">FINMA &amp; CSSF aligned</span>
     <span class="fact">Every figure traceable</span>
@@ -215,7 +215,7 @@
     <div class="screen comp-screen" id="comp-screen" data-cstep="0">
       <div class="screen-bar">
         <span class="dots"><i></i><i></i><i></i></span>
-        <span class="url">compliance review · 5 controls</span>
+        <span class="url">compliance review · select a control</span>
       </div>
       <div class="screen-body">
 
@@ -235,7 +235,6 @@
             <text x="100" y="110" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">TLS · MFA · read-only</text>
             <line x1="164" y1="80" x2="212" y2="80" stroke="#5C6660" stroke-width="1" marker-end="url(#carr)"/>
           </g>
-          <circle id="d-adv" cx="164" cy="80" r="2.6" fill="#1E4033"/>
 
           <!-- Statements through holder check (segregation) -->
           <g id="vg-gate" class="vg">
@@ -246,7 +245,6 @@
             <text x="100" y="204" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">holder check first</text>
             <line x1="164" y1="166" x2="212" y2="166" stroke="#5C6660" stroke-width="1" marker-end="url(#carr)"/>
           </g>
-          <circle id="d-gate" cx="164" cy="166" r="2.6" fill="#1E4033"/>
 
           <!-- Swiss region (residency) -->
           <g id="vg-region" class="vg">
@@ -294,7 +292,6 @@
             <text x="676" y="152" text-anchor="middle" font-family="Inter, sans-serif" font-size="11.5" font-weight="600" fill="#1A2420">Foreign clouds</text>
             <text x="676" y="166" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="9" fill="#5C6660">external AI APIs</text>
           </g>
-          <circle id="d-egress" cx="574" cy="120" r="2.6" fill="#1E4033"/>
         </svg>
 
         <div class="comp-caption">
@@ -465,10 +462,7 @@
   var ALL = ['vg-adv', 'vg-gate', 'vg-region', 'vg-app', 'vg-db', 'vg-arch', 'vg-log', 'vg-egress'];
   var chips = Array.prototype.slice.call(card.querySelectorAll('.cchip'));
   var q = document.getElementById('cq'), t = document.getElementById('ct'), ev = document.getElementById('cev');
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var i = 0, timer = null;
   function setStep(n) {
-    i = n;
     card.dataset.cstep = n;
     chips.forEach(function (c, k) { c.classList.toggle('on', k === n); });
     q.textContent = CS[n].q;
@@ -481,13 +475,8 @@
       el.classList.toggle('dim', !lit);
     });
   }
-  function start() { if (reduced || timer) return; timer = setInterval(function () { setStep((i + 1) % CS.length); }, 5200); }
-  function stop() { clearInterval(timer); timer = null; }
-  chips.forEach(function (c, k) { c.addEventListener('click', function () { stop(); setStep(k); start(); }); });
-  card.addEventListener('mouseenter', stop);
-  card.addEventListener('mouseleave', start);
+  chips.forEach(function (c, k) { c.addEventListener('click', function () { setStep(k); }); });
   setStep(0);
-  start();
 })();
 
 </script>
