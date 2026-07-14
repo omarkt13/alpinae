@@ -9,82 +9,112 @@
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../assets/styles.css">
 <style>
-  /* ---- portal refinements (scoped to this page) ---- */
-  .cp-h1 { font-family: 'EB Garamond', Georgia, serif; font-size: 30px; font-weight: 500;
-           line-height: 1.2; margin: 28px 0 12px; }
-  main.cp-wrap .eyebrow, .cp-head .badge { font-size: 12px; }
-  @media (max-width: 640px) {
-    .cp-h1 { font-size: 26px; }
-    main.cp-wrap .cp-total { font-size: 30px; white-space: nowrap; }
-  }
+  /* =========================================================
+     Client portal — self-contained layout.
+     Every section lives in one explicit grid stack, so spacing
+     is a single decision, not an accident of sibling selectors.
+     ========================================================= */
+
+  .cp-page { max-width: 960px; margin: 0 auto; padding: 40px 32px 96px; }
+
+  /* one spacing system for the whole page */
+  .cp-stack { display: grid; gap: 28px; margin-top: 32px; }
+  .cp-stack > * { margin: 0 !important; }          /* no inherited card margins, ever */
+  .cp-two { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+
+  .cp-card { background: var(--paper-raised, #fff); border: 1px solid var(--hairline);
+             border-radius: 10px; padding: 28px; }
+  .cp-card h2 { font-family: var(--sans); font-size: 16px; font-weight: 600; margin: 0 0 16px; }
+  .cp-caption { font-size: 13px; color: var(--ink-soft); margin: 14px 0 0; line-height: 1.6; }
+
+  /* ---- header & hero ---- */
+  .cp-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px;
+            flex-wrap: wrap; padding-bottom: 24px; border-bottom: 1px solid var(--hairline); }
   .cp-client { font-size: 15px; color: var(--ink-soft); margin-top: 4px; }
-  .cp-asat { font-size: 14px; color: var(--ink-soft); margin-top: 8px; }
-  .cp-change { margin-top: 18px; }
+  .cp-h1 { font-family: 'EB Garamond', Georgia, serif; font-size: 30px; font-weight: 500;
+           line-height: 1.2; margin: 32px 0 12px; }
+  .cp-figure { font-family: var(--mono); font-size: 40px; font-weight: 500;
+               font-variant-numeric: tabular-nums; }
+  .cp-asat { font-family: var(--mono); font-size: 14px; color: var(--ink-soft); margin-top: 8px; }
+  .cp-change { margin-top: 20px; }
   .cp-change .lbl { display: block; font-size: 12px; font-weight: 600; letter-spacing: .06em;
                     text-transform: uppercase; color: var(--ink-soft); margin-bottom: 3px; }
-  .cp-change .num { font-size: 15px; }
-  .cp-change .note { font-size: 13px; color: var(--ink-soft); margin-top: 3px; }
-  .cp-approved { font-size: 15px; margin-top: 16px; line-height: 1.6; }
+  .cp-change .val { font-family: var(--mono); font-size: 15px; }
+  .cp-change .note { font-size: 13px; color: var(--ink-soft); margin-top: 4px; max-width: 620px; }
+  .cp-approved { font-size: 15px; margin-top: 18px; line-height: 1.65; }
   .cp-approved .contact { font-size: 14px; color: var(--ink-soft); }
-  main.cp-wrap .panel h2 { font-family: var(--sans); font-size: 16px; font-weight: 600;
-                           margin-bottom: 14px; }
-  main.cp-wrap .caption { font-size: 13px; color: var(--ink-soft); margin-top: 12px; line-height: 1.6; }
-  /* one shared track set per panel: the label column hugs its longest label,
-     so bars start right after the text in both panels — no dead gap, no wrap */
-  main.cp-wrap .alloc { display: grid; grid-template-columns: fit-content(50%) 1fr 56px;
-                        column-gap: 14px; row-gap: 0; }
-  main.cp-wrap .alloc .arow { grid-column: 1 / -1; display: grid;
-                              grid-template-columns: subgrid; gap: 0 14px;
-                              padding: 8px 8px; margin: 0 -8px; }
-  main.cp-wrap .alloc .alabel { font-size: 15px; white-space: nowrap; }
-  main.cp-wrap .alloc .aval { font-size: 13.5px; }
-  @media (max-width: 640px) {
-    main.cp-wrap .alloc .alabel { white-space: normal; }
-  }
-  main.cp-wrap table.holdings td { font-size: 14.5px; }
-  main.cp-wrap table.holdings th { font-size: 12px; }
-  .fresh-pill { display: inline-block; font: 500 12px var(--sans); color: var(--ink-soft);
-                background: rgb(30 64 51 / 0.07); border-radius: 99px; padding: 1px 9px;
-                margin-left: 8px; white-space: nowrap; }
-  .cp-footer { margin-top: 28px; font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+  .cp-page .eyebrow, .cp-top .badge { font-size: 12px; }
 
-  /* chart: fits every viewport — no horizontal scrolling */
+  /* ---- trend chart ---- */
   #trend-chart { width: 100%; display: block; }
-  .chart-data summary { font-size: 13px; color: var(--pine); cursor: pointer; margin-top: 10px; }
+  .chart-data summary { font-size: 13px; color: var(--pine); cursor: pointer; margin-top: 12px; }
   .chart-data table { margin-top: 10px; border-collapse: collapse; }
   .chart-data th, .chart-data td { font-size: 13px; padding: 4px 18px 4px 0; text-align: left;
                                    border-bottom: 1px solid var(--hairline); }
   .chart-data td.num { font-family: var(--mono); }
-  @media (max-width: 640px) {
-    #trend-chart text.tick { font-size: 15px; }   /* ≈9px once the SVG scales down */
-  }
 
-  /* demo banner: compact on phones */
-  @media (max-width: 640px) {
-    .demo-banner .db-long { display: none; }
-  }
-  @media (min-width: 641px) {
-    .demo-banner .db-short { display: none; }
-  }
+  /* ---- allocation bars: label column hugs its longest label per card ---- */
+  .cp-bars { display: grid; grid-template-columns: fit-content(50%) 1fr 56px;
+             column-gap: 14px; }
+  .cp-bars .brow { grid-column: 1 / -1; display: grid; grid-template-columns: subgrid;
+                   align-items: center; padding: 8px 0; border-radius: 6px; }
+  .cp-bars .brow:hover { background: rgb(30 64 51 / 0.045); }
+  .cp-bars .blabel { font-size: 15px; white-space: nowrap; }
+  .cp-bars .bval { font-family: var(--mono); font-size: 13.5px; text-align: right;
+                   font-variant-numeric: tabular-nums; }
+  .cp-bars .btrack { height: 10px; border-radius: 5px; background: rgb(30 64 51 / 0.09);
+                     overflow: hidden; }
+  .cp-bars .btrack i { display: block; height: 100%; background: var(--pine); border-radius: 4px; }
 
-  /* tables become stacked cards on narrow screens */
+  /* ---- tables ---- */
+  .cp-table { width: 100%; border-collapse: collapse; }
+  .cp-table th { font-size: 12px; font-weight: 600; text-transform: uppercase;
+                 letter-spacing: .06em; color: var(--ink-soft); text-align: left;
+                 padding: 0 12px 10px 0; border-bottom: 1px solid var(--hairline); }
+  .cp-table td { font-size: 14.5px; padding: 12px 12px 12px 0; vertical-align: baseline;
+                 border-bottom: 1px solid var(--hairline); }
+  .cp-table tr:last-child td { border-bottom: none; }
+  .cp-table .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .cp-table th.num, .cp-table td.num { text-align: right; }
+  .cp-table th:last-child, .cp-table td:last-child { padding-right: 0; }
+  .cp-table tr.cp-total td { border-top: 2px solid var(--ink); border-bottom: none;
+                             font-weight: 600; padding-top: 14px; }
+  .fresh-pill { display: inline-block; font: 500 12px var(--sans); color: var(--ink-soft);
+                background: rgb(30 64 51 / 0.07); border-radius: 99px; padding: 1px 9px;
+                margin-left: 8px; white-space: nowrap; vertical-align: 1px; }
+
+  .cp-footer { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+
+  /* ---- responsive ---- */
   @media (max-width: 640px) {
-    main.cp-wrap table.stackable thead { display: none; }
-    main.cp-wrap table.stackable, main.cp-wrap table.stackable tbody,
-    main.cp-wrap table.stackable tr, main.cp-wrap table.stackable td { display: block; width: 100%; }
-    main.cp-wrap table.stackable tr { padding: 12px 0; border-bottom: 1px solid var(--hairline); }
-    main.cp-wrap table.stackable tr:last-child { border-bottom: none; }
-    main.cp-wrap table.stackable td { display: flex; justify-content: space-between;
-      align-items: baseline; gap: 16px; border: none; padding: 3px 0; text-align: left; }
-    main.cp-wrap table.stackable td.num { text-align: right; }
-    main.cp-wrap table.stackable td::before { content: attr(data-th); flex: 0 0 auto;
-      font-size: 12.5px; color: var(--ink-soft); }
-    main.cp-wrap table.stackable td:first-child { display: block; font-weight: 500; padding-bottom: 6px; }
-    main.cp-wrap table.stackable td:first-child::before { content: none; }
-    main.cp-wrap table.stackable td:empty { display: none; }
-    main.cp-wrap table.stackable tr.total-row { background: rgb(30 64 51 / 0.045);
-      padding: 12px 10px; border-radius: 4px; }
+    .cp-page { padding: 28px 20px 64px; }
+    .cp-h1 { font-size: 26px; }
+    .cp-figure { font-size: 30px; white-space: nowrap; }
+    .cp-stack { gap: 20px; margin-top: 24px; }
+    .cp-two { grid-template-columns: 1fr; gap: 20px; }
+    .cp-card { padding: 20px; }
+    .cp-bars .blabel { white-space: normal; }
+    #trend-chart text.tick { font-size: 15px; }   /* ≈9px after the SVG scales down */
+
+    /* tables become labelled cards */
+    .cp-table thead { display: none; }
+    .cp-table, .cp-table tbody, .cp-table tr, .cp-table td { display: block; width: 100%; }
+    .cp-table tr { padding: 12px 0; border-bottom: 1px solid var(--hairline); }
+    .cp-table tr:last-child { border-bottom: none; }
+    .cp-table td { display: flex; justify-content: space-between; align-items: baseline;
+                   gap: 16px; border: none; padding: 3px 0; text-align: left; }
+    .cp-table td.num { text-align: right; }
+    .cp-table td::before { content: attr(data-th); flex: 0 0 auto; font-family: var(--sans);
+                           font-size: 12.5px; font-weight: 400; color: var(--ink-soft); }
+    .cp-table td:first-child { display: block; font-weight: 500; padding-bottom: 6px; }
+    .cp-table td:first-child::before { content: none; }
+    .cp-table td:empty { display: none; }
+    .cp-table tr.cp-total { background: rgb(30 64 51 / 0.045); padding: 12px 10px;
+                            border-radius: 6px; }
+    .cp-table tr.cp-total td { border-top: none; padding-top: 3px; }
   }
+  @media (max-width: 640px) { .demo-banner .db-long { display: none; } }
+  @media (min-width: 641px) { .demo-banner .db-short { display: none; } }
 </style>
 </head>
 <body>
@@ -95,25 +125,24 @@
   <span class="db-short">Demo · <a href="../index.html">About</a> · <a href="advisor.html">Advisor view</a></span>
 </div>
 
-<main class="cp-wrap">
-  <header class="cp-head">
+<main class="cp-page">
+
+  <header class="cp-top">
     <div>
       <p class="eyebrow">Prepared by</p>
       <div class="wordmark" style="font-size:26px;">Valmont &amp; Cie</div>
       <p class="cp-client">For A. Keller</p>
     </div>
-    <div style="text-align:right;">
-      <span class="badge">Read-only</span>
-    </div>
+    <span class="badge">Read-only</span>
   </header>
 
   <h1 class="cp-h1">Your consolidated position</h1>
-  <div class="cp-total">CHF 12,401,268</div>
-  <p class="num cp-asat">As at 30 Jun 2026 · all values in CHF</p>
+  <div class="cp-figure">CHF 12,401,268</div>
+  <p class="cp-asat">As at 30 Jun 2026 · all values in CHF</p>
 
   <div class="cp-change">
     <span class="lbl">Change in consolidated assets</span>
-    <span class="num">+ CHF 214,730 since 31 Mar 2026 (+1.8%)</span>
+    <span class="val">+ CHF 214,730 since 31 Mar 2026 (+1.8%)</span>
     <p class="note">Includes market movements, deposits, withdrawals and currency effects —
       not investment performance alone.</p>
   </div>
@@ -125,133 +154,133 @@
     <a href="mailto:s.martin@valmont-cie.example">s.martin@valmont-cie.example</a></span>
   </p>
 
-  <section class="panel" style="margin-top:28px;">
-    <h2>Portfolio value — 12 months</h2>
-    <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" role="img" id="trend-chart" aria-label="Total portfolio value by month, July 2025 to June 2026, rising from 11.62 to 12.40 million francs. Monthly figures are available in the table below the chart.">
-      <!-- grid -->
-      <line x1="46" y1="28" x2="620" y2="28" stroke="var(--hairline)"/>
-      <line x1="46" y1="90" x2="620" y2="90" stroke="var(--hairline)"/>
-      <line x1="46" y1="152" x2="620" y2="152" stroke="var(--hairline)"/>
-      <line x1="46" y1="170" x2="620" y2="170" stroke="var(--hairline)"/>
-      <text class="tick" x="0" y="31" text-anchor="start" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">12.5M</text>
-      <text class="tick" x="0" y="93" text-anchor="start" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">12.0M</text>
-      <text class="tick" x="0" y="155" text-anchor="start" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">11.5M</text>
-      <!-- area + line -->
-      <path d="M46,137 L98,126 L150,142 L202,111 L255,88 L307,97 L359,80 L411,67 L464,67 L516,84 L568,58 L620,40 L620,170 L46,170 Z"
-            fill="rgb(30 64 51 / 0.07)" stroke="none"/>
-      <path d="M46,137 L98,126 L150,142 L202,111 L255,88 L307,97 L359,80 L411,67 L464,67 L516,84 L568,58 L620,40"
-            fill="none" stroke="var(--pine)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-      <circle cx="620" cy="40" r="4" fill="var(--pine)" stroke="var(--paper-raised)" stroke-width="2"/>
-      <text class="tick" x="614" y="24" text-anchor="end" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="var(--ink)">12.40M</text>
-      <!-- month ticks -->
-      <text class="tick" x="150" y="188" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Sep</text>
-      <text class="tick" x="307" y="188" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Dec</text>
-      <text class="tick" x="464" y="188" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Mar</text>
-      <text class="tick" x="620" y="188" text-anchor="end" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Jun</text>
-      <!-- interactive crosshair + tooltip -->
-      <line id="ch-line" x1="0" x2="0" y1="16" y2="170" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="3 3" style="opacity:0;pointer-events:none;"/>
-      <circle id="ch-dot" r="4" fill="var(--pine)" stroke="var(--paper-raised)" stroke-width="2" style="opacity:0;pointer-events:none;"/>
-      <g id="ch-tip" style="opacity:0;pointer-events:none;">
-        <rect width="118" height="40" rx="6" fill="var(--ink)" opacity="0.94"/>
-        <text id="ch-tip-month" x="12" y="17" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#ffffffbb"></text>
-        <text id="ch-tip-val" x="12" y="31" font-family="'IBM Plex Mono', monospace" font-size="11.5" font-weight="500" fill="#ffffff"></text>
-      </g>
-    </svg>
-    <p class="caption">
-      Total portfolio value at each month end, all sources, in CHF.
-      Tap or hover a month for its value.
-    </p>
-    <details class="chart-data">
-      <summary>Monthly values as a table</summary>
-      <table>
-        <thead><tr><th scope="col">Month end</th><th scope="col">Value (CHF)</th></tr></thead>
+  <div class="cp-stack">
+
+    <section class="cp-card">
+      <h2>Portfolio value — 12 months</h2>
+      <svg viewBox="0 0 640 200" xmlns="http://www.w3.org/2000/svg" role="img" id="trend-chart" aria-label="Total portfolio value by month, July 2025 to June 2026, rising from 11.62 to 12.40 million francs. Monthly figures are available in the table below the chart.">
+        <line x1="46" y1="28" x2="620" y2="28" stroke="var(--hairline)"/>
+        <line x1="46" y1="90" x2="620" y2="90" stroke="var(--hairline)"/>
+        <line x1="46" y1="152" x2="620" y2="152" stroke="var(--hairline)"/>
+        <line x1="46" y1="170" x2="620" y2="170" stroke="var(--hairline)"/>
+        <text class="tick" x="0" y="31" text-anchor="start" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">12.5M</text>
+        <text class="tick" x="0" y="93" text-anchor="start" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">12.0M</text>
+        <text class="tick" x="0" y="155" text-anchor="start" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">11.5M</text>
+        <path d="M46,137 L98,126 L150,142 L202,111 L255,88 L307,97 L359,80 L411,67 L464,67 L516,84 L568,58 L620,40 L620,170 L46,170 Z"
+              fill="rgb(30 64 51 / 0.07)" stroke="none"/>
+        <path d="M46,137 L98,126 L150,142 L202,111 L255,88 L307,97 L359,80 L411,67 L464,67 L516,84 L568,58 L620,40"
+              fill="none" stroke="var(--pine)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+        <circle cx="620" cy="40" r="4" fill="var(--pine)" stroke="var(--paper-raised)" stroke-width="2"/>
+        <text class="tick" x="614" y="24" text-anchor="end" font-family="'IBM Plex Mono', monospace" font-size="11" font-weight="500" fill="var(--ink)">12.40M</text>
+        <text class="tick" x="150" y="188" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Sep</text>
+        <text class="tick" x="307" y="188" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Dec</text>
+        <text class="tick" x="464" y="188" text-anchor="middle" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Mar</text>
+        <text class="tick" x="620" y="188" text-anchor="end" font-family="'IBM Plex Mono', monospace" font-size="10" fill="var(--ink-soft)">Jun</text>
+        <line id="ch-line" x1="0" x2="0" y1="16" y2="170" stroke="var(--ink-soft)" stroke-width="1" stroke-dasharray="3 3" style="opacity:0;pointer-events:none;"/>
+        <circle id="ch-dot" r="4" fill="var(--pine)" stroke="var(--paper-raised)" stroke-width="2" style="opacity:0;pointer-events:none;"/>
+        <g id="ch-tip" style="opacity:0;pointer-events:none;">
+          <rect width="118" height="40" rx="6" fill="var(--ink)" opacity="0.94"/>
+          <text id="ch-tip-month" x="12" y="17" font-family="'IBM Plex Mono', monospace" font-size="10" fill="#ffffffbb"></text>
+          <text id="ch-tip-val" x="12" y="31" font-family="'IBM Plex Mono', monospace" font-size="11.5" font-weight="500" fill="#ffffff"></text>
+        </g>
+      </svg>
+      <p class="cp-caption">
+        Total portfolio value at each month end, all sources, in CHF.
+        Tap or hover a month for its value.
+      </p>
+      <details class="chart-data">
+        <summary>Monthly values as a table</summary>
+        <table>
+          <thead><tr><th scope="col">Month end</th><th scope="col">Value (CHF)</th></tr></thead>
+          <tbody>
+            <tr><td>Jul 2025</td><td class="num">11.62M</td></tr>
+            <tr><td>Aug 2025</td><td class="num">11.71M</td></tr>
+            <tr><td>Sep 2025</td><td class="num">11.58M</td></tr>
+            <tr><td>Oct 2025</td><td class="num">11.83M</td></tr>
+            <tr><td>Nov 2025</td><td class="num">12.02M</td></tr>
+            <tr><td>Dec 2025</td><td class="num">11.94M</td></tr>
+            <tr><td>Jan 2026</td><td class="num">12.08M</td></tr>
+            <tr><td>Feb 2026</td><td class="num">12.19M</td></tr>
+            <tr><td>Mar 2026</td><td class="num">12.19M</td></tr>
+            <tr><td>Apr 2026</td><td class="num">12.05M</td></tr>
+            <tr><td>May 2026</td><td class="num">12.26M</td></tr>
+            <tr><td>Jun 2026</td><td class="num">12.40M</td></tr>
+          </tbody>
+        </table>
+      </details>
+    </section>
+
+    <div class="cp-two">
+      <section class="cp-card">
+        <h2>Allocation</h2>
+        <div class="cp-bars">
+          <div class="brow" title="Multi-asset funds · CHF 5,922,345"><span class="blabel">Multi-asset funds</span><span class="btrack"><i style="width:47.8%"></i></span><span class="bval">47.8%</span></div>
+          <div class="brow" title="Equities · CHF 3,199,826"><span class="blabel">Equities</span><span class="btrack"><i style="width:25.8%"></i></span><span class="bval">25.8%</span></div>
+          <div class="brow" title="Fixed income · CHF 1,470,480"><span class="blabel">Fixed income</span><span class="btrack"><i style="width:11.9%"></i></span><span class="bval">11.9%</span></div>
+          <div class="brow" title="Cash & equivalents · CHF 1,808,617"><span class="blabel">Cash &amp; equivalents</span><span class="btrack"><i style="width:14.5%"></i></span><span class="bval">14.5%</span></div>
+        </div>
+        <p class="cp-caption">Share of total consolidated assets.</p>
+      </section>
+      <section class="cp-card">
+        <h2>Currency exposure</h2>
+        <div class="cp-bars">
+          <div class="brow" title="CHF assets · CHF 7,480,817"><span class="blabel">CHF</span><span class="btrack"><i style="width:60.3%"></i></span><span class="bval">60.3%</span></div>
+          <div class="brow" title="EUR exposure · CHF 2,307,605"><span class="blabel">EUR</span><span class="btrack"><i style="width:18.6%"></i></span><span class="bval">18.6%</span></div>
+          <div class="brow" title="USD exposure · CHF 1,713,715"><span class="blabel">USD</span><span class="btrack"><i style="width:13.8%"></i></span><span class="bval">13.8%</span></div>
+          <div class="brow" title="SEK exposure · CHF 899,131"><span class="blabel">SEK</span><span class="btrack"><i style="width:7.3%"></i></span><span class="bval">7.3%</span></div>
+        </div>
+        <p class="cp-caption">After conversion to CHF at each source's valuation date.</p>
+      </section>
+    </div>
+
+    <section class="cp-card">
+      <h2>By source</h2>
+      <table class="cp-table">
+        <thead>
+          <tr><th scope="col">Source</th><th scope="col">Valuation date</th><th class="num" scope="col">Value (CHF)</th><th class="num" scope="col">Share</th></tr>
+        </thead>
         <tbody>
-          <tr><td>Jul 2025</td><td class="num">11.62M</td></tr>
-          <tr><td>Aug 2025</td><td class="num">11.71M</td></tr>
-          <tr><td>Sep 2025</td><td class="num">11.58M</td></tr>
-          <tr><td>Oct 2025</td><td class="num">11.83M</td></tr>
-          <tr><td>Nov 2025</td><td class="num">12.02M</td></tr>
-          <tr><td>Dec 2025</td><td class="num">11.94M</td></tr>
-          <tr><td>Jan 2026</td><td class="num">12.08M</td></tr>
-          <tr><td>Feb 2026</td><td class="num">12.19M</td></tr>
-          <tr><td>Mar 2026</td><td class="num">12.19M</td></tr>
-          <tr><td>Apr 2026</td><td class="num">12.05M</td></tr>
-          <tr><td>May 2026</td><td class="num">12.26M</td></tr>
-          <tr><td>Jun 2026</td><td class="num">12.40M</td></tr>
+          <tr><td>Valmont Global Allocation Fund</td><td class="num" data-th="Valuation date">30 Jun 2026</td><td class="num" data-th="Value (CHF)">4,819,815</td><td class="num" data-th="Share">38.9%</td></tr>
+          <tr><td>Banque Cantonale Privée, Geneva</td><td class="num" data-th="Valuation date">30 Jun 2026</td><td class="num" data-th="Value (CHF)">3,940,120</td><td class="num" data-th="Share">31.8%</td></tr>
+          <tr><td>Edmond Frères &amp; Cie, Luxembourg</td><td class="num" data-th="Valuation date">30 Jun 2026</td><td class="num" data-th="Value (CHF)">2,150,445</td><td class="num" data-th="Share">17.3%</td></tr>
+          <tr><td>Nordkap Asset Management, Stockholm <span class="fresh-pill">valued 27 Jun</span></td><td class="num" data-th="Valuation date">27 Jun 2026</td><td class="num" data-th="Value (CHF)">1,490,888</td><td class="num" data-th="Share">12.0%</td></tr>
+          <tr class="cp-total"><td>Total</td><td></td><td class="num" data-th="Value (CHF)">12,401,268</td><td class="num" data-th="Share">100.0%</td></tr>
         </tbody>
       </table>
-    </details>
-  </section>
+      <p class="cp-caption">
+        Nordkap's most recent statement is dated 27 June 2026; all other sources 30 June 2026.
+        The difference is shown, never hidden.
+      </p>
+    </section>
 
-  <div class="mk-grid cols-2" style="margin-top:24px;gap:24px;">
-    <section class="panel" style="margin-top:0;">
-      <h2>Allocation</h2>
-      <div class="alloc">
-        <div class="arow" title="Multi-asset funds · CHF 5,922,345"><span class="alabel">Multi-asset funds</span><span class="bar"><i style="width:47.8%"></i></span><span class="aval">47.8%</span></div>
-        <div class="arow" title="Equities · CHF 3,199,826"><span class="alabel">Equities</span><span class="bar"><i style="width:25.8%"></i></span><span class="aval">25.8%</span></div>
-        <div class="arow" title="Fixed income · CHF 1,470,480"><span class="alabel">Fixed income</span><span class="bar"><i style="width:11.9%"></i></span><span class="aval">11.9%</span></div>
-        <div class="arow" title="Cash & equivalents · CHF 1,808,617"><span class="alabel">Cash &amp; equivalents</span><span class="bar"><i style="width:14.5%"></i></span><span class="aval">14.5%</span></div>
-      </div>
-      <p class="caption">Share of total consolidated assets.</p>
+    <section class="cp-card">
+      <h2>Top holdings</h2>
+      <table class="cp-table">
+        <thead>
+          <tr><th scope="col">Instrument</th><th scope="col">Held at</th><th class="num" scope="col">Value (CHF)</th><th class="num" scope="col">Weight</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Valmont Global Allocation Fund</td><td data-th="Held at">Proprietary</td><td class="num" data-th="Value (CHF)">4,819,815</td><td class="num" data-th="Weight">38.9%</td></tr>
+          <tr><td>Cash &amp; equivalents</td><td data-th="Held at">3 custodians</td><td class="num" data-th="Value (CHF)">1,808,617</td><td class="num" data-th="Weight">14.5%</td></tr>
+          <tr><td>US Treasury 4.25% 2031</td><td data-th="Held at">2 custodians</td><td class="num" data-th="Value (CHF)">1,470,480</td><td class="num" data-th="Weight">11.9%</td></tr>
+          <tr><td>Nestlé SA</td><td data-th="Held at">2 custodians</td><td class="num" data-th="Value (CHF)">1,301,742</td><td class="num" data-th="Weight">10.5%</td></tr>
+          <tr><td>European IG Bond Fund (EF)</td><td data-th="Held at">Edmond Frères &amp; Cie</td><td class="num" data-th="Value (CHF)">1,102,530</td><td class="num" data-th="Weight">8.9%</td></tr>
+        </tbody>
+      </table>
+      <p class="cp-caption">
+        The five largest positions across all sources — 84.7% of consolidated assets.
+        The full position list is available from your relationship manager.
+      </p>
     </section>
-    <section class="panel" style="margin-top:0;">
-      <h2>Currency exposure</h2>
-      <div class="alloc">
-        <div class="arow" title="CHF assets · CHF 7,480,817"><span class="alabel">CHF</span><span class="bar"><i style="width:60.3%"></i></span><span class="aval">60.3%</span></div>
-        <div class="arow" title="EUR exposure · CHF 2,307,605"><span class="alabel">EUR</span><span class="bar"><i style="width:18.6%"></i></span><span class="aval">18.6%</span></div>
-        <div class="arow" title="USD exposure · CHF 1,713,715"><span class="alabel">USD</span><span class="bar"><i style="width:13.8%"></i></span><span class="aval">13.8%</span></div>
-        <div class="arow" title="SEK exposure · CHF 899,131"><span class="alabel">SEK</span><span class="bar"><i style="width:7.3%"></i></span><span class="aval">7.3%</span></div>
-      </div>
-      <p class="caption">After conversion to CHF at each source's valuation date.</p>
-    </section>
+
+    <p class="cp-footer">
+      This view is read-only and reflects figures reconciled and approved by
+      Valmont &amp; Cie. All values converted to CHF at SNB reference rates on each
+      source's valuation date. For questions, contact Sophie Martin, your
+      relationship manager. Alpinae ref. RPT-2026-Q2-KEL-004.
+    </p>
+
   </div>
-
-  <section class="panel">
-    <h2>By source</h2>
-    <table class="holdings stackable">
-      <thead>
-        <tr><th scope="col">Source</th><th scope="col">Valuation date</th><th class="num" scope="col">Value (CHF)</th><th class="num" scope="col">Share</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Valmont Global Allocation Fund</td><td class="num" data-th="Valuation date">30 Jun 2026</td><td class="num" data-th="Value (CHF)">4,819,815</td><td class="num" data-th="Share">38.9%</td></tr>
-        <tr><td>Banque Cantonale Privée, Geneva</td><td class="num" data-th="Valuation date">30 Jun 2026</td><td class="num" data-th="Value (CHF)">3,940,120</td><td class="num" data-th="Share">31.8%</td></tr>
-        <tr><td>Edmond Frères &amp; Cie, Luxembourg</td><td class="num" data-th="Valuation date">30 Jun 2026</td><td class="num" data-th="Value (CHF)">2,150,445</td><td class="num" data-th="Share">17.3%</td></tr>
-        <tr><td>Nordkap Asset Management, Stockholm <span class="fresh-pill">valued 27 Jun</span></td><td class="num" data-th="Valuation date">27 Jun 2026</td><td class="num" data-th="Value (CHF)">1,490,888</td><td class="num" data-th="Share">12.0%</td></tr>
-        <tr class="total-row"><td>Total</td><td></td><td class="num" data-th="Value (CHF)">12,401,268</td><td class="num" data-th="Share">100.0%</td></tr>
-      </tbody>
-    </table>
-    <p class="caption">
-      Nordkap's most recent statement is dated 27 June 2026; all other sources 30 June 2026.
-      The difference is shown, never hidden.
-    </p>
-  </section>
-
-  <section class="panel">
-    <h2>Top holdings</h2>
-    <table class="holdings stackable">
-      <thead>
-        <tr><th scope="col">Instrument</th><th scope="col">Held at</th><th class="num" scope="col">Value (CHF)</th><th class="num" scope="col">Weight</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Valmont Global Allocation Fund</td><td data-th="Held at">Proprietary</td><td class="num" data-th="Value (CHF)">4,819,815</td><td class="num" data-th="Weight">38.9%</td></tr>
-        <tr><td>Cash &amp; equivalents</td><td data-th="Held at">3 custodians</td><td class="num" data-th="Value (CHF)">1,808,617</td><td class="num" data-th="Weight">14.5%</td></tr>
-        <tr><td>US Treasury 4.25% 2031</td><td data-th="Held at">2 custodians</td><td class="num" data-th="Value (CHF)">1,470,480</td><td class="num" data-th="Weight">11.9%</td></tr>
-        <tr><td>Nestlé SA</td><td data-th="Held at">2 custodians</td><td class="num" data-th="Value (CHF)">1,301,742</td><td class="num" data-th="Weight">10.5%</td></tr>
-        <tr><td>European IG Bond Fund (EF)</td><td data-th="Held at">Edmond Frères &amp; Cie</td><td class="num" data-th="Value (CHF)">1,102,530</td><td class="num" data-th="Weight">8.9%</td></tr>
-      </tbody>
-    </table>
-    <p class="caption">
-      The five largest positions across all sources — 84.7% of consolidated assets.
-      The full position list is available from your relationship manager.
-    </p>
-  </section>
-
-  <p class="cp-footer">
-    This view is read-only and reflects figures reconciled and approved by
-    Valmont &amp; Cie. All values converted to CHF at SNB reference rates on each
-    source's valuation date. For questions, contact Sophie Martin, your
-    relationship manager. Alpinae ref. RPT-2026-Q2-KEL-004.
-  </p>
 </main>
 
 
