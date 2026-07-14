@@ -29,8 +29,18 @@
   main.cp-wrap .panel h2 { font-family: var(--sans); font-size: 16px; font-weight: 600;
                            margin-bottom: 14px; }
   main.cp-wrap .caption { font-size: 13px; color: var(--ink-soft); margin-top: 12px; line-height: 1.6; }
-  main.cp-wrap .alloc .alabel { font-size: 15px; }
+  /* one shared track set per panel: the label column hugs its longest label,
+     so bars start right after the text in both panels — no dead gap, no wrap */
+  main.cp-wrap .alloc { display: grid; grid-template-columns: fit-content(50%) 1fr 56px;
+                        column-gap: 14px; row-gap: 0; }
+  main.cp-wrap .alloc .arow { grid-column: 1 / -1; display: grid;
+                              grid-template-columns: subgrid; gap: 0 14px;
+                              padding: 8px 8px; margin: 0 -8px; }
+  main.cp-wrap .alloc .alabel { font-size: 15px; white-space: nowrap; }
   main.cp-wrap .alloc .aval { font-size: 13.5px; }
+  @media (max-width: 640px) {
+    main.cp-wrap .alloc .alabel { white-space: normal; }
+  }
   main.cp-wrap table.holdings td { font-size: 14.5px; }
   main.cp-wrap table.holdings th { font-size: 12px; }
   .fresh-pill { display: inline-block; font: 500 12px var(--sans); color: var(--ink-soft);
